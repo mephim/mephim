@@ -22,11 +22,15 @@ public class Movie {
     private String moviePoster;
     private String movieDescription;
 
-    @ManyToOne
-    @JoinColumn(name="category_id")
-    private Category category;
+    @OneToMany(mappedBy = "movieCategoryId")
+    @JsonManagedReference
+    private List<MovieCategory> movieCategories;
+
+    @OneToMany(mappedBy = "movieActorId")
+    @JsonManagedReference
+    private List<MovieActor> movieActors;
 
     @OneToMany(mappedBy = "movieTheaterId")
     @JsonManagedReference
-    private List<MovieTheater> movieTheatersList;
+    private List<MovieTheater> movieTheaters;
 }

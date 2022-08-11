@@ -1,22 +1,24 @@
 package com.example.mephim.entity;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class Category {
+public class MovieCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer categoryId;
-    private String categoryName;
+    private Integer movieCategoryId;
 
-    @OneToMany(mappedBy = "movieCategoryId")
-    @JsonManagedReference
-    private List<MovieCategory> movieCategories;
+    @ManyToOne
+    @JoinColumn(name="category_id")
+    private Category category;
+
+    @ManyToOne
+    @JoinColumn(name="movie_id")
+    private Movie movie;
 
 }
