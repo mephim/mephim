@@ -29,8 +29,4 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
-
-    @ManyToOne
-    @JoinColumn(name="room_id")
-    private Room room;
 }

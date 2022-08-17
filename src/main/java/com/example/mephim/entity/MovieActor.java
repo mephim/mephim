@@ -15,13 +15,13 @@ import javax.persistence.*;
 public class MovieActor {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer movieActor;
-
-    @ManyToOne
-    @JoinColumn(name="movie_id")
-    private Category category;
+    private Integer movieActorId;
 
     @ManyToOne
     @JoinColumn(name="actor_id")
     private Actor actor;
+
+    @ManyToOne
+    @JoinColumn(name="movie_id")
+    private Movie movie;
 }

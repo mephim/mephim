@@ -1,11 +1,13 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +24,10 @@ public class TicketDetail {
     private Ticket ticket;
 
     @OneToOne
-    @JoinColumn(name="seatId")
-    private Seat seat;
+    @JoinColumn(name="room_id")
+    private Room room;
 
+    @OneToMany(mappedBy = "bookingId")
+    @JsonManagedReference
+    private List<Booking> bookings;
 }

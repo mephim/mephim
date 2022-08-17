@@ -14,13 +14,17 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Room {
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roomId;
-    private String roomName;
+    private Integer userId;
+    private String userName;
+    private Boolean userGender;
+    private String userPhone;
+    private String userMail;
+    private String userAddress;
 
-    @OneToMany(mappedBy = "roomSeatId")
+    @OneToMany(mappedBy = "bookingId")
     @JsonManagedReference
-    private List<RoomSeat> roomSeats;
+    private List<Booking> bookings;
 }
