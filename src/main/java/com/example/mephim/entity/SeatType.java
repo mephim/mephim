@@ -19,6 +19,8 @@ public class SeatType {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatTypeId;
 
+    private String seatTypeName;
+
     @OneToMany(mappedBy = "seatId")
     @JsonManagedReference
     private List<Seat> seatList;

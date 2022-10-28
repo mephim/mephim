@@ -1,6 +1,6 @@
 package com.example.mephim.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,18 +14,15 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomSeat {
+public class BookingStatus {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer roomSeatId;
+    private Integer bookingStatusId;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="seatId")
-    private Seat seat;
+    private String bookingStatus;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="roomId")
-    private Room room;
+    @OneToMany(mappedBy = "bookingId")
+    @JsonManagedReference
+    private List<Booking> bookingList;
+
 }

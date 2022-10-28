@@ -32,6 +32,7 @@ public class MovieController {
        try {
             movieService.saveMovie(movieCreateDto);
         } catch (Exception e) {
+           System.out.println("---Exception: "+ e.getMessage());
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return new ResponseEntity<>(HttpStatus.OK);

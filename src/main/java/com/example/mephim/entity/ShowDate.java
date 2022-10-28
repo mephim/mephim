@@ -23,19 +23,6 @@ public class ShowDate {
     @Column(name = "date", columnDefinition = "DATE")
     private String date;
 
-    @OneToMany(mappedBy = "movieId")
-    @JsonManagedReference
-    private List<Movie> movieList;
-
-    @OneToMany(mappedBy = "showTimeId")
-    @JsonManagedReference
-    private List<ShowTime> showTimeList;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="show_time_id")
-    private ShowTime showTime;
-
     @OneToMany(mappedBy = "ticketId")
     @JsonManagedReference
     private List<Ticket> ticketList;

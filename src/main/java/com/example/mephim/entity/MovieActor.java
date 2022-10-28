@@ -27,4 +27,8 @@ public class MovieActor {
     @ManyToOne
     @JoinColumn(name="movie_id")
     private Movie movie;
+
+    public MovieActor (Integer movieActorId) {
+        this.movieActorId = movieActorId;
+    }
 }

@@ -22,7 +22,7 @@ public class ShowTime {
 
     private String time;
 
-    @OneToMany(mappedBy = "showDateId")
+    @OneToMany(mappedBy = "ticketId")
     @JsonManagedReference
-    private List<ShowDate> showDateList;
+    private List<Ticket> ticketList;
 }

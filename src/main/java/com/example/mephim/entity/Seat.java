@@ -35,10 +35,6 @@ public class Seat {
     @JoinColumn(name="seatTypeId")
     private SeatType seatType;
 
-    @OneToMany(mappedBy = "roomSeatId")
-    @JsonManagedReference
-    private List<RoomSeat> roomSeats;
-
     @OneToMany(mappedBy = "bookingId")
     @JsonManagedReference
     private List<Booking> bookingList;

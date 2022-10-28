@@ -20,10 +20,6 @@ public class Room {
     private Integer roomId;
     private String roomName;
 
-    @OneToMany(mappedBy = "roomSeatId")
-    @JsonManagedReference
-    private List<RoomSeat> roomSeats;
-
     @OneToMany(mappedBy = "bookingId")
     @JsonManagedReference
     private List<Booking> bookingList;

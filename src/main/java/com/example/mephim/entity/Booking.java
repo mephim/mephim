@@ -23,6 +23,13 @@ public class Booking {
     @JoinColumn(name="userId")
     private User user;
 
+    private String time;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="booking_status_id")
+    private BookingStatus BookingStatus;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="ticket_id")

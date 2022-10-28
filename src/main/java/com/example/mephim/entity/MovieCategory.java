@@ -24,4 +24,8 @@ public class MovieCategory {
     @JoinColumn(name="movie_id")
     private Movie movie;
 
+    public MovieCategory (Integer movieCategoryId) {
+        this.movieCategoryId = movieCategoryId;
+    }
+
 }
