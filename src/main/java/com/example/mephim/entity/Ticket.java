@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +24,16 @@ public class Ticket {
     @JoinColumn(name = "movie_id")
     private Movie movie;
 
-    @OneToMany(mappedBy = "ticketDetailId")
-    private List<TicketDetail> ticketDetails;
+    @OneToMany(mappedBy = "bookingId")
+    private List<Booking> bookingList;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
+
+    @JsonIgnore
+    @ManyToOne
+    @JoinColumn(name="show_time_id")
+    private ShowTime showTime;
 }

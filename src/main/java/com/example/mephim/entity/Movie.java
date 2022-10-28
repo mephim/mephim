@@ -15,7 +15,6 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieId;
     private String movieName;
-    private String movieActor;
     private String movieDirector;
     private Integer movieLength;
     private String movieTrailerUrl;

@@ -1,11 +1,14 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -19,7 +22,7 @@ public class ShowTime {
 
     private String time;
 
-    @ManyToOne
-    @JoinColumn(name="show_date_id")
-    private ShowDate showDate;
+    @OneToMany(mappedBy = "showDateId")
+    @JsonManagedReference
+    private List<ShowDate> showDateList;
 }

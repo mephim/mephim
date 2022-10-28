@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,15 +20,13 @@ public class MovieTheater {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieTheaterId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="theater_id")
     private Theater theater;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="movie_id")
     private Movie movie;
-
-    @OneToMany(mappedBy = "movieId")
-    @JsonManagedReference
-    private List<Movie> movieList;
 }

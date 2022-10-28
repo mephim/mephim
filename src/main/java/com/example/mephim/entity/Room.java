@@ -23,4 +23,8 @@ public class Room {
     @OneToMany(mappedBy = "roomSeatId")
     @JsonManagedReference
     private List<RoomSeat> roomSeats;
+
+    @OneToMany(mappedBy = "bookingId")
+    @JsonManagedReference
+    private List<Booking> bookingList;
 }

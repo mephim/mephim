@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,14 +20,17 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "seatRowId")
     private SeatRow seatRow;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="seatTypeId")
     private SeatType seatType;
@@ -34,4 +38,8 @@ public class Seat {
     @OneToMany(mappedBy = "roomSeatId")
     @JsonManagedReference
     private List<RoomSeat> roomSeats;
+
+    @OneToMany(mappedBy = "bookingId")
+    @JsonManagedReference
+    private List<Booking> bookingList;
 }

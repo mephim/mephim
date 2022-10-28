@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,10 +18,12 @@ public class MovieActor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieActorId;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="actor_id")
     private Actor actor;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="movie_id")
     private Movie movie;
