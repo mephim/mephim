@@ -25,4 +25,8 @@ public class ShowTime {
     @OneToMany(mappedBy = "ticketId")
     @JsonManagedReference
     private List<Ticket> ticketList;
+
+    public ShowTime(String time) {
+        this.time = time;
+    }
 }

@@ -19,4 +19,8 @@ public class SeatColumn {
     @JsonManagedReference
     private List<Seat> seats;
 
+    public SeatColumn(String columnName) {
+        this.columnName = columnName;
+    }
+
 }

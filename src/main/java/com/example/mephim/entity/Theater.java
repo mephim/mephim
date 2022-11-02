@@ -25,11 +25,7 @@ public class Theater {
     @JoinColumn(name="theater_group_id")
     private TheaterGroup theaterGroup;
 
-    @OneToMany(mappedBy = "categoryId")
-    @JsonManagedReference
-    private List<Category> categoryList;
-
-    @OneToMany(mappedBy = "movieTheaterId")
-    @JsonManagedReference
-    private List<MovieTheater> movieTheatersList;
+//    @OneToMany(mappedBy = "movieTheaterId")
+//    @JsonManagedReference
+//    private List<MovieTheater> movieTheatersList;
 }

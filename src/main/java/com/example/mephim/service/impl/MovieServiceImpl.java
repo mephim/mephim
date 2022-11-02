@@ -1,36 +1,51 @@
 package com.example.mephim.service.impl;
 
-import com.example.mephim.dto.MovieCreateDto;
-import com.example.mephim.entity.Movie;
-import com.example.mephim.entity.MovieActor;
-import com.example.mephim.entity.MovieCategory;
-import com.example.mephim.entity.MovieTheater;
+import com.example.mephim.request.MovieCreateDto;
+import com.example.mephim.entity.*;
+import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.repos.MovieRepo;
+import com.example.mephim.service.CommonService;
+import com.example.mephim.service.MovieActorService;
+import com.example.mephim.service.MovieCategoryService;
 import com.example.mephim.service.MovieService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.lang.reflect.Type;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class MovieServiceImpl implements MovieService {
 
     @Autowired
     MovieRepo movieRepo;
-
     @Autowired
-    ModelMapper mapper;
+    CommonService commonService;
+    @Autowired
+    MovieActorService movieActorService;
+    @Autowired
+    MovieCategoryService movieCategoryService;
 
     @Override
     public List<Movie> findAMovies() {
-            return movieRepo.findAll();
+        return movieRepo.findAll();
+    }
+
+    boolean isExitsCategoriesId(List<Integer> idList) {
+        List<Integer> listIdNotExist = idList.stream().filter((id -> commonService.findCategoryById(id) == null))
+                .collect(Collectors.toList());
+        return listIdNotExist.isEmpty();
+    }
+    boolean isExitsActorsId(List<Integer> idList) {
+        List<Integer> listIdNotExist = idList.stream().filter((id -> commonService.findActorById(id) == null))
+                .collect(Collectors.toList());
+        return listIdNotExist.isEmpty();
     }
 
     @Override
-    public void saveMovie(MovieCreateDto movieCreateDto) {
+    public void saveMovie(MovieCreateDto movieCreateDto) throws InvalidParamException {
         Movie movie = new Movie();
         movie.setMovieName(movieCreateDto.getMovieName());
         movie.setMovieDirector(movieCreateDto.getMovieDirector());
@@ -39,21 +54,25 @@ public class MovieServiceImpl implements MovieService {
         movie.setMoviePoster(movieCreateDto.getMoviePoster());
         movie.setMovieDescription(movieCreateDto.getMovieDescription());
 
-        List<Integer> categoryIds = movieCreateDto.getMovieCategoryIds();
-        List<MovieCategory> movieCategoryList = new ArrayList<>();
-        categoryIds.forEach((categoryId) -> movieCategoryList.add(new MovieCategory(categoryId)));
-        movie.setMovieCategories(movieCategoryList);
+        if (!isExitsCategoriesId(movieCreateDto.getMovieCategoryIds())
+                || !isExitsActorsId(movieCreateDto.getMovieActorIds())) {
+            throw new InvalidParamException();
+        }
+        Movie movieSaved = movieRepo.save(movie);
+        movieCreateDto.getMovieCategoryIds().forEach(id -> {
+            MovieCategory movieCategory = new MovieCategory();
+            movieCategory.setCategory(new Category(id));
+            movieCategory.setMovie(movieSaved);
+            movieCategoryService.save(movieCategory);
+        });
 
-        List<Integer> movieActorIds = movieCreateDto.getMovieActorIds();
-        List<MovieActor> movieActorList = new ArrayList<>();
-        movieActorIds.forEach((movieActorId) -> movieActorList.add(new MovieActor(movieActorId)));
-        movie.setMovieActors(movieActorList);
+        movieCreateDto.getMovieActorIds().forEach(id -> {
+            MovieActor movieActor = new MovieActor();
+            movieActor.setActor(new Actor(id));
+            movieActor.setMovie(movieSaved);
+            movieActorService.save(movieActor);
+        });
 
-        List<Integer> movieTheaterIds = movieCreateDto.getMovieTheaterIds();
-        List<MovieTheater> movieTheaterList = new ArrayList<>();
-        movieTheaterIds.forEach((movieTheaterId) -> movieTheaterList.add(new MovieTheater(movieTheaterId)));
-        movie.setMovieTheaters(movieTheaterList);
-        movieRepo.save(movie);
     }
 
     @Override

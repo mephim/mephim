@@ -23,4 +23,8 @@ public class SeatRow {
     @OneToMany(mappedBy = "seatId")
     @JsonManagedReference
     private List<Seat> seats;
+
+    public SeatRow(String rowName) {
+        this.rowName = rowName;
+    }
 }

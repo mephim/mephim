@@ -24,4 +24,8 @@ public class SeatType {
     @OneToMany(mappedBy = "seatId")
     @JsonManagedReference
     private List<Seat> seatList;
+
+    public SeatType(String seatTypeName) {
+        this.seatTypeName = seatTypeName;
+    }
 }

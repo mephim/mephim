@@ -19,4 +19,8 @@ public class TheaterGroup {
     @OneToMany(mappedBy = "theaterGroup")
     @JsonBackReference
     private List<Theater> theaterList;
+
+    public TheaterGroup(String theaterName) {
+        this.theaterName = theaterName;
+    }
 }

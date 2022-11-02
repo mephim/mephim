@@ -1,4 +1,4 @@
-package com.example.mephim.dto;
+package com.example.mephim.request;
 
 import lombok.Data;
 
@@ -14,5 +14,4 @@ public class MovieCreateDto {
     private String movieDescription;
     private List<Integer> movieCategoryIds;
     private List<Integer> movieActorIds;
-    private List<Integer> movieTheaterIds;
 }

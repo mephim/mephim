@@ -1,4 +1,4 @@
-package com.example.mephim.dto;
+package com.example.mephim.request;
 
 import lombok.Data;
 

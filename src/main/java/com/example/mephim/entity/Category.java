@@ -15,8 +15,15 @@ public class Category {
     private Integer categoryId;
     private String categoryName;
 
-    @OneToMany(mappedBy = "movieCategoryId")
-    @JsonManagedReference
-    private List<MovieCategory> movieCategories;
+//    @OneToMany(mappedBy = "movieCategoryId")
+//    @JsonManagedReference
+//    private List<MovieCategory> movieCategories;
 
+    public Category(String categoryName){
+        this.categoryName = categoryName;
+    }
+
+    public Category(Integer categoryId){
+        this.categoryId = categoryId;
+    }
 }

@@ -18,11 +18,15 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer userId;
-    private String userName;
     private Boolean userGender;
     private String userPhone;
     private String userMail;
     private String userAddress;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "username", referencedColumnName = "username")
+    private Account account;
+
 
     @OneToMany(mappedBy = "bookingId")
     @JsonManagedReference

@@ -20,7 +20,15 @@ public class Actor {
     private Integer actorId;
     private String actorName;
 
-    @OneToMany(mappedBy = "movieActorId")
-    @JsonManagedReference
-    private List<MovieActor> movieActors;
+//    @OneToMany(mappedBy = "movieActorId")
+//    @JsonManagedReference
+//    private List<MovieActor> movieActors;
+
+    public Actor(String actorName) {
+        this.actorName = actorName;
+    }
+
+    public Actor(Integer actorId) {
+        this.actorId = actorId;
+    }
 }

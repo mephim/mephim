@@ -1,6 +1,6 @@
 package com.example.mephim.service;
 
-import com.example.mephim.dto.BookingDto;
+import com.example.mephim.request.BookingDto;
 import com.example.mephim.entity.Movie;
 
 import java.util.List;
