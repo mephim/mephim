@@ -36,4 +36,8 @@ public class Ticket {
     @ManyToOne
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
+
+    public Ticket(Integer ticketId) {
+        this.ticketId = ticketId;
+    }
 }

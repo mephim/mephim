@@ -7,7 +7,8 @@ public class BookingDto {
     private String user;
     private String time;
     private Integer ticketId;
-    private Integer seatId;
+    private Integer seatRowId;
+    private Integer seatColumnId;
+    private Integer seatTypeId;
     private Integer roomId;
-    private Integer bookingStatusId;
 }
