@@ -30,12 +30,16 @@ public class Seat {
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name="seatTypeId")
-    private SeatType seatType;
-
-    @OneToMany(mappedBy = "bookingId")
+    @OneToMany(mappedBy = "roomSeatId")
     @JsonManagedReference
-    private List<Booking> bookingList;
+    private List<RoomSeat> roomSeatList;
+
+    public Seat(Integer seatId) {
+        this.seatId = seatId;
+    }
+
+    public Seat(SeatRow seatRow, SeatColumn seatColumn) {
+        this.seatRow = seatRow;
+        this.seatColumn = seatColumn;
+    }
 }

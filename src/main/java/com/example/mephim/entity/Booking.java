@@ -37,11 +37,6 @@ public class Booking {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "seat_id")
-    private Seat seat;
-
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "room_id")
-    private Room room;
+    @JoinColumn(name = "room_seat_id")
+    private RoomSeat roomSeat;
 }

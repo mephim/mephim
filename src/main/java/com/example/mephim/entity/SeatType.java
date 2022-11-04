@@ -21,9 +21,13 @@ public class SeatType {
 
     private String seatTypeName;
 
-    @OneToMany(mappedBy = "seatId")
+    @OneToMany(mappedBy = "roomSeatId")
     @JsonManagedReference
-    private List<Seat> seatList;
+    private List<RoomSeat> roomSeatList;
+
+    public SeatType(Integer seatTypeId) {
+        this.seatTypeId = seatTypeId;
+    }
 
     public SeatType(String seatTypeName) {
         this.seatTypeName = seatTypeName;

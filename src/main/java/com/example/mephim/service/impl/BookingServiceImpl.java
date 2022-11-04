@@ -29,7 +29,7 @@ public class BookingServiceImpl implements BookingService {
     SeatService seatService;
 
     @Autowired
-    UserRepo userService;
+    UserService userService;
 
 
     @Override
@@ -44,12 +44,14 @@ public class BookingServiceImpl implements BookingService {
         Seat seat = new Seat();
         seat.setSeatRow(new SeatRow(bookingDto.getSeatRowId(), null, null));
         seat.setSeatColumn(new SeatColumn(bookingDto.getSeatColumnId(), null, null));
-        seat.setSeatType(new SeatType(bookingDto.getSeatTypeId(), null, null));
+//        seat.setSeatType(new SeatType(bookingDto.getSeatTypeId(), null, null));
         seatService.addSeat(seat);
-        booking.setSeat(seat);
+//        booking.setSeat(seat);
         booking.setTicket(new Ticket(bookingDto.getTicketId()));
-        booking.setRoom(room);
-        booking.setTime(new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date()));
+//        booking.setRoom(room);
+        booking.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+        User user = userService.findByUsername(bookingDto.getUser());
+        booking.setUser(user);
         bookingRepo.save(booking);
     }
 }

@@ -32,6 +32,10 @@ public class Ticket {
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
 
+    @OneToOne
+    @JoinColumn(name = "roomId")
+    private Room room;
+
     @JsonIgnore
     @ManyToOne
     @JoinColumn(name="show_time_id")

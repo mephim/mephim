@@ -24,6 +24,9 @@ public class SeatRow {
     @JsonManagedReference
     private List<Seat> seats;
 
+    public SeatRow(Integer rowId) {
+        this.rowId = rowId;
+    }
     public SeatRow(String rowName) {
         this.rowName = rowName;
     }

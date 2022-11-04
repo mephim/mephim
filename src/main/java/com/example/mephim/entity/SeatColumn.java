@@ -19,6 +19,9 @@ public class SeatColumn {
     @JsonManagedReference
     private List<Seat> seats;
 
+    public SeatColumn(Integer columnId) {
+        this.columnId = columnId;
+    }
     public SeatColumn(String columnName) {
         this.columnName = columnName;
     }

@@ -16,6 +16,9 @@ public class CommonServiceImpl implements CommonService {
     SeatRepo seatRepo;
 
     @Autowired
+    RoomSeatRepo roomSeatRepo;
+
+    @Autowired
     SeatTypeRepo seatTypeRepo;
 
     @Autowired
@@ -97,6 +100,22 @@ public class CommonServiceImpl implements CommonService {
     public void initialTheaterGroup(TheaterGroup theaterGroup) {
         log.info("Saves theaterGroup to the database: " + theaterGroup.getTheaterName());
         theaterGroupRepo.save(theaterGroup);
+    }
+
+    @Override
+    public void initialSeat(Integer seatColumnId, Integer seatRowId) {
+        log.info("Saves seat to the database: " + seatColumnId + "; "+ seatRowId);
+        SeatColumn seatColumn = seatColumnRepo.findById(seatColumnId).orElse(null);
+        SeatRow seatRow = seatRowRepo.findById(seatRowId).orElse(null);
+        seatRepo.save(new Seat(seatRow,seatColumn));
+    }
+
+    @Override
+    public void initialRoomSeat(Integer roomId, Integer seatId, Integer seatTypeId) {
+        log.info("Saves roomSeat to the database: " + roomId + "; "+ seatId);
+        Room room = roomRepo.findById(roomId).orElse(null);
+        Seat seat = seatRepo.findById(seatId).orElse(null);
+        roomSeatRepo.save(new RoomSeat(room,seat,new SeatType(seatTypeId)));
     }
 
     @Override
