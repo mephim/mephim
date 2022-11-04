@@ -19,7 +19,7 @@ import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-@Service
+@Service @Transactional
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     AccountService accountService;

@@ -5,8 +5,9 @@ import com.example.mephim.repos.SeatRepo;
 import com.example.mephim.service.SeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service @Transactional
 public class SeatServiceImpl implements SeatService {
 
     @Autowired

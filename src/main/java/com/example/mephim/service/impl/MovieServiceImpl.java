@@ -15,8 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
-@Transactional
+@Service @Transactional
 public class MovieServiceImpl implements MovieService {
 
     @Autowired

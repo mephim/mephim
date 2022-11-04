@@ -25,4 +25,8 @@ public class BookingStatus {
     @JsonManagedReference
     private List<Booking> bookingList;
 
+    public BookingStatus(Integer bookingStatusId) {
+        this.bookingStatusId = bookingStatusId;
+    }
+
 }

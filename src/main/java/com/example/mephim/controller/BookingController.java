@@ -1,7 +1,9 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.entity.Booking;
 import com.example.mephim.exception.InvalidParamException;
+import com.example.mephim.exception.SeatIsBookedException;
 import com.example.mephim.request.BookingDto;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.service.BookingService;
@@ -21,7 +23,12 @@ public class BookingController {
 
     @PostMapping("/addNew")
     public ResponseEntity<?> addBooking(@RequestBody BookingDto bookingDto) {
-            bookingService.saveBooking(bookingDto);
-        return new ResponseEntity<>(new CustomResponse(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
+        Integer bookingSaved;
+        try {
+            bookingSaved = bookingService.saveBooking(bookingDto);
+        } catch (InvalidParamException | SeatIsBookedException e) {
+            return new ResponseEntity<>(new CustomResponse<Booking>(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS, bookingSaved), HttpStatus.CREATED);
     }
 }
