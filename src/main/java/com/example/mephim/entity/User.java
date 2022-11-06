@@ -27,7 +27,6 @@ public class User {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private Account account;
 
-
     @OneToMany(mappedBy = "bookingId")
     @JsonManagedReference
     private List<Booking> bookings;

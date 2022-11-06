@@ -14,8 +14,5 @@ public class JwtResponse {
     public JwtResponse(String jwtToken, User user) {
         this.jwtToken = jwtToken;
         this.user = user;
-
-        this.user.getAccount().setPassword(null); // hide password
-        this.user.getAccount().setVerificationCode(null); // hide verify code
     }
 }

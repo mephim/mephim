@@ -3,9 +3,6 @@ package com.example.mephim.service.impl;
 import com.example.mephim.entity.Account;
 import com.example.mephim.service.AccountService;
 import com.example.mephim.ultils.MyUserDetailsImpl;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,7 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Set;
 import java.util.stream.Collectors;
 

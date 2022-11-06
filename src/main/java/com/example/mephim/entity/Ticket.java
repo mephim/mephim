@@ -28,7 +28,7 @@ public class Ticket {
     private List<Booking> bookingList;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
 
@@ -37,7 +37,7 @@ public class Ticket {
     private Room room;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
 

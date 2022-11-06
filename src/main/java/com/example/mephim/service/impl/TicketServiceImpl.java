@@ -17,4 +17,9 @@ public class TicketServiceImpl implements TicketService {
     public Ticket findById(Integer ticketId) {
         return ticketRepo.findById(ticketId).orElse(null);
     }
+
+    @Override
+    public Ticket findTicketByMovie(Integer movieId) {
+        return ticketRepo.findTicketByMovie(movieId);
+    }
 }

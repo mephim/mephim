@@ -21,7 +21,7 @@ public class Theater {
     private String theaterDescription;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="theater_group_id")
     private TheaterGroup theaterGroup;
 

@@ -9,4 +9,7 @@ import org.springframework.stereotype.Repository;
 public interface TicketRepo extends JpaRepository<Ticket, Integer> {
     @Query(value = "select * from ticket where roomId = ?", nativeQuery = true)
     Ticket findTicketByRoomId(Integer roomId);
+
+    @Query(value = "select * from ticket where movie_id = ?", nativeQuery = true)
+    Ticket findTicketByMovie(Integer movieId);
 }

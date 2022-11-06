@@ -21,12 +21,12 @@ public class Seat {
     private Integer seatId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seatRowId")
     private SeatRow seatRow;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 

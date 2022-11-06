@@ -1,24 +1,21 @@
 package com.example.mephim.response;
 import lombok.Data;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 @Data
 public class CustomResponse<T> {
     private String status;
-    private String serverTime;
+    private String serverTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
     private T data;
     public CustomResponse(String status) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         this.status = status;
-        this.serverTime = dtf.format(LocalDateTime.now());
     }
 
     public CustomResponse(String status, T data) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         this.status = status;
-        this.serverTime = dtf.format(LocalDateTime.now());
         this.data = data;
     }
 }

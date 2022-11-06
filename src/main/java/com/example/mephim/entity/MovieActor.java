@@ -19,12 +19,12 @@ public class MovieActor {
     private Integer movieActorId;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="actor_id")
     private Actor actor;
 
     @JsonIgnore
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="movie_id")
     private Movie movie;
 
