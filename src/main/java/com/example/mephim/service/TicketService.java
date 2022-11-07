@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 public interface TicketService {
     Ticket findById(Integer ticketId);
     Ticket findTicketByMovie(Integer movieId);
+    Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId);
 
 }

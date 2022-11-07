@@ -12,4 +12,7 @@ public interface MovieRepo extends JpaRepository<Movie, Integer> {
 //    @Query(value="select movie_id, movie_description, movie_length, movie_name, movie_poster, movie_trailer_url from movie",nativeQuery = true)
     List<Movie> findAll();
 //    void saveMovie(Movie movie);
+
+
+    List<Movie> findByShowDate(Integer showDateId);
 }

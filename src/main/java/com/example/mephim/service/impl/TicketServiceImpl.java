@@ -22,4 +22,9 @@ public class TicketServiceImpl implements TicketService {
     public Ticket findTicketByMovie(Integer movieId) {
         return ticketRepo.findTicketByMovie(movieId);
     }
+
+    @Override
+    public Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId) {
+        return ticketRepo.findTicketByShowDateAndShowTime(showDateId,showTimeId);
+    }
 }
