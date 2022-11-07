@@ -6,6 +6,7 @@ import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.service.MovieService;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +29,19 @@ public class MovieController {
         try {
             movieService.saveMovie(movieCreateDto);
         } catch (InvalidParamException e) {
-            return new ResponseEntity<>(new CustomResponse(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomResponse<>(e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponse(Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>(new CustomResponse(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/find-movie-by-show-date")
+    public ResponseEntity<?> addMovie(@RequestParam Integer showDateId) {
+        Integer movieId = movieService.getMovieByShowDate(showDateId);
+        if(movieId == null) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
+        JSONObject dataResponseJson=new JSONObject();
+        dataResponseJson.put("movieId", movieId);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
     }
 }

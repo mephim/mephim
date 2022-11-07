@@ -78,4 +78,9 @@ public class MovieServiceImpl implements MovieService {
     public void deleteMovie(Integer movieId) {
         movieRepo.deleteById(movieId);
     }
+
+    @Override
+    public Integer getMovieByShowDate(Integer showDateId) {
+        return movieRepo.getMovieByShowDate(showDateId);
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.mephim.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,10 +32,6 @@ public class Ticket {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
-
-    @OneToOne
-    @JoinColumn(name = "roomId")
-    private Room room;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
