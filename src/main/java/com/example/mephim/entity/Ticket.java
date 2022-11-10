@@ -38,6 +38,8 @@ public class Ticket {
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
 
+    private Boolean active;
+
     public Ticket(Integer ticketId) {
         this.ticketId = ticketId;
     }
