@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -20,18 +21,18 @@ public class Seat {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer seatId;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "seatRowId")
     private SeatRow seatRow;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 
     @OneToMany(mappedBy = "roomSeatId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<RoomSeat> roomSeatList;
 
     public Seat(Integer seatId) {

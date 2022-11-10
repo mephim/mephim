@@ -1,5 +1,6 @@
 package com.example.mephim.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
@@ -26,15 +27,16 @@ public class Ticket {
     private Movie movie;
 
     @OneToMany(mappedBy = "bookingId")
+    @JsonManagedReference
     private List<Booking> bookingList;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
 
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
+    @JsonBackReference
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
 
