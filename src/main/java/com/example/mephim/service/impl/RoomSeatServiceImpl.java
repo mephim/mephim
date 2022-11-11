@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 @Service @Transactional
 public class RoomSeatServiceImpl implements RoomSeatService {
@@ -29,17 +29,32 @@ public class RoomSeatServiceImpl implements RoomSeatService {
     }
 
     @Override
-    public List<RoomSeatRes> findRoomSeatByShowDateAndShowTime(Integer showDateId, Integer showTimeId, Integer ticketId) {
-        List<RoomSeat> roomSeatList = roomSeatRepo.findRoomSeatByShowDateAndShowTime(showDateId, showTimeId, ticketId);
+    public List<RoomSeatRes> findRoomSeatByShowDateAndShowTimeTicket(Integer showDateId, Integer showTimeId, Integer ticketId) {
+        List<RoomSeat> roomSeatListIsEmpty = roomSeatRepo.findRoomSeatIsEmptyByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
+        List<RoomSeat> roomSeatListIsBooking = roomSeatRepo.findRoomSeatIsBookingByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
+
         List<RoomSeatRes> roomSeatRes = new ArrayList<>();
-        roomSeatList.forEach(roomSeat -> {
+        roomSeatListIsEmpty.forEach(roomSeat -> {
             RoomSeatRes res = new RoomSeatRes();
             res.setRoomSeatId(roomSeat.getRoomSeatId());
             res.setSeatName(roomSeat.getSeat().getSeatColumn().getColumnName() + roomSeat.getSeat().getSeatRow().getRowName());
             res.setSeatType(roomSeat.getSeatType().getSeatTypeName());
-
+            res.setIsBooking(false);
             roomSeatRes.add(res);
         });
+
+        roomSeatListIsBooking.forEach(roomSeat -> {
+            RoomSeatRes res = new RoomSeatRes();
+            res.setRoomSeatId(roomSeat.getRoomSeatId());
+            res.setSeatName(roomSeat.getSeat().getSeatColumn().getColumnName() + roomSeat.getSeat().getSeatRow().getRowName());
+            res.setSeatType(roomSeat.getSeatType().getSeatTypeName());
+            res.setIsBooking(true);
+            roomSeatRes.add(res);
+        });
+
+
+        Collections.sort(roomSeatRes);
+
 
         return roomSeatRes;
     }

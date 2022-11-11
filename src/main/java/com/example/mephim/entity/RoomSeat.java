@@ -16,7 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RoomSeat {
+public class RoomSeat{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roomSeatId;
@@ -42,5 +42,4 @@ public class RoomSeat {
         this.seat = seat;
         this.seatType = seatType;
     }
-
 }
