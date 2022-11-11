@@ -21,12 +21,10 @@ public class RoomTicket {
     private Integer roomTicketId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="room_id")
     private Room room;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="ticket_id")
     private Ticket actor;
 }

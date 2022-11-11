@@ -27,16 +27,14 @@ public class Ticket {
     private Movie movie;
 
     @OneToMany(mappedBy = "bookingId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Booking> bookingList;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="show_date_id")
     private ShowDate showDate;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
 

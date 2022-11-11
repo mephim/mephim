@@ -22,12 +22,10 @@ public class Seat {
     private Integer seatId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "seatRowId")
     private SeatRow seatRow;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 

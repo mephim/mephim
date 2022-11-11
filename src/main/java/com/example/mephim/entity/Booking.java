@@ -22,24 +22,20 @@ public class Booking {
     private Integer bookingId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="user_id")
     private User user;
 
     private String time;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="booking_status_id")
     private BookingStatus BookingStatus;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="ticket_id")
     private Ticket ticket;
 
     @ManyToOne
     @JoinColumn(name = "room_seat_id")
-    @JsonBackReference
     private RoomSeat roomSeat;
 }

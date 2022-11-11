@@ -34,7 +34,7 @@ public class RoomSeat {
     private Room room;
 
     @OneToMany(mappedBy = "bookingId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Booking> bookingList;
 
     public RoomSeat(Room room, Seat seat, SeatType seatType) {

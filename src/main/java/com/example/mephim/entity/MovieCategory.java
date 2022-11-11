@@ -17,12 +17,10 @@ public class MovieCategory {
     private Integer movieCategoryId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="category_id")
     private Category category;
 
     @ManyToOne
-    @JsonManagedReference
     @JoinColumn(name="movie_id")
     private Movie movie;
 

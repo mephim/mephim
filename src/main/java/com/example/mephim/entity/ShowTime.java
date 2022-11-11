@@ -24,7 +24,7 @@ public class ShowTime {
     private String time;
 
     @OneToMany(mappedBy = "ticketId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Ticket> ticketList;
 
     public ShowTime(String time) {

@@ -1,6 +1,7 @@
 package com.example.mephim.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 
@@ -17,7 +18,7 @@ public class SeatColumn {
     private String columnName;
 
     @OneToMany(mappedBy = "seatId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Seat> seats;
 
     public SeatColumn(Integer columnId) {

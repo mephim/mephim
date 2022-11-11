@@ -30,6 +30,6 @@ public class User {
     private Account account;
 
     @OneToMany(mappedBy = "bookingId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Booking> bookings;
 }

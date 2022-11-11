@@ -22,7 +22,6 @@ public class Theater {
     private String theaterDescription;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="theater_group_id")
     private TheaterGroup theaterGroup;
 

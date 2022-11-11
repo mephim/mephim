@@ -21,12 +21,10 @@ public class MovieActor {
     private Integer movieActorId;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="actor_id")
     private Actor actor;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="movie_id")
     private Movie movie;
 

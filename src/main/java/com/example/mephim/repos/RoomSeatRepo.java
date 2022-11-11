@@ -25,10 +25,9 @@ public interface RoomSeatRepo extends JpaRepository<RoomSeat, Integer> {
             "where room_seat.room_id = room.room_id\n" +
             "and room.room_id = room_ticket.room_id\n" +
             "and ticket.ticket_id = room_ticket.ticket_id\n" +
-            "-- and booking.booking_id is null\n" +
+            "and booking.booking_id is null\n" +
             "and ticket.show_date_id = ?\n" +
             "and ticket.show_time_id = ?\n" +
-            "-- and room_ticket.active = 1\n" +
             "and room_ticket.ticket_id = ?", nativeQuery = true)
     List<RoomSeat> findRoomSeatByShowDateAndShowTime(Integer showDateId, Integer showTimeId, Integer ticketId);
 }

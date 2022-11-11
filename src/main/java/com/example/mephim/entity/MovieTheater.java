@@ -20,13 +20,11 @@ public class MovieTheater {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieTheaterId;
 
-    @JsonBackReference
     @ManyToOne
     @JoinColumn(name="theater_id")
     private Theater theater;
 
     @ManyToOne
-    @JsonBackReference
     @JoinColumn(name="movie_id")
     private Movie movie;
 

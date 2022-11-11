@@ -25,7 +25,7 @@ public class ShowDate {
     private String date;
 
     @OneToMany(mappedBy = "ticketId")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Ticket> ticketList;
 
     public ShowDate(String date) {

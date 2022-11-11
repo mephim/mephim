@@ -36,7 +36,7 @@ public class Account {
     private Boolean isEnable;
 
     @OneToMany(mappedBy = "account")
-    @JsonBackReference
+    @JsonIgnore
     private Set<AccountRole> roles;
 
     @OneToOne(mappedBy = "account")

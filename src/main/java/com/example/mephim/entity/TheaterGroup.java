@@ -1,6 +1,7 @@
 package com.example.mephim.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,7 +19,7 @@ public class TheaterGroup {
     private String theaterName;
 
     @OneToMany(mappedBy = "theaterGroup")
-    @JsonManagedReference
+    @JsonIgnore
     private List<Theater> theaterList;
 
     public TheaterGroup(String theaterName) {
