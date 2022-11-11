@@ -1,11 +1,13 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.service.MovieService;
+import com.example.mephim.service.ShowTimeService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +21,9 @@ import java.util.List;
 public class MovieController {
     @Autowired
     MovieService movieService;
+
+    @Autowired
+    ShowTimeService showTimeService;
     @GetMapping("/listMovie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
@@ -38,10 +43,18 @@ public class MovieController {
 
     @PostMapping(value = "/find-movie-by-show-date")
     public ResponseEntity<?> addMovie(@RequestParam Integer showDateId) {
-        Integer movieId = movieService.getMovieByShowDate(showDateId);
-        if(movieId == null) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
+        List<Movie> movieList = movieService.getMovieByShowDate(showDateId);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
         JSONObject dataResponseJson=new JSONObject();
-        dataResponseJson.put("movieId", movieId);
+        dataResponseJson.put("movieId", movieList);
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/find-show-time-by-show-date")
+    public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer movieId,
+                                                    @RequestParam Integer showDateId) {
+        List<ShowTime> showTimeList = showTimeService.findShowTimeByShowDate(movieId, showDateId);
+        if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showTimeList), HttpStatus.CREATED);
     }
 }

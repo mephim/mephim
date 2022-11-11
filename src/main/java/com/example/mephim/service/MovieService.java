@@ -9,5 +9,5 @@ public interface MovieService {
     List<Movie> findAMovies();
     void saveMovie(MovieCreateDto movie) throws Exception;
     void deleteMovie(Integer movieId);
-    Integer getMovieByShowDate(Integer showDateId);
+    List<Movie> getMovieByShowDate(Integer showDateId);
 }
