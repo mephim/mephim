@@ -20,7 +20,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ticketId;
-    private Double ticketPrice;
+    private Long ticketPrice;
 
     @OneToOne
     @JoinColumn(name = "movie_id")
@@ -42,5 +42,11 @@ public class Ticket {
 
     public Ticket(Integer ticketId) {
         this.ticketId = ticketId;
+    }
+
+    public Ticket(Integer ticketId, Long ticketPrice, Movie movie){
+        this.ticketId = ticketId;
+        this.ticketPrice = ticketPrice;
+        this.movie = movie;
     }
 }

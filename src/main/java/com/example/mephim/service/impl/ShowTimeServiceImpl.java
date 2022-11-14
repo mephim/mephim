@@ -1,11 +1,16 @@
 package com.example.mephim.service.impl;
 
 import com.example.mephim.entity.ShowTime;
+import com.example.mephim.entity.Ticket;
 import com.example.mephim.repos.ShowTimeRepo;
+import com.example.mephim.response.ShowTimeRes;
+import com.example.mephim.service.ShowDateService;
 import com.example.mephim.service.ShowTimeService;
+import com.example.mephim.service.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,8 +19,32 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     @Autowired
     ShowTimeRepo showTimeRepo;
 
+    @Autowired
+    ShowDateService showDateService;
+    @Autowired
+    TicketService ticketService;
+
     @Override
-    public List<ShowTime> findShowTimeByShowDate(Integer movieId, Integer showDateId) {
-        return showTimeRepo.findShowTimeByShowDate(movieId,showDateId);
+    public List<ShowTimeRes> findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId) {
+        List<ShowTimeRes> resList = new ArrayList<>();
+        List<ShowTime> showTimes = showTimeRepo.findShowTimeByShowDate(movieId,showDateId);
+
+        showTimes.forEach(showTime -> {
+            ShowTimeRes res = new ShowTimeRes();
+            res.setShowDateId(showDateService.findShowDateById(showDateId));
+            res.setShowTime(showTime);
+
+            Ticket ticket = ticketService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId,showDateId,showTime.getShowTimeId());
+            ShowTimeRes.TicketRes ticketRes = new ShowTimeRes.TicketRes();
+            ticketRes.setTicketId(ticket.getTicketId());
+            ticketRes.setTicketPrice(ticket.getTicketPrice());
+            ticketRes.setMovie(ticket.getMovie());
+
+            res.setTicket(ticketRes);
+
+            resList.add(res);
+        });
+
+        return resList;
     }
 }

@@ -18,4 +18,9 @@ public class ShowDateServiceImpl implements ShowDateService {
     public List<ShowDate> findShowDateByMovieId(Integer movieId) {
         return showDateRepo.findShowDateByMovieId(movieId);
     }
+
+    @Override
+    public ShowDate findShowDateById(Integer showDateId) {
+        return showDateRepo.findById(showDateId).orElse(null);
+    }
 }

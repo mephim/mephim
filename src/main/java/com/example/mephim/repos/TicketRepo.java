@@ -19,4 +19,10 @@ public interface TicketRepo extends JpaRepository<Ticket, Integer> {
             "and ticket.show_date_id = ?\n" +
             "and ticket.show_time_id = ?;", nativeQuery = true)
     Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId);
+
+    @Query(value = "select ticket.* from ticket where ticket.movie_id = ?\n" +
+            "and ticket.show_date_id = ?\n" +
+            "and ticket.show_time_id = ?\n" +
+            "and ticket.active = 1;", nativeQuery = true)
+    Ticket findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId, Integer showTimeId);
 }

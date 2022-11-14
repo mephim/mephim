@@ -6,6 +6,7 @@ import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
+import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.MovieService;
 import com.example.mephim.service.ShowTimeService;
 import org.json.simple.JSONObject;
@@ -53,7 +54,7 @@ public class MovieController {
     @PostMapping(value = "/find-show-time-by-show-date")
     public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer movieId,
                                                     @RequestParam Integer showDateId) {
-        List<ShowTime> showTimeList = showTimeService.findShowTimeByShowDate(movieId, showDateId);
+        List<ShowTimeRes> showTimeList = showTimeService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId, showDateId);
         if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showTimeList), HttpStatus.CREATED);
     }

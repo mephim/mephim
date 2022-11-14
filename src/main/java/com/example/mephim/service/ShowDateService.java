@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ShowDateService {
     List<ShowDate> findShowDateByMovieId(Integer movieId);
+    ShowDate findShowDateById(Integer showDateId);
 }

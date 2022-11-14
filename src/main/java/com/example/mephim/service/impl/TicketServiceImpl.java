@@ -27,4 +27,9 @@ public class TicketServiceImpl implements TicketService {
     public Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId) {
         return ticketRepo.findTicketByShowDateAndShowTime(showDateId,showTimeId);
     }
+
+    @Override
+    public Ticket findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId, Integer showTimeId) {
+        return ticketRepo.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId,showDateId,showTimeId);
+    }
 }

@@ -15,6 +15,7 @@ public interface ShowTimeRepo extends JpaRepository<ShowTime, Integer> {
             "and ticket.show_date_id = show_date.show_date_id\n" +
             "and ticket.movie_id = movie.movie_id\n" +
             "and ticket.movie_id = ?\n" +
-            "and ticket.show_date_id = ?;", nativeQuery = true)
+            "and ticket.show_date_id = ?\n" +
+            "and ticket.active = 1;", nativeQuery = true)
     List<ShowTime> findShowTimeByShowDate(Integer movieId, Integer showDateId);
 }
