@@ -14,6 +14,7 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
             "inner join movie \n" +
             "where show_date.show_date_id = ticket.ticket_id \n" +
             "and movie.movie_id = ticket.movie_id\n" +
-            "and movie.movie_id = ?", nativeQuery = true)
+            "and movie.movie_id = ?\n" +
+            "and ticket.ticket_id = 1", nativeQuery = true)
     List<ShowDate> findShowDateByMovieId(Integer movieId);
 }
