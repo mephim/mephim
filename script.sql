@@ -25,3 +25,11 @@ and room.room_id = room_ticket.room_id
 -- and booking.booking_id is null
 and room_ticket.ticket_id = 2
 and room_seat.room_id = 5;
+
+
+
+select distinct show_date.* from show_date inner join ticket inner join movie inner join movie_theater
+where show_date.show_date_id = ticket.show_date_id
+  and movie.movie_id = ticket.movie_id
+  and movie_theater.movie_id = movie.movie_id
+  and movie_theater.theater_id = 1;
