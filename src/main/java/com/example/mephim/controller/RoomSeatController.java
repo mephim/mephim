@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/seat")
+@CrossOrigin("*")
 public class RoomSeatController{
 
     @Autowired
@@ -21,7 +22,7 @@ public class RoomSeatController{
     @Autowired
     RoomRepo roomRepo;
 
-    @PostMapping("/find")
+    @GetMapping("/find")
     public ResponseEntity<?> addBooking(@RequestParam(name = "showDateId") Integer showDateId,
                                         @RequestParam(name = "showTimeId") Integer showTimeId,
                                         @RequestParam(name = "ticketId") Integer ticketId) {

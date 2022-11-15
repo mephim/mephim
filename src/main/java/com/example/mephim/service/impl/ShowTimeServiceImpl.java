@@ -1,9 +1,11 @@
 package com.example.mephim.service.impl;
 
+import com.example.mephim.entity.Room;
 import com.example.mephim.entity.ShowTime;
 import com.example.mephim.entity.Ticket;
 import com.example.mephim.repos.ShowTimeRepo;
 import com.example.mephim.response.ShowTimeRes;
+import com.example.mephim.service.RoomService;
 import com.example.mephim.service.ShowDateService;
 import com.example.mephim.service.ShowTimeService;
 import com.example.mephim.service.TicketService;
@@ -24,6 +26,9 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     @Autowired
     TicketService ticketService;
 
+    @Autowired
+    RoomService roomService;
+
     @Override
     public List<ShowTimeRes> findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId) {
         List<ShowTimeRes> resList = new ArrayList<>();
@@ -35,12 +40,14 @@ public class ShowTimeServiceImpl implements ShowTimeService {
             res.setShowTime(showTime);
 
             Ticket ticket = ticketService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId,showDateId,showTime.getShowTimeId());
+            Room room = roomService.findByTicketId(ticket.getTicketId());
             ShowTimeRes.TicketRes ticketRes = new ShowTimeRes.TicketRes();
             ticketRes.setTicketId(ticket.getTicketId());
             ticketRes.setTicketPrice(ticket.getTicketPrice());
             ticketRes.setMovie(ticket.getMovie());
 
             res.setTicket(ticketRes);
+            res.setRoom(room);
 
             resList.add(res);
         });

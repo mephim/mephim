@@ -15,6 +15,16 @@ public class ShowDateServiceImpl implements ShowDateService {
     ShowDateRepo showDateRepo;
 
     @Override
+    public List<ShowDate> findAll() {
+        return showDateRepo.findAll();
+    }
+
+    @Override
+    public List<ShowDate> findShowDateByTheaterId(Integer theaterId) {
+        return showDateRepo.findShowDateByTheaterId(theaterId);
+    }
+
+    @Override
     public List<ShowDate> findShowDateByMovieId(Integer movieId) {
         return showDateRepo.findShowDateByMovieId(movieId);
     }

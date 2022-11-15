@@ -1,6 +1,7 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.entity.ShowDate;
 import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
@@ -8,6 +9,7 @@ import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.MovieService;
+import com.example.mephim.service.ShowDateService;
 import com.example.mephim.service.ShowTimeService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +21,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/movie")
+@CrossOrigin("*")
 public class MovieController {
     @Autowired
     MovieService movieService;
-
     @Autowired
     ShowTimeService showTimeService;
+    @Autowired
+    ShowDateService showDateService;
     @GetMapping("/listMovie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
@@ -42,20 +46,32 @@ public class MovieController {
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/find-movie-by-show-date")
+    @GetMapping(value = "/find-movie-by-show-date")
     public ResponseEntity<?> addMovie(@RequestParam Integer showDateId) {
         List<Movie> movieList = movieService.getMovieByShowDate(showDateId);
-        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieId", movieList);
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "/find-show-time-by-show-date")
+    @GetMapping(value = "/find-all-show-date")
+    public ResponseEntity<?> findShowTimeByShowDate() {
+        List<ShowDate> showDateList = showDateService.findAll();
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showDateList), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/find-show-date-by-theater")
+    public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer theaterId) {
+        List<ShowDate> showDateList = showDateService.findShowDateByTheaterId(theaterId);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showDateList), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/find-show-time-by-show-date")
     public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer movieId,
                                                     @RequestParam Integer showDateId) {
         List<ShowTimeRes> showTimeList = showTimeService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId, showDateId);
-        if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.NOT_FOUND);
+        if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showTimeList), HttpStatus.CREATED);
     }
 }

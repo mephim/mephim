@@ -14,6 +14,7 @@ public interface RoomSeatRepo extends JpaRepository<RoomSeat, Integer> {
             "inner join booking_status " +
             "where ticket.ticket_id = booking.ticket_id " +
             "and booking_status.booking_status_id=1 " +
+            "and ticket.active=1\n" +
             "and booking.ticket_id=?", nativeQuery = true)
     RoomSeat findByTicketId(Integer ticketId);
 

@@ -14,6 +14,11 @@ public class RoomServiceImpl implements RoomService {
     RoomRepo roomRepo;
 
     @Override
+    public Room findByTicketId(Integer ticketId) {
+        return roomRepo.findByTicketId(ticketId);
+    }
+
+    @Override
     public Room findByRoomId(Integer roomId) {
         return roomRepo.findById(roomId).orElse(null);
     }
