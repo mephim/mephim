@@ -18,4 +18,9 @@ public class UserServiceImpl implements UserService {
         System.out.println("---User find by username: "+ user);
         return user;
     }
+
+    @Override
+    public User createNewUser(User user) {
+        return userRepo.save(user);
+    }
 }

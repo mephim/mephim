@@ -18,4 +18,10 @@ public class Constants {
     public static final String[] THEATER_GROUP_LIST = {"GALAXY CINEMA", "LOTTE CINEMA"};
     public static final String RESPONSE_STATUS_SUCCESS = "SUCCESS";
     public static final String RESPONSE_STATUS_ERROR = "ERROR";
+
+//    public static final String MY_EMAIL = "leconghaufake4@gmail.com";
+//    public static final String MY_PASSWORD = "terecdhuasteklgu";
+    public static final String MY_EMAIL = "g00gle.suuport1@gmail.com";
+    public static final String MY_PASSWORD = "kndwyqajcldtjocj";
+    public static final String VERIFY_MAIL = "PLEASE VERIFY MAIL";
 }

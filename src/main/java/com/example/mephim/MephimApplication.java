@@ -3,6 +3,7 @@ package com.example.mephim;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.*;
 import com.example.mephim.service.CommonService;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -26,6 +27,7 @@ public class MephimApplication {
     CommandLineRunner runner() {
         return  args -> {
             System.out.println(bCryptPasswordEncoder.encode("123456"));
+            System.out.println(DigestUtils.md5Hex("1669285315hINFQECPpOmhGfCatYc3cuErWo59ZtqvuTBHyAR3fPXbpTfI9Q").toUpperCase());
         };
     }
     // ADMIN ADD DATA
