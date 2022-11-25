@@ -1,14 +1,17 @@
 package com.example.mephim.controller;
 
+import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.User;
 import com.example.mephim.jwt.JwtUtils;
 import com.example.mephim.repos.UserRepo;
+import com.example.mephim.request.AccountVerifyRequest;
 import com.example.mephim.request.LoginRequest;
 import com.example.mephim.request.RegisterRequest;
 import com.example.mephim.response.JwtResponse;
 import com.example.mephim.service.SecurityService;
 import com.example.mephim.service.impl.UserDetailServiceImpl;
 import com.example.mephim.template.mail.RequestResetPasswordTemplate;
+import com.example.mephim.ultils.AESCrypt;
 import com.example.mephim.ultils.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import java.security.NoSuchAlgorithmException;
+import java.util.Objects;
 
 @RestController
 @RequestMapping("/api")
@@ -74,5 +78,16 @@ public class SecurityController {
             throw new RuntimeException(e);
         }
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/verify-account")
+    public ResponseEntity<?> verifyAccount(@RequestBody AccountVerifyRequest accountVerifyRequest){
+        if(accountVerifyRequest == null) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        Long verifyCodeCreateTime = Long.valueOf(Objects.requireNonNull(AESCrypt.decrypt(accountVerifyRequest.getVerifyCode(), Constants.secretKey)).substring(0,10));
+        Boolean verifyResult = securityService.verifyAccount(accountVerifyRequest.getVerifyCode(), verifyCodeCreateTime);
+        if(verifyResult) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 }

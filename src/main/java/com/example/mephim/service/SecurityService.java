@@ -10,4 +10,5 @@ public interface SecurityService {
     void createNewAccount(RegisterRequest registerRequest) throws MessagingException, NoSuchAlgorithmException;
     void requestResetPassword(String mail, String link);
     void resetPassword(String username, String newPassword);
+    Boolean verifyAccount(String verifyCode, Long verifyCodeCreateTime);
 }

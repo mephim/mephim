@@ -8,6 +8,7 @@ import com.example.mephim.service.AccountService;
 import com.example.mephim.service.SecurityService;
 import com.example.mephim.service.UserService;
 import com.example.mephim.template.mail.ConfirmMailTemplate;
+import com.example.mephim.ultils.AESCrypt;
 import com.example.mephim.ultils.MailSender;
 import com.example.mephim.ultils.RandomString;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -36,16 +37,16 @@ public class SecurityServiceImpl implements SecurityService {
 
     @Override
     public void createNewAccount(RegisterRequest registerRequest) throws MessagingException, NoSuchAlgorithmException {
-        Long unixTime = System.currentTimeMillis() / 1000L;;
-        String verificationCode = RandomString.getAlphaNumericString(50);
+        Long unixTime = System.currentTimeMillis() / 1000L;
+        String verificationCode = AESCrypt.encrypt(unixTime + RandomString.getAlphaNumericString(50),Constants.secretKey);
         Account account = new Account();
         account.setUsername(registerRequest.getUsername());
         account.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
         account.setRegisterDate(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
         account.setProvider(registerRequest.getProvider());
         account.setIsEnable(true);
-        account.setVerificationCode(DigestUtils.md5Hex(unixTime + verificationCode).toUpperCase());
-        System.out.println("HEX: "+unixTime + verificationCode);
+        account.setVerificationCode(verificationCode);
+        System.out.println("HEXeccrypt: "+ verificationCode);
         Account accountSaved = accountService.createAccount(account);
         if (accountSaved != null) {
             User user = new User();
@@ -54,8 +55,8 @@ public class SecurityServiceImpl implements SecurityService {
             user.setUserPhone(registerRequest.getUserPhone());
             user.setAccount(accountSaved);
             User userSaved = userService.createNewUser(user);
-            if(userSaved != null) {
-                requestVerifyAccount(userSaved.getUserMail(), accountSaved.getUsername(), "http://locahost:9090/reset?"+verificationCode);
+            if (userSaved != null) {
+                requestVerifyAccount(userSaved.getUserMail(), accountSaved.getUsername(), "http://locahost:9090/reset?" + verificationCode);
             }
         }
     }
@@ -70,11 +71,28 @@ public class SecurityServiceImpl implements SecurityService {
 
     }
 
+    @Override
+    public Boolean verifyAccount(String verifyCode, Long verifyCodeCreateTime) {
+        Boolean isActive = false;
+        Long localTime = System.currentTimeMillis() / 1000L;
+        if(localTime - verifyCodeCreateTime > 15*60) {
+            return false;
+        }
+        Account account = accountService.findByVerificationCode(verifyCode);
+        if(account != null) {
+             isActive = accountService.activeAccount(account.getUsername());
+             if(isActive) {
+                 accountService.deleteVerificationCode(account.getUsername());
+             }
+        }
+        return isActive;
+    }
+
     void requestVerifyAccount(String mail, String username, String verifyLink) throws MessagingException {
         try {
             mailSender.send(mail, Constants.VERIFY_MAIL, ConfirmMailTemplate.build(username, verifyLink));
         } catch (Exception exception) {
-            System.out.println("ERROR: "+ exception);
+            System.out.println("ERROR: " + exception);
         }
     }
 }

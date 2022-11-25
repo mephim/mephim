@@ -20,4 +20,19 @@ public class AccountServiceImpl implements AccountService {
     public Account createAccount(Account account) {
         return accountRepo.save(account);
     }
+
+    @Override
+    public Account findByVerificationCode(String verifyCode) {
+        return accountRepo.findByVerificationCode(verifyCode);
+    }
+
+    @Override
+    public Boolean activeAccount(String username) {
+        return accountRepo.activeAccount(username) > 0;
+    }
+
+    @Override
+    public Boolean deleteVerificationCode(String username) {
+        return accountRepo.deleteVerificationCode(username) > 0;
+    }
 }

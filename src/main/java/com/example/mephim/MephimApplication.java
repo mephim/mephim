@@ -3,6 +3,7 @@ package com.example.mephim;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.*;
 import com.example.mephim.service.CommonService;
+import com.example.mephim.ultils.AESCrypt;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -26,8 +27,10 @@ public class MephimApplication {
     @Bean
     CommandLineRunner runner() {
         return  args -> {
+            long unixTime = System.currentTimeMillis() / 1000L;
             System.out.println(bCryptPasswordEncoder.encode("123456"));
-            System.out.println(DigestUtils.md5Hex("1669285315hINFQECPpOmhGfCatYc3cuErWo59ZtqvuTBHyAR3fPXbpTfI9Q").toUpperCase());
+            System.out.println("Uxtime: "+unixTime);
+            System.out.println(AESCrypt.decrypt("yXGQ2lsH2tRuLDlKMyvZcV/puvSfL9thrHxrEW6MfHWZ/T4HMV+IR5voeLnfVfpB8XwYzuY3qZdFnCuN3d388w==", Constants.secretKey));
         };
     }
     // ADMIN ADD DATA

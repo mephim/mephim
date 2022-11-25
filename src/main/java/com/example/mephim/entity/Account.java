@@ -26,7 +26,7 @@ public class Account {
     @Column(name = "register_date", columnDefinition = "DATE")
     private String registerDate;
 
-    @Column(name = "verification_code", columnDefinition = "varchar(100)")
+    @Column(name = "verification_code", columnDefinition = "varchar(500)")
     private String verificationCode;
 
     @Column(name = "provider", columnDefinition = "VARCHAR(20)")
