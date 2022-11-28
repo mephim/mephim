@@ -50,23 +50,23 @@ public class SecurityController {
     @Autowired
     private MailSender mailSender;
 
-    @PostMapping("/login")
-    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) throws MessagingException {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
-                        loginRequest.getPassword()));
+//    @PostMapping("/login")
+//    public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) throws MessagingException {
+//        Authentication authentication = authenticationManager.authenticate(
+//                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),
+//                        loginRequest.getPassword()));
+//
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//        UserDetails userDetails = userDetailService
+//                .loadUserByUsername(authentication.getName());
+//        String jwtToken = jwtUtils.generateToken(userDetails);
+//        User user = userRepo.findByUsername(loginRequest.getUsername());
 
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        UserDetails userDetails = userDetailService
-                .loadUserByUsername(authentication.getName());
-        String jwtToken = jwtUtils.generateToken(userDetails);
-        User user = userRepo.findByUsername(loginRequest.getUsername());
+//        String message = RequestResetPasswordTemplate.build("hoangvanhanh","fb.com/conghau6");
+//        mailSender.send("leconghau095@gmail.com","Reset password", message);
 
-        String message = RequestResetPasswordTemplate.build("hoangvanhanh","fb.com/conghau6");
-        mailSender.send("leconghau095@gmail.com","Reset password", message);
-
-        return new ResponseEntity<>(new JwtResponse(jwtToken,user),HttpStatus.OK);
-    }
+//        return new ResponseEntity<>(new JwtResponse(jwtToken,user),HttpStatus.OK);
+//    }
 
     @PostMapping("/register-account")
     public ResponseEntity<?> registerAccount(@RequestBody RegisterRequest registerRequest) {

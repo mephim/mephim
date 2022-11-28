@@ -11,14 +11,17 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
 @SpringBootApplication
 public class MephimApplication {
 
-    @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Bean
+    public BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     public static void main(String[] args) {
         SpringApplication.run(MephimApplication.class, args);
@@ -27,10 +30,10 @@ public class MephimApplication {
     @Bean
     CommandLineRunner runner() {
         return  args -> {
-            long unixTime = System.currentTimeMillis() / 1000L;
-            System.out.println(bCryptPasswordEncoder.encode("123456"));
-            System.out.println("Uxtime: "+unixTime);
-            System.out.println(AESCrypt.decrypt("yXGQ2lsH2tRuLDlKMyvZcV/puvSfL9thrHxrEW6MfHWZ/T4HMV+IR5voeLnfVfpB8XwYzuY3qZdFnCuN3d388w==", Constants.secretKey));
+//            long unixTime = System.currentTimeMillis() / 1000L;
+//            System.out.println(passwordEncoder.encode("123456"));
+//            System.out.println("Uxtime: "+unixTime);
+//            System.out.println(AESCrypt.decrypt("yXGQ2lsH2tRuLDlKMyvZcV/puvSfL9thrHxrEW6MfHWZ/T4HMV+IR5voeLnfVfpB8XwYzuY3qZdFnCuN3d388w==", Constants.secretKey));
         };
     }
     // ADMIN ADD DATA
