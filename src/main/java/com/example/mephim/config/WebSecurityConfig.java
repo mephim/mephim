@@ -2,7 +2,7 @@ package com.example.mephim.config;
 
 import com.example.mephim.filter.CustomAuthenticationFilter;
 import com.example.mephim.filter.CustomAuthorizationFilter;
-import com.example.mephim.jwt.JwtFilter;
+//import com.example.mephim.jwt.JwtFilter;
 import com.example.mephim.service.impl.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,9 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     private final UserDetailsService userDetailsService;
     private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
-
-//    @Autowired
-//    private UserDetailServiceImpl userDetailService;
-//
-//    @Autowired
-//    private JwtFilter jwtFilter;
-//
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
@@ -50,14 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
         customAuthenticationFilter.setFilterProcessesUrl("/api/login");
         http.csrf().disable();
-        http.authorizeRequests().antMatchers("/movie/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/login").permitAll();
-//                .and().authorizeRequests().antMatchers("/api/movie/*")
-//                .access("hasRole('ROLE_ADMIN')")
-//                .and().cors();
-
-//        http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-        http.addFilter(new CustomAuthenticationFilter(authenticationManagerBean()));
+        http.authorizeRequests().antMatchers("/api/movie/**").hasRole("ADMIN");
+        http.authorizeRequests().antMatchers("/api/login").permitAll();
+        http.addFilter(customAuthenticationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

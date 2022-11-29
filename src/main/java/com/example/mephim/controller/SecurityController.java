@@ -2,7 +2,7 @@ package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.User;
-import com.example.mephim.jwt.JwtUtils;
+//import com.example.mephim.jwt.JwtUtils;
 import com.example.mephim.repos.UserRepo;
 import com.example.mephim.request.AccountVerifyRequest;
 import com.example.mephim.request.LoginRequest;
@@ -35,8 +35,8 @@ public class SecurityController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private JwtUtils jwtUtils;
+//    @Autowired
+//    private JwtUtils jwtUtils;
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
