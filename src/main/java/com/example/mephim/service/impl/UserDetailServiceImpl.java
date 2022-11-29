@@ -24,10 +24,8 @@ import java.util.stream.Collectors;
 public class UserDetailServiceImpl implements UserDetailsService {
     @Autowired
     AccountService accountService;
-
     @Autowired
     UserService userService;
-
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userService.findByUsername(username);
@@ -43,21 +41,4 @@ public class UserDetailServiceImpl implements UserDetailsService {
         });
         return new org.springframework.security.core.userdetails.User(user.getAccount().getUsername(), user.getAccount().getPassword(), authorities);
     }
-
-//    @Override
-//    @Transactional
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        Account account = accountService.findByUsername(username);
-//        System.out.println("---account: " + account.getUsername() + " "+ account.getPassword());
-//
-//        Set<GrantedAuthority> authorities = account.getRoles().stream()
-//                .map(role -> new SimpleGrantedAuthority(role.getRole().getRoleName()))
-//                .collect(Collectors.toSet());
-//        System.out.println("---authorities: "+ authorities);
-//        return new MyUserDetailsImpl(
-//                account.getUsername(),
-//                account.getPassword(),
-//                authorities,
-//                account.getIsEnable());
-//    }
 }

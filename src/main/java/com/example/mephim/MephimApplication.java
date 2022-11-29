@@ -3,15 +3,11 @@ package com.example.mephim;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.*;
 import com.example.mephim.service.CommonService;
-import com.example.mephim.ultils.AESCrypt;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Arrays;
 
@@ -27,15 +23,6 @@ public class MephimApplication {
         SpringApplication.run(MephimApplication.class, args);
     }
 
-    @Bean
-    CommandLineRunner runner() {
-        return  args -> {
-//            long unixTime = System.currentTimeMillis() / 1000L;
-//            System.out.println(passwordEncoder.encode("123456"));
-//            System.out.println("Uxtime: "+unixTime);
-//            System.out.println(AESCrypt.decrypt("yXGQ2lsH2tRuLDlKMyvZcV/puvSfL9thrHxrEW6MfHWZ/T4HMV+IR5voeLnfVfpB8XwYzuY3qZdFnCuN3d388w==", Constants.secretKey));
-        };
-    }
     // ADMIN ADD DATA
 //    @Bean
     CommandLineRunner run(CommonService seatService) {
