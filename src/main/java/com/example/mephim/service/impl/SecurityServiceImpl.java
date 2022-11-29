@@ -11,7 +11,6 @@ import com.example.mephim.template.mail.ConfirmMailTemplate;
 import com.example.mephim.ultils.AESCrypt;
 import com.example.mephim.ultils.MailSender;
 import com.example.mephim.ultils.RandomString;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
