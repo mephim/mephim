@@ -80,6 +80,11 @@ public class MovieServiceImpl implements MovieService {
     }
 
     @Override
+    public List<Movie> getMovieByTheater(Integer theaterId) {
+        return movieRepo.findMovieByTheaterId(theaterId);
+    }
+
+    @Override
     public List<Movie> getMovieByShowDate(Integer showDateId) {
         return movieRepo.getMovieByShowDate(showDateId);
     }

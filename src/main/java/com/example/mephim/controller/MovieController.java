@@ -46,6 +46,24 @@ public class MovieController {
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
     }
 
+    @GetMapping(value = "/find-movie-by-theater")
+    public ResponseEntity<?> findMovie(@RequestParam Integer theaterId) {
+        List<Movie> movieList = movieService.getMovieByShowDate(theaterId);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        JSONObject dataResponseJson=new JSONObject();
+        dataResponseJson.put("movieId", movieList);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/find-show-date-by-movie")
+    public ResponseEntity<?> findShowDate(@RequestParam Integer movieId) {
+        List<ShowDate> showDateList = showDateService.findShowDateByMovieId(movieId);
+        if(showDateList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        JSONObject dataResponseJson=new JSONObject();
+        dataResponseJson.put("showDateList", showDateList);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+    }
+
     @GetMapping(value = "/find-movie-by-show-date")
     public ResponseEntity<?> addMovie(@RequestParam Integer showDateId) {
         List<Movie> movieList = movieService.getMovieByShowDate(showDateId);
