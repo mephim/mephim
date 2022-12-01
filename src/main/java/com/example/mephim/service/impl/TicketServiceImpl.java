@@ -7,11 +7,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service @Transactional
 public class TicketServiceImpl implements TicketService {
 
     @Autowired
     TicketRepo ticketRepo;
+
+    @Override
+    public List<Ticket> findAll() {
+        return ticketRepo.findAll();
+    }
 
     @Override
     public Ticket findById(Integer ticketId) {

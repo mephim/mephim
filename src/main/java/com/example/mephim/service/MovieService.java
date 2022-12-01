@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface MovieService {
     List<Movie> findAMovies();
+    List<Movie> findMovieHasTicket();
     void saveMovie(MovieCreateDto movie) throws Exception;
     void deleteMovie(Integer movieId);
     List<Movie> getMovieByTheater(Integer theaterId);

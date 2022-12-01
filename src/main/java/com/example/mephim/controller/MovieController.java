@@ -3,6 +3,7 @@ package com.example.mephim.controller;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.ShowDate;
 import com.example.mephim.entity.ShowTime;
+import com.example.mephim.entity.Ticket;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
@@ -11,6 +12,7 @@ import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.MovieService;
 import com.example.mephim.service.ShowDateService;
 import com.example.mephim.service.ShowTimeService;
+import com.example.mephim.service.TicketService;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,6 +31,10 @@ public class MovieController {
     ShowTimeService showTimeService;
     @Autowired
     ShowDateService showDateService;
+
+    @Autowired
+    TicketService ticketService;
+
     @GetMapping("/listMovie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
@@ -52,6 +58,15 @@ public class MovieController {
         if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieId", movieList);
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/find-movie-has-ticket")
+    public ResponseEntity<?> findAllTicket() {
+        List<Movie> movieList = movieService.findMovieHasTicket();
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        JSONObject dataResponseJson=new JSONObject();
+        dataResponseJson.put("movieList", movieList);
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
     }
 

@@ -15,7 +15,7 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
             "where show_date.show_date_id = ticket.ticket_id \n" +
             "and movie.movie_id = ticket.movie_id\n" +
             "and movie.movie_id = ?\n" +
-            "and ticket.ticket_id = 1", nativeQuery = true)
+            "and ticket.active = 1", nativeQuery = true)
     List<ShowDate> findShowDateByMovieId(Integer movieId);
     @Query(value = "select distinct show_date.* from show_date inner join ticket inner join movie inner join movie_theater\n" +
             "where show_date.show_date_id = ticket.show_date_id\n" +

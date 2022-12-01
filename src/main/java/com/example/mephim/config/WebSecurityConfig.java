@@ -39,14 +39,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
-        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
-        http.csrf().disable();
-//        http.authorizeRequests().antMatchers("/api/movie/**").permitAll();
-//        http.authorizeRequests().antMatchers("/api/movie/**").hasRole("ADMIN");
-        http.authorizeRequests().antMatchers("/api/login").permitAll();
-        http.authorizeRequests().anyRequest().permitAll();
-        http.addFilter(customAuthenticationFilter);
-        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
+//        CustomAuthenticationFilter customAuthenticationFilter = new CustomAuthenticationFilter(authenticationManagerBean());
+//        customAuthenticationFilter.setFilterProcessesUrl("/api/login");
+//        http.csrf().disable();
+////        http.authorizeRequests().antMatchers("/api/movie/**").permitAll();
+////        http.authorizeRequests().antMatchers("/api/movie/**").hasRole("ADMIN");
+//        http.authorizeRequests().antMatchers("/api/login").permitAll();
+//        http.authorizeRequests().anyRequest().permitAll();
+//        http.addFilter(customAuthenticationFilter);
+//        http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
 }

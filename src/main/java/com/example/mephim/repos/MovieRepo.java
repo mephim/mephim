@@ -11,6 +11,8 @@ import java.util.List;
 public interface MovieRepo extends JpaRepository<Movie, Integer> {
 //    @Query(value="select movie_id, movie_description, movie_length, movie_name, movie_poster, movie_trailer_url from movie",nativeQuery = true)
     List<Movie> findAll();
+    @Query(value = "select distinct movie.* from movie inner join ticket where movie.movie_id = ticket.movie_id and ticket.active = 1;", nativeQuery = true)
+    List<Movie> findMovieHasTicket();
 //    void saveMovie(Movie movie);
     @Query(value="select distinct movie.* from movie inner join ticket inner join show_date\n" +
             "where movie.movie_id = ticket.movie_id\n" +

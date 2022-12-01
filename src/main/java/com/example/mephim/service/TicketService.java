@@ -3,7 +3,10 @@ package com.example.mephim.service;
 import com.example.mephim.entity.Ticket;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface TicketService {
+    List<Ticket> findAll();
     Ticket findById(Integer ticketId);
     Ticket findTicketByMovie(Integer movieId);
     Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId);

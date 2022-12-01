@@ -32,6 +32,11 @@ public class MovieServiceImpl implements MovieService {
         return movieRepo.findAll();
     }
 
+    @Override
+    public List<Movie> findMovieHasTicket() {
+        return movieRepo.findMovieHasTicket();
+    }
+
     boolean isExitsCategoriesId(List<Integer> idList) {
         List<Integer> listIdNotExist = idList.stream().filter((id -> commonService.findCategoryById(id) == null))
                 .collect(Collectors.toList());
