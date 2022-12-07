@@ -12,7 +12,7 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
     @Query(value = "select show_date.* from show_date \n" +
             "inner join ticket \n" +
             "inner join movie \n" +
-            "where show_date.show_date_id = ticket.ticket_id \n" +
+            "where show_date.show_date_id = ticket.show_date_id \n" +
             "and movie.movie_id = ticket.movie_id\n" +
             "and movie.movie_id = ?\n" +
             "and ticket.active = 1", nativeQuery = true)

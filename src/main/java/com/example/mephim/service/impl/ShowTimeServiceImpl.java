@@ -36,7 +36,7 @@ public class ShowTimeServiceImpl implements ShowTimeService {
 
         showTimes.forEach(showTime -> {
             ShowTimeRes res = new ShowTimeRes();
-            res.setShowDateId(showDateService.findShowDateById(showDateId));
+            res.setShowDate(showDateService.findShowDateById(showDateId));
             res.setShowTime(showTime);
 
             Ticket ticket = ticketService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId,showDateId,showTime.getShowTimeId());

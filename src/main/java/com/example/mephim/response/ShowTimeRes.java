@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 public class ShowTimeRes {
-    private ShowDate showDateId;
+    private ShowDate showDate;
     private ShowTime showTime;
     private TicketRes ticket;
     private Room room;
