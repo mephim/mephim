@@ -1,14 +1,18 @@
 package com.example.mephim.response;
 import lombok.Data;
+import lombok.experimental.SuperBuilder;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import static java.time.LocalDateTime.now;
+
 @Data
+@SuperBuilder
 public class CustomResponse<T> {
     private String status;
-    private String serverTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date());
+    private String serverTime = now().toString();
     private T data;
     public CustomResponse(String status) {
         this.status = status;

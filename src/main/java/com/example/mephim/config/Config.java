@@ -18,7 +18,6 @@ public class Config {
     public static final String vnp_Command  = "pay";
     public static final String vnp_CurrCode  = "VND";
     public static final String vnp_BankCode  = "NCB";
-    public static final String vnp_OrderInfo = "Thanh toan tien mua ve xem phim";
     public static final String vnp_OrderType  = "250000"; // thanh toán hoá đơn
     public static final String vnp_ReturnUrl  = "https://google.com";
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";

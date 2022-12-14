@@ -32,4 +32,8 @@ public class User {
     @OneToMany(mappedBy = "bookingId")
     @JsonIgnore
     private List<Booking> bookings;
+
+    @OneToMany(mappedBy = "transactionId")
+    @JsonIgnore
+    private List<Transaction> transactions;
 }
