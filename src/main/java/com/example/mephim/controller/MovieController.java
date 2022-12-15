@@ -8,6 +8,7 @@ import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
+import com.example.mephim.response.ShowResponse;
 import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.MovieService;
 import com.example.mephim.service.ShowDateService;
@@ -92,6 +93,12 @@ public class MovieController {
     public ResponseEntity<?> findShowTimeByShowDate() {
         List<ShowDate> showDateList = showDateService.findAll();
         return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showDateList), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/admin/find-all-show")
+    public ResponseEntity<?> adminFindAllShow() {
+        List<?> showResponses = showDateService.adminFindAllShow();
+        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showResponses), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-show-date-by-theater")

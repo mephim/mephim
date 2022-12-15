@@ -1,7 +1,9 @@
 package com.example.mephim.service.impl;
 
 import com.example.mephim.entity.ShowDate;
+import com.example.mephim.entity.ShowTime;
 import com.example.mephim.repos.ShowDateRepo;
+import com.example.mephim.response.ShowResponse;
 import com.example.mephim.service.ShowDateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,6 +29,11 @@ public class ShowDateServiceImpl implements ShowDateService {
     @Override
     public List<ShowDate> findShowDateByMovieId(Integer movieId) {
         return showDateRepo.findShowDateByMovieId(movieId);
+    }
+
+    @Override
+    public List<ShowTime> adminFindAllShow() {
+        return showDateRepo.adminFindAllShow();
     }
 
     @Override

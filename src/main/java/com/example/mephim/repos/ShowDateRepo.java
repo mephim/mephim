@@ -1,6 +1,8 @@
 package com.example.mephim.repos;
 
 import com.example.mephim.entity.ShowDate;
+import com.example.mephim.entity.ShowTime;
+import com.example.mephim.response.ShowResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -24,4 +26,10 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
             "and ticket.active = 1\n" +
             "and movie_theater.theater_id = ?;", nativeQuery = true)
     List<ShowDate> findShowDateByTheaterId(Integer theaterId);
+
+    @Query(value = "select show_date.date, show_time.time, movie.movie_length, movie.movie_name from show_date inner join show_time inner join movie inner join ticket\n" +
+            "where show_date.show_date_id = ticket.show_date_id\n" +
+            "and show_time.show_time_id = ticket.show_time_id\n" +
+            "and movie.movie_id = ticket.movie_id", nativeQuery = true)
+    List<ShowTime> adminFindAllShow();
 }
