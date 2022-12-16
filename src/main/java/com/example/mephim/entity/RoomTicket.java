@@ -26,5 +26,5 @@ public class RoomTicket {
 
     @ManyToOne
     @JoinColumn(name="ticket_id")
-    private Ticket actor;
+    private Ticket ticket;
 }

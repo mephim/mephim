@@ -9,6 +9,8 @@ public interface ShowResponse {
     String getTime();
     @Value("#{target.movie_length}")
     Integer getMovieLength();
+    @Value("#{target.room_name}")
+    String getRoomName();
     @Value("#{target.movie_name}")
     String getMovieName();
 }
