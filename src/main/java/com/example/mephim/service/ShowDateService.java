@@ -10,6 +10,6 @@ public interface ShowDateService {
     List<ShowDate> findAll();
     List<ShowDate> findShowDateByTheaterId(Integer theaterId);
     List<ShowDate> findShowDateByMovieId(Integer movieId);
-    List<ShowTime> adminFindAllShow();
+    List<ShowResponse> adminFindAllShow();
     ShowDate findShowDateById(Integer showDateId);
 }

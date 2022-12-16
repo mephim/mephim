@@ -32,7 +32,7 @@ public class ShowDateServiceImpl implements ShowDateService {
     }
 
     @Override
-    public List<ShowTime> adminFindAllShow() {
+    public List<ShowResponse> adminFindAllShow() {
         return showDateRepo.adminFindAllShow();
     }
 
