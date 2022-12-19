@@ -39,9 +39,8 @@ public interface TicketRepo extends JpaRepository<Ticket, Integer> {
             "and ticket.movie_id = movie.movie_id\n" +
             "and room_ticket.ticket_id = ticket.ticket_id\n" +
             "and room_ticket.room_id = room.room_id\n" +
-            "and room.room_id = 3\n" +
-            "having (time_start Between '2022-12-18 08:00' AND '2022-12-18 09:54'\n" +
-            "or time_end Between '2022-12-18 08:00' AND '2022-12-18 09:54');", nativeQuery = true)
+            "having (time_start Between ?1 AND ?2\n" +
+            "or time_end Between ?1 AND ?2);", nativeQuery = true)
     // Param timeStart and timeEnd must format like `2022-12-18 08:00`
     List<ShowExistResponse> findListShowExistByRoomAndTime(String timeStart, String timeEnd);
 }

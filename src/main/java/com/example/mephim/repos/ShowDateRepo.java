@@ -1,7 +1,6 @@
 package com.example.mephim.repos;
 
 import com.example.mephim.entity.ShowDate;
-import com.example.mephim.entity.ShowTime;
 import com.example.mephim.response.ShowResponse;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,6 +10,10 @@ import java.util.List;
 
 @Repository
 public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
+
+    // Default JPA queries
+    ShowDate findByShowDateId(Integer showDateId);
+
     @Query(value = "select show_date.* from show_date \n" +
             "inner join ticket \n" +
             "inner join movie \n" +

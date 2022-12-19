@@ -9,7 +9,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.TimeZone;
 
 @SpringBootApplication
 public class MephimApplication {
@@ -21,6 +24,17 @@ public class MephimApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(MephimApplication.class, args);
+    }
+
+    @Bean
+    CommandLineRunner run() {
+        return args -> {
+            SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            Calendar cld = Calendar.getInstance(TimeZone.getTimeZone("Etc/GMT+7"));
+            cld.setTime(sf.parse("2022-12-19 07:00"));
+            cld.add(Calendar.MINUTE, 120);
+            System.out.println(cld);
+        };
     }
 
     // ADMIN ADD DATA
@@ -63,17 +77,17 @@ public class MephimApplication {
                 seatService.initialTheaterGroup(new TheaterGroup(item));
             });
 
-            for(int i=1; i<=10; i++) {
-                for(int j=1; j<=10; j++) {
-                    seatService.initialSeat(i,j);
+            for (int i = 1; i <= 10; i++) {
+                for (int j = 1; j <= 10; j++) {
+                    seatService.initialSeat(i, j);
                 }
             }
 
             // length of roomList = 5
-            for(int i=1; i<=5; i++) {
-                for(int j=1; j<=100; j++){
-                    if(j>=90) seatService.initialRoomSeat(i,j,2);
-                    else seatService.initialRoomSeat(i,j,1);
+            for (int i = 1; i <= 5; i++) {
+                for (int j = 1; j <= 100; j++) {
+                    if (j >= 90) seatService.initialRoomSeat(i, j, 2);
+                    else seatService.initialRoomSeat(i, j, 1);
                 }
             }
         };

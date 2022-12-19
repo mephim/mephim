@@ -1,8 +1,9 @@
 package com.example.mephim.service;
 
 import com.example.mephim.entity.Ticket;
-import com.example.mephim.response.ShowExistResponse;
-import org.springframework.data.jpa.repository.Query;
+import com.example.mephim.exception.ShowConflictBySameMovieInTimeException;
+import com.example.mephim.exception.ShowConflictBySameRoomException;
+import com.example.mephim.request.TicketCreateDto;
 
 import java.util.List;
 
@@ -12,6 +13,5 @@ public interface TicketService {
     Ticket findTicketByMovie(Integer movieId);
     Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId);
     Ticket findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId, Integer showTimeId);
-    List<ShowExistResponse> findListShowExistByRoomAndTime(Integer roomId, String timeStart, String timeEnd);
-
+    Ticket save(TicketCreateDto ticketCreateDto) throws ShowConflictBySameMovieInTimeException, ShowConflictBySameRoomException;
 }

@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface MovieRepo extends JpaRepository<Movie, Integer> {
+
+    Movie findMovieByMovieId(Integer movieId);
+
 //    @Query(value="select movie_id, movie_description, movie_length, movie_name, movie_poster, movie_trailer_url from movie",nativeQuery = true)
     List<Movie> findAll();
     @Query(value = "select distinct movie.* from movie inner join ticket where movie.movie_id = ticket.movie_id and ticket.active = 1;", nativeQuery = true)

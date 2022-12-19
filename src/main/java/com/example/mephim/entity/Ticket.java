@@ -44,6 +44,14 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
+    public Ticket(Integer ticketId, Long ticketPrice, Movie movie, ShowDate showDate, ShowTime showTime) {
+        this.ticketId = ticketId;
+        this.ticketPrice = ticketPrice;
+        this.movie = movie;
+        this.showDate = showDate;
+        this.showTime = showTime;
+    }
+
     public Ticket(Integer ticketId, Long ticketPrice, Movie movie){
         this.ticketId = ticketId;
         this.ticketPrice = ticketPrice;

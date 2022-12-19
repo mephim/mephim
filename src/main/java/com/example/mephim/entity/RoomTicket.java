@@ -27,4 +27,9 @@ public class RoomTicket {
     @ManyToOne
     @JoinColumn(name="ticket_id")
     private Ticket ticket;
+
+    public RoomTicket(Room room, Ticket ticket) {
+        this.room = room;
+        this.ticket = ticket;
+    }
 }
