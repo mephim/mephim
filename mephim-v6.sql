@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 8.0.26, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 8.0.29, for Win64 (x86_64)
 --
--- Host: localhost    Database: mephim
+-- Host: localhost    Database: mephim_v6
 -- ------------------------------------------------------
--- Server version	8.0.26
+-- Server version	8.0.29
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -421,7 +421,7 @@ CREATE TABLE `room_ticket` (
   KEY `FKgcod7f4j2rhvmy755dsfriprn` (`room_id`),
   CONSTRAINT `FKgcod7f4j2rhvmy755dsfriprn` FOREIGN KEY (`room_id`) REFERENCES `room` (`room_id`),
   CONSTRAINT `FKnhuqgolkqsja9rqm0tgco5qwn` FOREIGN KEY (`ticket_id`) REFERENCES `ticket` (`ticket_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -430,7 +430,7 @@ CREATE TABLE `room_ticket` (
 
 LOCK TABLES `room_ticket` WRITE;
 /*!40000 ALTER TABLE `room_ticket` DISABLE KEYS */;
-INSERT INTO `room_ticket` VALUES (1,1,1),(2,2,5),(3,3,4),(4,4,3),(5,5,2),(6,8,3),(7,9,5),(8,10,3),(10,12,3),(11,13,5),(12,14,2),(13,15,1),(14,16,3),(15,6,1);
+INSERT INTO `room_ticket` VALUES (1,1,1),(2,2,5),(3,3,4),(4,4,3),(5,5,2),(6,8,3),(7,9,5),(8,10,3),(10,12,3),(11,13,5),(12,14,2),(13,15,1),(14,16,3),(15,6,1),(16,17,1),(23,24,1);
 /*!40000 ALTER TABLE `room_ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -555,7 +555,7 @@ CREATE TABLE `show_date` (
 
 LOCK TABLES `show_date` WRITE;
 /*!40000 ALTER TABLE `show_date` DISABLE KEYS */;
-INSERT INTO `show_date` VALUES (1,'2022-12-17'),(2,'2022-12-18'),(3,'2022-12-19'),(4,'2022-12-20'),(5,'2022-12-21'),(6,'2022-12-22'),(7,'2022-12-23'),(8,'2022-12-24');
+INSERT INTO `show_date` VALUES (1,'2022-12-20'),(2,'2022-12-21'),(3,'2022-12-22'),(4,'2022-12-23'),(5,'2022-12-24'),(6,'2022-12-25'),(7,'2022-12-26'),(8,'2022-12-27');
 /*!40000 ALTER TABLE `show_date` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -579,7 +579,7 @@ CREATE TABLE `show_time` (
 
 LOCK TABLES `show_time` WRITE;
 /*!40000 ALTER TABLE `show_time` DISABLE KEYS */;
-INSERT INTO `show_time` VALUES (1,'7:00'),(2,'8:00'),(3,'9:00'),(4,'10:00'),(5,'11:00'),(6,'12:00'),(7,'13:00'),(8,'14:00'),(9,'15:00'),(10,'16:00'),(11,'17:00'),(12,'18:00'),(13,'19:00'),(14,'20:00'),(15,'21:00'),(16,'22:00');
+INSERT INTO `show_time` VALUES (1,'07:00'),(2,'08:00'),(3,'09:00'),(4,'10:00'),(5,'11:00'),(6,'12:00'),(7,'13:00'),(8,'14:00'),(9,'15:00'),(10,'16:00'),(11,'17:00'),(12,'18:00'),(13,'19:00'),(14,'20:00'),(15,'21:00'),(16,'22:00');
 /*!40000 ALTER TABLE `show_time` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -657,7 +657,7 @@ CREATE TABLE `ticket` (
   CONSTRAINT `FK76th994c74fm9ohowlu53yfpx` FOREIGN KEY (`movie_id`) REFERENCES `movie` (`movie_id`),
   CONSTRAINT `FKmqtp9rsodoshkl8tsnn4mkfns` FOREIGN KEY (`show_date_id`) REFERENCES `show_date` (`show_date_id`),
   CONSTRAINT `FKsbhsari8771yntnvt3x9aws8b` FOREIGN KEY (`show_time_id`) REFERENCES `show_time` (`show_time_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -666,7 +666,7 @@ CREATE TABLE `ticket` (
 
 LOCK TABLES `ticket` WRITE;
 /*!40000 ALTER TABLE `ticket` DISABLE KEYS */;
-INSERT INTO `ticket` VALUES (1,65000,1,1,12,_binary ''),(2,55000,1,5,9,_binary ''),(3,50000,1,5,3,_binary ''),(4,40000,2,1,7,_binary ''),(5,33000,1,2,5,_binary ''),(6,60000,3,2,2,_binary ''),(7,30000,3,4,1,_binary ''),(8,30000,4,4,5,_binary ''),(9,40000,4,1,2,_binary ''),(10,30000,4,1,5,_binary ''),(12,60000,4,2,1,_binary ''),(13,70000,4,2,11,_binary ''),(14,34000,4,3,7,_binary ''),(15,53433,4,3,4,_binary ''),(16,66666,4,3,1,_binary '');
+INSERT INTO `ticket` VALUES (1,65000,1,1,12,_binary ''),(2,55000,1,5,9,_binary ''),(3,50000,1,5,3,_binary ''),(4,40000,2,1,7,_binary ''),(5,33000,1,2,5,_binary ''),(6,60000,3,2,2,_binary ''),(7,30000,3,4,1,_binary ''),(8,30000,4,4,5,_binary ''),(9,40000,4,1,2,_binary ''),(10,30000,4,1,5,_binary ''),(12,60000,4,2,1,_binary ''),(13,70000,4,2,11,_binary ''),(14,34000,4,3,7,_binary ''),(15,53433,4,3,4,_binary ''),(16,66666,4,3,1,_binary ''),(17,60000,1,1,1,_binary ''),(24,60000,1,1,3,_binary '');
 /*!40000 ALTER TABLE `ticket` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -737,4 +737,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-12-19  9:41:56
+-- Dump completed on 2022-12-19 17:29:22
