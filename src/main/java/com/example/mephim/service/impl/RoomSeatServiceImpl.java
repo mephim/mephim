@@ -30,32 +30,6 @@ public class RoomSeatServiceImpl implements RoomSeatService {
 
     @Override
     public List<RoomSeatRes> findRoomSeatByShowDateAndShowTimeTicket(Integer showDateId, Integer showTimeId, Integer ticketId) {
-        List<RoomSeat> roomSeatListIsEmpty = roomSeatRepo.findRoomSeatIsEmptyByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
-        List<RoomSeat> roomSeatListIsBooking = roomSeatRepo.findRoomSeatIsBookingByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
-
-        List<RoomSeatRes> roomSeatRes = new ArrayList<>();
-        roomSeatListIsEmpty.forEach(roomSeat -> {
-            RoomSeatRes res = new RoomSeatRes();
-            res.setRoomSeatId(roomSeat.getRoomSeatId());
-            res.setSeatName(roomSeat.getSeat().getSeatColumn().getColumnName() + roomSeat.getSeat().getSeatRow().getRowName());
-            res.setSeatType(roomSeat.getSeatType().getSeatTypeName());
-            res.setIsBooking(false);
-            roomSeatRes.add(res);
-        });
-
-        roomSeatListIsBooking.forEach(roomSeat -> {
-            RoomSeatRes res = new RoomSeatRes();
-            res.setRoomSeatId(roomSeat.getRoomSeatId());
-            res.setSeatName(roomSeat.getSeat().getSeatColumn().getColumnName() + roomSeat.getSeat().getSeatRow().getRowName());
-            res.setSeatType(roomSeat.getSeatType().getSeatTypeName());
-            res.setIsBooking(true);
-            roomSeatRes.add(res);
-        });
-
-
-        Collections.sort(roomSeatRes);
-
-
-        return roomSeatRes;
+        return roomSeatRepo.findRoomSeatByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
     }
 }

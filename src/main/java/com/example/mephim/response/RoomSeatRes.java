@@ -1,16 +1,15 @@
 package com.example.mephim.response;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 
-@Data
-public class RoomSeatRes implements Comparable<RoomSeatRes> {
-    private Integer roomSeatId;
-    private String seatName;
-    private String seatType;
-    private Boolean isBooking;
-
-    @Override
-    public int compareTo(RoomSeatRes o) {
-        return this.roomSeatId - o.getRoomSeatId();
-    }
+public interface RoomSeatRes {
+    @Value("#{target.room_seat_id}")
+    Integer getRoomSeatId();
+    @Value("#{target.seat_name}")
+    String getSeatName();
+    @Value("#{target.seat_type}")
+    String getSeatType();
+    @Value("#{target.is_booking}")
+    Integer getIsBooking();
 }
