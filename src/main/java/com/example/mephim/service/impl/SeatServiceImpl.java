@@ -13,7 +13,12 @@ public class SeatServiceImpl implements SeatService {
     @Autowired
     SeatRepo seatRepo;
     @Override
-    public void addSeat(Seat seat) {
+    public void save(Seat seat) {
         seatRepo.save(seat);
+    }
+
+    @Override
+    public Seat findSeatByTicketIdAndSeatId(Integer ticketId, Integer seatId) {
+        return seatRepo.findSeatByTicketIdAndSeatId(ticketId, seatId);
     }
 }

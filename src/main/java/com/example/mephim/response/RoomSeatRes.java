@@ -4,7 +4,7 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Value;
 
 public interface RoomSeatRes {
-    @Value("#{target.room_seat_id}")
+    @Value("#{target.seat_id}")
     Integer getRoomSeatId();
     @Value("#{target.seat_name}")
     String getSeatName();

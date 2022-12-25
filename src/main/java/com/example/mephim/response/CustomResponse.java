@@ -19,6 +19,11 @@ public class CustomResponse<T> {
         this.status = status;
     }
 
+    public CustomResponse(Integer code, T data) {
+        this.code = code;
+        this.data = data;
+    }
+
     public CustomResponse(String status, T data) {
         this.status = status;
         this.data = data;

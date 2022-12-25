@@ -29,9 +29,17 @@ public class Seat {
     @JoinColumn(name = "seatColumnId")
     private SeatColumn seatColumn;
 
-    @OneToMany(mappedBy = "roomSeatId")
+    @ManyToOne
+    @JoinColumn(name = "seatTypeId")
+    private SeatType seatType;
+
+    @ManyToOne
+    @JoinColumn(name="room_id")
+    private Room room;
+
+    @OneToMany(mappedBy = "bookingId")
     @JsonIgnore
-    private List<RoomSeat> roomSeatList;
+    private List<Booking> bookingList;
 
     public Seat(Integer seatId) {
         this.seatId = seatId;
@@ -40,5 +48,12 @@ public class Seat {
     public Seat(SeatRow seatRow, SeatColumn seatColumn) {
         this.seatRow = seatRow;
         this.seatColumn = seatColumn;
+    }
+
+    public Seat(Room room, SeatColumn seatColumn, SeatRow seatRow, SeatType seatType) {
+        this.seatRow = seatRow;
+        this.seatColumn = seatColumn;
+        this.seatType = seatType;
+        this.room = room;
     }
 }

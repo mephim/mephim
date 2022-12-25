@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface BookingRepo extends JpaRepository<Booking, Integer> {
-    @Query(value = "select booking.* from booking inner join ticket where booking.ticket_id = ticket.ticket_id and booking.room_seat_id = ? and booking.ticket_id = ?;", nativeQuery = true)
+    @Query(value = "select booking.* from booking inner join ticket where booking.ticket_id = ticket.ticket_id and booking.seat_id = ? and booking.ticket_id = ?;", nativeQuery = true)
     Booking findBookingByRoomSeatAndTicket(Integer roomSeatId, Integer ticketId);
 }

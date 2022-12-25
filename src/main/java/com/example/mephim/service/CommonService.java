@@ -14,7 +14,7 @@ public interface CommonService {
     void initialActor(Actor actor);
     void initialRoom(Room room);
     void initialTheaterGroup(TheaterGroup theaterGroup);
-    void initialSeat(Integer seatColumnId, Integer seatRowId);
+    void initialSeat(Integer roomId, Integer seatColumnId, Integer seatRowId);
     void initialRoomSeat(Integer roomId, Integer seatId, Integer seatTypeId);
 
     ShowDate findShowDateById(Integer id);

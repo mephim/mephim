@@ -21,10 +21,12 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer roomId;
     private String roomName;
+    private Integer totalRow;
+    private Integer totalColumn;
 
-    @OneToMany(mappedBy = "roomSeatId")
+    @OneToMany(mappedBy = "seatId")
     @JsonIgnore
-    private List<RoomSeat> roomSeatList;
+    private List<Seat> seatList;
 
     public Room(Integer roomId) {
         this.roomId = roomId;

@@ -1,6 +1,7 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.constants.ERROR_CODE;
 import com.example.mephim.entity.Booking;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.exception.SeatIsBookedException;
@@ -28,10 +29,10 @@ public class BookingController {
         try {
             bookingSaved = bookingService.saveBooking(bookingDto);
         } catch (InvalidParamException | SeatIsBookedException e) {
-            return new ResponseEntity<>(new CustomResponse<Booking>(e.getMessage()), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new CustomResponse<>(ERROR_CODE.CONFLICT_ROOM,e.getMessage()), HttpStatus.EXPECTATION_FAILED);
         }
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("bookingId", bookingSaved);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS, dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(200,Constants.RESPONSE_STATUS_SUCCESS, dataResponseJson), HttpStatus.CREATED);
     }
 }

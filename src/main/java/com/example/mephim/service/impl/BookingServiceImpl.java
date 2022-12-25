@@ -27,8 +27,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     UserService userService;
 
-    @Autowired
-    RoomSeatService roomSeatService;
+//    @Autowired
+//    RoomSeatService roomSeatService;
 
     @Autowired
     TicketService ticketService;
@@ -45,14 +45,14 @@ public class BookingServiceImpl implements BookingService {
 
     @Override
     public Integer saveBooking(BookingDto bookingDto) throws InvalidParamException, SeatIsBookedException {
-        Booking bookedBySeat = findBookingByRoomSeatAndTicket(bookingDto.getRoomSeatId(), bookingDto.getTicketId());
+        Booking bookedBySeat = findBookingByRoomSeatAndTicket(bookingDto.getSeatId(), bookingDto.getTicketId());
         if(bookedBySeat != null) throw new SeatIsBookedException();
 
         User user = userService.findByUsername(bookingDto.getUser());
         if(user == null) throw new InvalidParamException();
 
-        RoomSeat roomSeat = roomSeatService.findById(bookingDto.getRoomSeatId());
-        if(roomSeat == null) throw new InvalidParamException();
+        Seat seat = seatService.findSeatByTicketIdAndSeatId(bookingDto.getTicketId(), bookingDto.getSeatId());
+        if(seat == null) throw new InvalidParamException();
 
         Ticket ticket = ticketService.findById(bookingDto.getTicketId());
         if(ticket == null) throw new InvalidParamException();
@@ -60,7 +60,7 @@ public class BookingServiceImpl implements BookingService {
 
         Booking booking = new Booking();
         booking.setUser(user);
-        booking.setRoomSeat(roomSeat);
+        booking.setSeat(seat);
         booking.setTicket(ticket);
         booking.setBookingStatus(new BookingStatus(1));
         booking.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));

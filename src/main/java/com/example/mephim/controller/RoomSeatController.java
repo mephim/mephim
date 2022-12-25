@@ -3,7 +3,7 @@ package com.example.mephim.controller;
 import com.example.mephim.entity.Room;
 import com.example.mephim.repos.RoomRepo;
 import com.example.mephim.response.RoomSeatRes;
-import com.example.mephim.service.RoomSeatService;
+//import com.example.mephim.service.RoomSeatService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,22 +16,22 @@ import java.util.List;
 @CrossOrigin("*")
 public class RoomSeatController{
 
-    @Autowired
-    RoomSeatService roomSeatService;
+//    @Autowired
+//    RoomSeatService roomSeatService;
 
     @Autowired
     RoomRepo roomRepo;
 
-    @GetMapping("/find")
-    public ResponseEntity<?> addBooking(@RequestParam(name = "showDateId") Integer showDateId,
-                                        @RequestParam(name = "showTimeId") Integer showTimeId,
-                                        @RequestParam(name = "ticketId") Integer ticketId) {
-
-        List<RoomSeatRes> roomSeat = roomSeatService.findRoomSeatByShowDateAndShowTimeTicket(showDateId,showTimeId,ticketId);
-
-        return new ResponseEntity<>(roomSeat,HttpStatus.OK);
-
-    }
+//    @GetMapping("/find")
+//    public ResponseEntity<?> addBooking(@RequestParam(name = "showDateId") Integer showDateId,
+//                                        @RequestParam(name = "showTimeId") Integer showTimeId,
+//                                        @RequestParam(name = "ticketId") Integer ticketId) {
+//
+//        List<RoomSeatRes> roomSeat = roomSeatService.findRoomSeatByShowDateAndShowTimeTicket(showDateId,showTimeId,ticketId);
+//
+//        return new ResponseEntity<>(roomSeat,HttpStatus.OK);
+//
+//    }
 
 
     @PostMapping("/findAll")

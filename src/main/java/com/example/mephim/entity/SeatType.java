@@ -23,9 +23,9 @@ public class SeatType {
 
     private String seatTypeName;
 
-    @OneToMany(mappedBy = "roomSeatId")
+    @OneToMany(mappedBy = "seatId")
     @JsonIgnore
-    private List<RoomSeat> roomSeatList;
+    private List<Seat> seatList;
 
     public SeatType(Integer seatTypeId) {
         this.seatTypeId = seatTypeId;
