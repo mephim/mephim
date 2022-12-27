@@ -24,8 +24,8 @@ public class BookingServiceImpl implements BookingService {
     @Autowired
     SeatService seatService;
 
-    @Autowired
-    UserService userService;
+//    @Autowired
+//    UserService userService;
 
 //    @Autowired
 //    RoomSeatService roomSeatService;
@@ -48,8 +48,8 @@ public class BookingServiceImpl implements BookingService {
         Booking bookedBySeat = findBookingByRoomSeatAndTicket(bookingDto.getSeatId(), bookingDto.getTicketId());
         if(bookedBySeat != null) throw new SeatIsBookedException();
 
-        User user = userService.findByUsername(bookingDto.getUser());
-        if(user == null) throw new InvalidParamException();
+//        User user = userService.findByUsername(bookingDto.getUser());
+//        if(user == null) throw new InvalidParamException();
 
         Seat seat = seatService.findSeatByTicketIdAndSeatId(bookingDto.getTicketId(), bookingDto.getSeatId());
         if(seat == null) throw new InvalidParamException();
@@ -59,7 +59,7 @@ public class BookingServiceImpl implements BookingService {
 
 
         Booking booking = new Booking();
-        booking.setUser(user);
+//        booking.setUser(user);
         booking.setSeat(seat);
         booking.setTicket(ticket);
         booking.setBookingStatus(new BookingStatus(1));

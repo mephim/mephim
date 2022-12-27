@@ -20,19 +20,6 @@ public class Movie {
     private String movieTrailerUrl;
     private String moviePoster;
     private String movieDescription;
-
-//    @OneToMany(mappedBy = "movieCategoryId")
-//    @JsonManagedReference
-//    private List<MovieCategory> movieCategories;
-
-//    @OneToMany(mappedBy = "movieActorId")
-//    @JsonManagedReference
-//    private List<MovieActor> movieActors;
-
-//    @OneToMany(mappedBy = "movieTheaterId")
-//    @JsonManagedReference
-//    private List<MovieTheater> movieTheaters;
-
     public Movie(Integer movieId){
         this.movieId = movieId;
     }

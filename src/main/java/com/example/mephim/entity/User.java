@@ -1,33 +1,84 @@
 package com.example.mephim.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+import java.time.Instant;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(	name = "users",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = "username"),
+                @UniqueConstraint(columnNames = "email")
+        })
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer userId;
-    private Boolean userGender;
-    private String userPhone;
-    private String userMail;
-    private String userAddress;
+    private Long id;
+    @NotBlank
+    @Size(max = 20)
+    private String username;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "username", referencedColumnName = "username")
-    private Account account;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    private String email;
+
+    @NotBlank
+    @Size(max = 120)
+    private String password;
+
+//    @NotBlank
+    @Size(max = 9)
+    private String phone;
+
+    public User(String username, String email, String password, Instant registerDate) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.registerDate = registerDate;
+    }
+
+    public User(String username, String email, String password, Instant registerDate, String provider, Boolean isEnable) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.registerDate = registerDate;
+        this.provider = provider;
+        this.isEnable = isEnable;
+    }
+
+    @Column(nullable = false)
+    private Instant registerDate;
+
+    @Size(max = 500)
+    private String verificationCode;
+
+    @Size(max = 20)
+    private String provider;
+
+    @Column(name = "is_enable", columnDefinition = "bit(1)")
+    private Boolean isEnable;
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(	name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "bookingId")
     @JsonIgnore

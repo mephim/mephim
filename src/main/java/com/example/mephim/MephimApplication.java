@@ -18,11 +18,6 @@ import java.util.TimeZone;
 @SpringBootApplication
 public class MephimApplication {
 
-    @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
     public static void main(String[] args) {
         SpringApplication.run(MephimApplication.class, args);
     }
