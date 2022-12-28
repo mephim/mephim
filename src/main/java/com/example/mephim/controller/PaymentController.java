@@ -80,7 +80,7 @@ public class PaymentController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         if (req.getVnp_ResponseCode().equals("00")) {
-            return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS, "OK"), HttpStatus.OK);
+            return new ResponseEntity<>(new CustomResponse<>(23,"OK"), HttpStatus.OK);
         }
 
         return new ResponseEntity<>(HttpStatus.NOT_FOUND);

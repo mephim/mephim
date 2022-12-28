@@ -46,72 +46,72 @@ public class MovieController {
         try {
             movieService.saveMovie(movieCreateDto);
         } catch (InvalidParamException e) {
-            return new ResponseEntity<>(new CustomResponse<>(e.getMessage()), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new CustomResponse<>(-1,e.getMessage()), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new CustomResponse<>(-100,Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(18, ""), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-movie-by-theater")
     public ResponseEntity<?> findMovie(@RequestParam Integer theaterId) {
         List<Movie> movieList = movieService.getMovieByShowDate(theaterId);
-        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(10, "data is empty"), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieId", movieList);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(10,dataResponseJson), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-movie-has-ticket")
     public ResponseEntity<?> findAllTicket() {
         List<Movie> movieList = movieService.findMovieHasTicket();
-        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0,""), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieList", movieList);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(11,dataResponseJson), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-show-date-by-movie")
     public ResponseEntity<?> findShowDate(@RequestParam Integer movieId) {
         List<ShowDate> showDateList = showDateService.findShowDateByMovieId(movieId);
-        if(showDateList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        if(showDateList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0, "data is empty"), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("showDateList", showDateList);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(12, dataResponseJson), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-movie-by-show-date")
     public ResponseEntity<?> addMovie(@RequestParam Integer showDateId) {
         List<Movie> movieList = movieService.getMovieByShowDate(showDateId);
-        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
+        if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0, "data is empty"), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieId", movieList);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(13, dataResponseJson), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-all-show-date")
     public ResponseEntity<?> findShowTimeByShowDate() {
         List<ShowDate> showDateList = showDateService.findAll();
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showDateList), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(14,showDateList), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/admin/find-all-show")
     public ResponseEntity<?> adminFindAllShow() {
         List<?> showResponses = showDateService.adminFindAllShow();
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showResponses), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(15, showResponses), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-show-date-by-theater")
     public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer theaterId) {
         List<ShowDate> showDateList = showDateService.findShowDateByTheaterId(theaterId);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showDateList), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(16, showDateList), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-show-time-by-show-date")
     public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer movieId,
                                                     @RequestParam Integer showDateId) {
         List<ShowTimeRes> showTimeList = showTimeService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId, showDateId);
-        if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS), HttpStatus.OK);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,showTimeList), HttpStatus.CREATED);
+        if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0, "data is empty"), HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse<>(17 ,showTimeList), HttpStatus.CREATED);
     }
 }

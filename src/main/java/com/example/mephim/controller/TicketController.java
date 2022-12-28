@@ -30,15 +30,15 @@ public class TicketController {
         } catch (ShowConflictBySameMovieInTimeException  e) {
             JSONObject dataResponseJson=new JSONObject();
             dataResponseJson.put("conflictTicket", e.getData());
-            return new ResponseEntity<>(new CustomResponse<>(ERROR_CODE.CONFLICT_MOVIE ,e.getMessage(),dataResponseJson), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new CustomResponse<>(-21,dataResponseJson), HttpStatus.EXPECTATION_FAILED);
         } catch (ShowConflictBySameRoomException e) {
             JSONObject dataResponseJson=new JSONObject();
             dataResponseJson.put("conflictTicket", e.getData());
-            return new ResponseEntity<>(new CustomResponse<>(ERROR_CODE.CONFLICT_ROOM,e.getMessage(),dataResponseJson), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>(new CustomResponse<>(-22,dataResponseJson), HttpStatus.EXPECTATION_FAILED);
         }
 
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("ticket", result);
-        return new ResponseEntity<>(new CustomResponse<>(Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(25, dataResponseJson), HttpStatus.CREATED);
     }
 }

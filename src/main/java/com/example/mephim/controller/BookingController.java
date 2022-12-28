@@ -33,6 +33,6 @@ public class BookingController {
         }
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("bookingId", bookingSaved);
-        return new ResponseEntity<>(new CustomResponse<>(200,Constants.RESPONSE_STATUS_SUCCESS, dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(200, dataResponseJson), HttpStatus.CREATED);
     }
 }

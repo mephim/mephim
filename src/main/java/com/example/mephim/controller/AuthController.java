@@ -70,18 +70,22 @@ public class AuthController {
     RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
     return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(new CustomResponse<>(200, Constants.RESPONSE_STATUS_SUCCESS, new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
+            .body(new CustomResponse<>(200, new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
             userDetails.getUsername(), userDetails.getEmail(), roles)));
   }
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
     if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return new ResponseEntity<>(new CustomResponse<>(4, Constants.RESPONSE_STATUS_ERROR, "Error: Username is already taken!"), HttpStatus.CREATED);
+      return ResponseEntity
+              .status(HttpStatus.CREATED)
+              .body(new CustomResponse<>(4, "Error: Username is already taken!"));
     }
 
     if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return new ResponseEntity<>(new CustomResponse<>(5, Constants.RESPONSE_STATUS_ERROR, "Error: Email is already in use!"), HttpStatus.CREATED);
+      return ResponseEntity
+              .status(HttpStatus.CREATED)
+              .body(new CustomResponse<>(5, "Error: Email is already in use!"));
     }
 
     // Create new user's account
@@ -121,7 +125,9 @@ public class AuthController {
     user.setRoles(roles);
     userRepository.save(user);
 
-    return new ResponseEntity<>(new CustomResponse<>(200, Constants.RESPONSE_STATUS_SUCCESS, "User registered successfully!"), HttpStatus.CREATED);
+    return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(new CustomResponse<>(1, "User registered successfully!"));
   }
 
   @PostMapping("/refreshtoken")

@@ -38,7 +38,7 @@ public class RoomController {
             dataResponseJson.put("room", roomTicket.getRoom());
         }
         dataResponseJson.put("roomSeat", roomSeat);
-        return new ResponseEntity<>(new CustomResponse<>(0,Constants.RESPONSE_STATUS_SUCCESS,dataResponseJson), HttpStatus.CREATED);
+        return new ResponseEntity<>(new CustomResponse<>(20,dataResponseJson), HttpStatus.CREATED);
     }
 
     @GetMapping("/find-room-struct")
