@@ -23,6 +23,6 @@ public class Constants {
 //    public static final String MY_PASSWORD = "terecdhuasteklgu";
     public static final String MY_EMAIL = "g00gle.suuport1@gmail.com";
     public static final String MY_PASSWORD = "kndwyqajcldtjocj";
-    public static final String VERIFY_MAIL = "PLEASE VERIFY MAIL";
+    public static final String VERIFY_MAIL = "PLEASE VERIFY ACCOUNT";
     public static final String secretKey = "123abc";
 }

@@ -1,7 +1,10 @@
 package com.example.mephim.controller;
+
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.*;
+import com.example.mephim.exception.EmailDuplicateException;
 import com.example.mephim.exception.TokenRefreshException;
+import com.example.mephim.exception.UsernameDuplicateException;
 import com.example.mephim.payload.request.LoginRequest;
 import com.example.mephim.payload.request.SignupRequest;
 import com.example.mephim.payload.request.TokenRefreshRequest;
@@ -14,6 +17,7 @@ import com.example.mephim.response.CustomResponse;
 import com.example.mephim.security.jwt.JwtUtils;
 import com.example.mephim.security.services.RefreshTokenService;
 import com.example.mephim.security.services.UserDetailsImpl;
+import com.example.mephim.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -34,124 +38,91 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
-  @Autowired
-  AuthenticationManager authenticationManager;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
-  @Autowired
-  UserRepository userRepository;
+    @Autowired
+    UserRepository userRepository;
 
-  @Autowired
-  RoleRepository roleRepository;
+    @Autowired
+    UserService userService;
 
-  @Autowired
-  PasswordEncoder encoder;
+    @Autowired
+    RoleRepository roleRepository;
 
-  @Autowired
-  JwtUtils jwtUtils;
+    @Autowired
+    PasswordEncoder encoder;
 
-  @Autowired
-  RefreshTokenService refreshTokenService;
+    @Autowired
+    JwtUtils jwtUtils;
 
-  @PostMapping("/signin")
-  public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
+    @Autowired
+    RefreshTokenService refreshTokenService;
 
-    Authentication authentication = authenticationManager
-        .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    @PostMapping("/signin")
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
 
-    SecurityContextHolder.getContext().setAuthentication(authentication);
+        Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
-    UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+        SecurityContextHolder.getContext().setAuthentication(authentication);
 
-    String jwt = jwtUtils.generateJwtToken(userDetails);
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
-    List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
-        .collect(Collectors.toList());
+        String jwt = jwtUtils.generateJwtToken(userDetails);
 
-    RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
-    return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(new CustomResponse<>(200, new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-            userDetails.getUsername(), userDetails.getEmail(), roles)));
-  }
+        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+                .collect(Collectors.toList());
 
-  @PostMapping("/signup")
-  public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
-      return ResponseEntity
-              .status(HttpStatus.CREATED)
-              .body(new CustomResponse<>(4, "Error: Username is already taken!"));
+        RefreshToken refreshToken = refreshTokenService.createRefreshToken(userDetails.getId());
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new CustomResponse<>(200, new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
+                        userDetails.getUsername(), userDetails.getEmail(), roles)));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
-      return ResponseEntity
-              .status(HttpStatus.CREATED)
-              .body(new CustomResponse<>(5, "Error: Email is already in use!"));
-    }
+    @PostMapping("/signup")
+    public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
-    // Create new user's account
-    User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-        encoder.encode(signUpRequest.getPassword()), Instant.now(), EProvider.REGISTER.toString(), true);
-
-    Set<String> strRoles = signUpRequest.getRole();
-    Set<Role> roles = new HashSet<>();
-
-    if (strRoles == null) {
-      Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-      roles.add(userRole);
-    } else {
-      strRoles.forEach(role -> {
-        switch (role) {
-        case "admin":
-          Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(adminRole);
-
-          break;
-        case "mod":
-          Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(modRole);
-
-          break;
-        default:
-          Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
-          roles.add(userRole);
+        try {
+            userService.signUp(signUpRequest);
+        } catch (UsernameDuplicateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(new CustomResponse<>(4, "Error: Username is already taken!"));
+        } catch (EmailDuplicateException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CREATED)
+                    .body(new CustomResponse<>(5, "Error: Email is already in use!"));
         }
-      });
+
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(new CustomResponse<>(1, "User registered successfully!"));
     }
 
-    user.setRoles(roles);
-    userRepository.save(user);
+    @PostMapping("/refreshtoken")
+    public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
+        String requestRefreshToken = request.getRefreshToken();
 
-    return ResponseEntity
-            .status(HttpStatus.CREATED)
-            .body(new CustomResponse<>(1, "User registered successfully!"));
-  }
+        return refreshTokenService.findByToken(requestRefreshToken)
+                .map(refreshTokenService::verifyExpiration)
 
-  @PostMapping("/refreshtoken")
-  public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenRefreshRequest request) {
-    String requestRefreshToken = request.getRefreshToken();
+                .map(RefreshToken::getUser)
+                .map(user -> {
+                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
+                })
+                .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
+                        "Refresh token is not in database!"));
+    }
 
-    return refreshTokenService.findByToken(requestRefreshToken)
-        .map(refreshTokenService::verifyExpiration)
-
-        .map(RefreshToken::getUser)
-        .map(user -> {
-          String token = jwtUtils.generateTokenFromUsername(user.getUsername());
-          return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
-        })
-        .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,
-            "Refresh token is not in database!"));
-  }
-  
-  @PostMapping("/signout")
-  public ResponseEntity<?> logoutUser() {
-    UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-    Long userId = userDetails.getId();
-    refreshTokenService.deleteByUserId(userId);
-    return ResponseEntity.ok(new MessageResponse("Log out successful!"));
-  }
+    @PostMapping("/signout")
+    public ResponseEntity<?> logoutUser() {
+        UserDetailsImpl userDetails = (UserDetailsImpl) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userDetails.getId();
+        refreshTokenService.deleteByUserId(userId);
+        return ResponseEntity.ok(new MessageResponse("Log out successful!"));
+    }
 
 }
