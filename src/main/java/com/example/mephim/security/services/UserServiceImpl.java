@@ -5,6 +5,7 @@ import com.example.mephim.entity.ERole;
 import com.example.mephim.entity.Role;
 import com.example.mephim.entity.User;
 import com.example.mephim.exception.EmailDuplicateException;
+import com.example.mephim.exception.UserNotFoundException;
 import com.example.mephim.exception.UsernameDuplicateException;
 import com.example.mephim.payload.request.SignupRequest;
 import com.example.mephim.repos.RoleRepository;
@@ -15,16 +16,18 @@ import com.example.mephim.ultils.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 
+import static com.example.mephim.constants.Constants.RESET_PASSWORD;
 import static com.example.mephim.constants.Constants.VERIFY_MAIL;
 
 @Service
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     @Autowired
     UserRepository userRepository;
 
@@ -82,26 +85,48 @@ public class UserServiceImpl implements UserService{
         }
 
         // create verify code by random string
-        String verifyCode = RandomString.generateString(50);
+        String verifyCode = generateCode();
 
         user.setRoles(roles);
         user.setVerificationCode(verifyCode);
 //        userRepository.save(user);
 
         // send verify code to the mail user to verify account
-        sendCodeVerifyAccount(user.getEmail(),user.getUsername(), verifyCode);
-    }
-
-    @Override
-    public User findByVerifyCode(String verifyCode) {
-        return null;
+        sendCodeVerifyAccount(user.getEmail(), user.getUsername(), verifyCode);
     }
 
     public void sendCodeVerifyAccount(String email, String username, String code) {
         try {
-            mailSender.send(email, VERIFY_MAIL, ConfirmMailTemplate.build(username, "http://172.25.240.1:9090/api/auth/verify-account/" + code));
+            mailSender.send(email, VERIFY_MAIL, ConfirmMailTemplate.build(username, "localhost:3000/verify?" + code));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    String generateCode() {
+        return RandomString.generateString(50);
+    }
+
+    @Override
+    public void requestVerifyCode(String email) throws UserNotFoundException {
+        // before send mail reset password must check user is not disable
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        String verifyCode = generateCode();
+        try {
+            mailSender.send(email, RESET_PASSWORD, ConfirmMailTemplate.build(user.getUsername(), "localhost:3000/reset?" + verifyCode));
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override @Transactional
+    public void updatePassword(String newPassword, String verifyCode) {
+        userRepository.updatePassword(newPassword, verifyCode);
+    }
+
+    @Override @Transactional
+    public void verify(String verifyCode) throws UserNotFoundException {
+        userRepository.findByVerifyCode(verifyCode).orElseThrow(UserNotFoundException::new);
+        userRepository.enableUser(verifyCode);
     }
 }

@@ -1,13 +1,11 @@
 package com.example.mephim.controller;
 
-import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.*;
 import com.example.mephim.exception.EmailDuplicateException;
 import com.example.mephim.exception.TokenRefreshException;
+import com.example.mephim.exception.UserNotFoundException;
 import com.example.mephim.exception.UsernameDuplicateException;
-import com.example.mephim.payload.request.LoginRequest;
-import com.example.mephim.payload.request.SignupRequest;
-import com.example.mephim.payload.request.TokenRefreshRequest;
+import com.example.mephim.payload.request.*;
 import com.example.mephim.payload.response.JwtResponse;
 import com.example.mephim.payload.response.MessageResponse;
 import com.example.mephim.payload.response.TokenRefreshResponse;
@@ -19,7 +17,6 @@ import com.example.mephim.security.services.RefreshTokenService;
 import com.example.mephim.security.services.UserDetailsImpl;
 import com.example.mephim.security.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,7 +27,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.Instant;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -125,4 +121,27 @@ public class AuthController {
         return ResponseEntity.ok(new MessageResponse("Log out successful!"));
     }
 
+    @PostMapping("/verify")
+    public ResponseEntity<?> verify(@RequestBody VerifyCodeRequest request) throws UserNotFoundException {
+        userService.verify(request.getVerifyCode());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new CustomResponse<>(1, "Verify code was sending!"));
+    };
+
+    @PostMapping("/request-code")
+    public ResponseEntity<?> requestResetPassword(@RequestBody RequestResetPasswordRequest request) throws UserNotFoundException {
+            userService.requestVerifyCode(request.getEmail());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new CustomResponse<>(1, "Email reset password was sending!"));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) throws UserNotFoundException {
+        userService.requestVerifyCode(request.getVerifyCode());
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(new CustomResponse<>(1, "Email reset password was sending!"));
+    }
 }

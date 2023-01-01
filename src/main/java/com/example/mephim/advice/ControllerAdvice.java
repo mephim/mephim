@@ -2,6 +2,7 @@ package com.example.mephim.advice;
 
 import com.example.mephim.exception.ShowConflictBySameMovieInTimeException;
 import com.example.mephim.exception.TokenRefreshException;
+import com.example.mephim.exception.UserNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -27,6 +28,16 @@ public class ControllerAdvice {
   @ExceptionHandler(value = ShowConflictBySameMovieInTimeException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorMessage handleShowConflictBySameMovieInTimeException(ShowConflictBySameMovieInTimeException ex, WebRequest request) {
+    return new ErrorMessage(
+            HttpStatus.BAD_REQUEST.value(),
+            new Date(),
+            ex.getMessage(),
+            request.getDescription(false));
+  }
+
+  @ExceptionHandler(value = UserNotFoundException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorMessage handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
     return new ErrorMessage(
             HttpStatus.BAD_REQUEST.value(),
             new Date(),
