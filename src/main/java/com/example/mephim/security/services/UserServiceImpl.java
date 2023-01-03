@@ -107,11 +107,12 @@ public class UserServiceImpl implements UserService {
         return RandomString.generateString(50);
     }
 
-    @Override
+    @Override @Transactional
     public void requestVerifyCode(String email) throws UserNotFoundException {
         // before send mail reset password must check user is not disable
         User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         String verifyCode = generateCode();
+        userRepository.setVerifyCode(verifyCode, user.getUsername());
         try {
             mailSender.send(email, RESET_PASSWORD, ConfirmMailTemplate.build(user.getUsername(), "localhost:3000/reset?" + verifyCode));
         } catch (MessagingException e) {
