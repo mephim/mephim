@@ -2,6 +2,7 @@ package com.example.mephim.repos;
 
 import com.example.mephim.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,9 +22,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query(value = "select * from users where verification_code = ? and not is_enable", nativeQuery = true)
   Optional<User> findByVerifyCode(String verifyCode);
-
+  @Modifying
   @Query(value = "update users set is_enable = true where verification_code = ? and not is_enable", nativeQuery = true)
   void enableUser(String verifyCode);
+  @Modifying
   @Query(value = "update users set password = ? where verification_code = ? and not is_enable", nativeQuery = true)
   void updatePassword(String newPassword, String verifyCode);
+
+  @Modifying
+  @Query(value = "update users set verification_code = null where verification_code = ? and is_enable", nativeQuery = true)
+  void deleteVerifyCode(String verifyCode);
 }

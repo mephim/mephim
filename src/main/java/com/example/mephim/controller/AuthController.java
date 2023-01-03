@@ -123,6 +123,7 @@ public class AuthController {
 
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody VerifyCodeRequest request) throws UserNotFoundException {
+        System.out.println("VerifyCode: "+ request.getVerifyCode());
         userService.verify(request.getVerifyCode());
         return ResponseEntity
                 .status(HttpStatus.OK)

@@ -89,7 +89,7 @@ public class UserServiceImpl implements UserService {
 
         user.setRoles(roles);
         user.setVerificationCode(verifyCode);
-//        userRepository.save(user);
+        userRepository.save(user);
 
         // send verify code to the mail user to verify account
         sendCodeVerifyAccount(user.getEmail(), user.getUsername(), verifyCode);
@@ -97,7 +97,7 @@ public class UserServiceImpl implements UserService {
 
     public void sendCodeVerifyAccount(String email, String username, String code) {
         try {
-            mailSender.send(email, VERIFY_MAIL, ConfirmMailTemplate.build(username, "localhost:3000/verify?" + code));
+            mailSender.send(email, VERIFY_MAIL, ConfirmMailTemplate.build(username, "localhost:3000/verify?code=" + code));
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
@@ -128,5 +128,6 @@ public class UserServiceImpl implements UserService {
     public void verify(String verifyCode) throws UserNotFoundException {
         userRepository.findByVerifyCode(verifyCode).orElseThrow(UserNotFoundException::new);
         userRepository.enableUser(verifyCode);
+        userRepository.deleteVerifyCode(verifyCode);
     }
 }
