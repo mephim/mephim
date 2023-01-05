@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
+@RequestMapping("/api")
 @CrossOrigin("*")
 public class PaymentController {
     @PostMapping("/create-payment")
