@@ -15,7 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/ticket")
+@RequestMapping("/api/ticket")
 @CrossOrigin("*")
 public class TicketController {
 

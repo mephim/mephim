@@ -88,7 +88,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
 //        .antMatchers("/api/movie/**").permitAll()
         .antMatchers("/api/movie/**").permitAll()
         .antMatchers("/api/room/**").permitAll()
-        .antMatchers("/api/create-payment").hasRole("USER")
+        .antMatchers("/api/ticket/**").permitAll()
+        .antMatchers("/api/create-payment").permitAll()
         .anyRequest().authenticated();
     
     http.authenticationProvider(authenticationProvider());

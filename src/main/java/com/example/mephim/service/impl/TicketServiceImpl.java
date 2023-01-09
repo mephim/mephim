@@ -77,7 +77,7 @@ public class TicketServiceImpl implements TicketService {
         Integer showTimeId = ticketCreateDto.getShowTimeId();
         ShowTime showTime = showTimeRepo.findById(showTimeId).orElse(null);
         Integer roomId = ticketCreateDto.getRoomId();
-        Long price = ticketCreateDto.getTicketPrice();
+        Integer price = ticketCreateDto.getPrice();
 
         System.out.println("SIZE: " + findListShowExistByRoomAndTime(timeStart, timeEnd).size());
         // Get show is conflict with this scheduler

@@ -12,7 +12,7 @@ public class ShowTimeRes {
     @Data
     public static class TicketRes {
         private Integer ticketId;
-        private Long ticketPrice;
+        private Integer ticketPrice;
         private Movie movie;
     }
 }

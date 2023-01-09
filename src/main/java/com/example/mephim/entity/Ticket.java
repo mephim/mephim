@@ -1,8 +1,6 @@
 package com.example.mephim.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +18,7 @@ public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer ticketId;
-    private Long ticketPrice;
+    private Integer ticketPrice;
 
     @OneToOne
     @JoinColumn(name = "movie_id")
@@ -44,7 +42,7 @@ public class Ticket {
         this.ticketId = ticketId;
     }
 
-    public Ticket(Integer ticketId, Long ticketPrice, Movie movie, ShowDate showDate, ShowTime showTime) {
+    public Ticket(Integer ticketId, Integer ticketPrice, Movie movie, ShowDate showDate, ShowTime showTime) {
         this.ticketId = ticketId;
         this.ticketPrice = ticketPrice;
         this.movie = movie;
@@ -52,7 +50,7 @@ public class Ticket {
         this.showTime = showTime;
     }
 
-    public Ticket(Integer ticketId, Long ticketPrice, Movie movie){
+    public Ticket(Integer ticketId, Integer ticketPrice, Movie movie){
         this.ticketId = ticketId;
         this.ticketPrice = ticketPrice;
         this.movie = movie;
