@@ -7,6 +7,7 @@ import com.example.mephim.response.RoomStruct;
 import java.util.List;
 
 public interface RoomService {
+    List<Room> findAll();
     Room findByTicketId(Integer ticketId);
     Room findByRoomId(Integer roomId);
     List<RoomSeatRes> findRoomSeatByShowDateAndShowTimeTicket(Integer showDateId, Integer showTimeId, Integer ticketId);

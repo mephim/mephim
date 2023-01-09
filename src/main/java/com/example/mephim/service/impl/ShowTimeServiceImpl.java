@@ -30,6 +30,11 @@ public class ShowTimeServiceImpl implements ShowTimeService {
     RoomService roomService;
 
     @Override
+    public List<ShowTime> findAll() {
+        return showTimeRepo.findAll();
+    }
+
+    @Override
     public List<ShowTimeRes> findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId) {
         List<ShowTimeRes> resList = new ArrayList<>();
         List<ShowTime> showTimes = showTimeRepo.findShowTimeByShowDate(movieId,showDateId);

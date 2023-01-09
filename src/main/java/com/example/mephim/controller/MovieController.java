@@ -3,12 +3,10 @@ package com.example.mephim.controller;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.ShowDate;
 import com.example.mephim.entity.ShowTime;
-import com.example.mephim.entity.Ticket;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
-import com.example.mephim.response.ShowResponse;
 import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.MovieService;
 import com.example.mephim.service.ShowDateService;
@@ -90,9 +88,15 @@ public class MovieController {
     }
 
     @GetMapping(value = "/find-all-show-date")
-    public ResponseEntity<?> findShowTimeByShowDate() {
+    public ResponseEntity<?> findAllShowDate() {
         List<ShowDate> showDateList = showDateService.findAll();
         return new ResponseEntity<>(new CustomResponse<>(14,showDateList), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/find-all-show-time")
+    public ResponseEntity<?> findAllShowTime() {
+        List<ShowTime> showTimeList = showTimeService.findAll();
+        return new ResponseEntity<>(new CustomResponse<>(14,showTimeList), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/admin/find-all-show")
@@ -102,14 +106,14 @@ public class MovieController {
     }
 
     @GetMapping(value = "/find-show-date-by-theater")
-    public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer theaterId) {
+    public ResponseEntity<?> findAllShowDate(@RequestParam Integer theaterId) {
         List<ShowDate> showDateList = showDateService.findShowDateByTheaterId(theaterId);
         return new ResponseEntity<>(new CustomResponse<>(16, showDateList), HttpStatus.CREATED);
     }
 
     @GetMapping(value = "/find-show-time-by-show-date")
-    public ResponseEntity<?> findShowTimeByShowDate(@RequestParam Integer movieId,
-                                                    @RequestParam Integer showDateId) {
+    public ResponseEntity<?> findAllShowDate(@RequestParam Integer movieId,
+                                             @RequestParam Integer showDateId) {
         List<ShowTimeRes> showTimeList = showTimeService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId, showDateId);
         if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0, "data is empty"), HttpStatus.OK);
         return new ResponseEntity<>(new CustomResponse<>(17 ,showTimeList), HttpStatus.CREATED);

@@ -86,7 +86,8 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
         .authorizeRequests().antMatchers("/api/auth/**").permitAll()
         .antMatchers("/api/test/**").permitAll()
 //        .antMatchers("/api/movie/**").permitAll()
-        .antMatchers("/api/movie/**").hasRole("USER")
+        .antMatchers("/api/movie/**").permitAll()
+        .antMatchers("/api/room/**").permitAll()
         .antMatchers("/api/create-payment").hasRole("USER")
         .anyRequest().authenticated();
     

@@ -1,7 +1,9 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.entity.Room;
 import com.example.mephim.entity.RoomTicket;
+import com.example.mephim.entity.ShowTime;
 import com.example.mephim.repos.RoomRepo;
 import com.example.mephim.repos.RoomTicketRepo;
 import com.example.mephim.response.CustomResponse;
@@ -45,6 +47,12 @@ public class RoomController {
     public ResponseEntity<?> getRoomStruct(@RequestParam(name = "roomId") Integer roomId) {
         RoomStruct roomStruct = roomService.getRoomStruct(roomId);
         return new ResponseEntity<>(roomStruct, HttpStatus.OK);
+    }
 
+
+    @GetMapping(value = "/find-all")
+    public ResponseEntity<?> findAllShowTime() {
+        List<Room> roomList = roomService.findAll();
+        return new ResponseEntity<>(new CustomResponse<>(14,roomList), HttpStatus.CREATED);
     }
 }
