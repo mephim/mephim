@@ -34,12 +34,12 @@ public class MovieController {
     @Autowired
     TicketService ticketService;
 
-    @GetMapping("/listMovie")
+    @GetMapping("/list-movie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
-    @PostMapping(value = "/addMovie")
+    @PostMapping(value = "/create-movie")
     public ResponseEntity<?> addMovie(@RequestBody MovieCreateDto movieCreateDto) {
         try {
             movieService.saveMovie(movieCreateDto);
