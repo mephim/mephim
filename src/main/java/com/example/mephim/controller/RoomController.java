@@ -1,11 +1,6 @@
 package com.example.mephim.controller;
 
-import com.example.mephim.constants.Constants;
 import com.example.mephim.entity.Room;
-import com.example.mephim.entity.RoomTicket;
-import com.example.mephim.entity.ShowTime;
-import com.example.mephim.repos.RoomRepo;
-import com.example.mephim.repos.RoomTicketRepo;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.response.RoomSeatRes;
 import com.example.mephim.response.RoomStruct;
@@ -22,9 +17,6 @@ import java.util.List;
 @RequestMapping("/api/room")
 @CrossOrigin("*")
 public class RoomController {
-
-    @Autowired
-    RoomTicketRepo roomTicketRepo;
     @Autowired
     RoomService roomService;
 
@@ -34,10 +26,10 @@ public class RoomController {
                                         @RequestParam(name = "ticketId") Integer ticketId) {
 
         List<RoomSeatRes> roomSeat = roomService.findRoomSeatByShowDateAndShowTimeTicket(showDateId, showTimeId, ticketId);
-        RoomTicket roomTicket = roomTicketRepo.findByTicketId(ticketId);
+        Room room = roomService.findByTicketId(ticketId);
         JSONObject dataResponseJson=new JSONObject();
-        if(roomTicket != null) {
-            dataResponseJson.put("room", roomTicket.getRoom());
+        if(room != null) {
+            dataResponseJson.put("room", room);
         }
         dataResponseJson.put("roomSeat", roomSeat);
         return new ResponseEntity<>(new CustomResponse<>(20,dataResponseJson), HttpStatus.CREATED);

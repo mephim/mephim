@@ -36,6 +36,10 @@ public class Ticket {
     @JoinColumn(name="show_time_id")
     private ShowTime showTime;
 
+    @ManyToOne
+    @JoinColumn(name="room_id")
+    private Room room;
+
     private Boolean active;
 
     public Ticket(Integer ticketId) {

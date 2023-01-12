@@ -7,15 +7,12 @@ import com.example.mephim.repos.*;
 import com.example.mephim.request.TicketCreateDto;
 import com.example.mephim.response.ShowExistResponse;
 import com.example.mephim.service.TicketService;
-import com.google.api.client.util.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service
@@ -33,9 +30,6 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     MovieRepo movieRepo;
-
-    @Autowired
-    RoomTicketRepo roomTicketRepo;
 
     @Override
     public List<Ticket> findAll() {
@@ -104,11 +98,9 @@ public class TicketServiceImpl implements TicketService {
         ticket.setShowDate(showDate);
         ticket.setShowTime(showTime);
         ticket.setActive(true);
+        ticket.setRoom(new Room(roomId));
 
-        Ticket ticketSaved = ticketRepo.save(ticket);
-        roomTicketRepo.save(new RoomTicket(new Room(roomId), ticketSaved));
-
-        return ticketSaved;
+        return ticketRepo.save(ticket);
     }
 
     public Map<String, String> getTimeStartAndTimeEnd(Integer showDateId, Integer showTimeId, Integer movieId) {
@@ -116,7 +108,6 @@ public class TicketServiceImpl implements TicketService {
         ShowTime showTime = showTimeRepo.findByShowTimeId(showTimeId);
         Movie movie = movieRepo.findMovieByMovieId(movieId);
         Date timeStart;
-        Date timeEnd;
 
         // Create format date
         SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm");

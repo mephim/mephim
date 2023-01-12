@@ -28,6 +28,10 @@ public class Room {
     @JsonIgnore
     private List<Seat> seatList;
 
+    @OneToMany(mappedBy = "ticketId")
+    @JsonIgnore
+    private List<Ticket> ticketList;
+
     public Room(Integer roomId) {
         this.roomId = roomId;
     }
