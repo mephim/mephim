@@ -3,6 +3,7 @@ package com.example.mephim.controller;
 import com.example.mephim.constants.Constants;
 import com.example.mephim.constants.ERROR_CODE;
 import com.example.mephim.entity.Booking;
+import com.example.mephim.entity.Ticket;
 import com.example.mephim.exception.ShowConflictBySameMovieInTimeException;
 import com.example.mephim.exception.ShowConflictBySameRoomException;
 import com.example.mephim.request.TicketCreateDto;
@@ -14,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/ticket")
 @CrossOrigin("*")
@@ -21,6 +24,12 @@ public class TicketController {
 
     @Autowired
     TicketService ticketService;
+
+    @GetMapping("/find-all")
+    public ResponseEntity<?> findAllTicket() {
+        List<Ticket> ticketList = ticketService.findAll();
+        return new ResponseEntity<>(new CustomResponse<>(1,ticketList), HttpStatus.OK);
+    }
 
     @PostMapping("/create-new")
     public ResponseEntity<?> createNewTicket(@RequestBody TicketCreateDto ticketCreateDto) {
