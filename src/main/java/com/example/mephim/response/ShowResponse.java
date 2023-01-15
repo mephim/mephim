@@ -19,4 +19,6 @@ public interface ShowResponse {
     String getTimeEnd();
     @Value("#{target.movie_length}")
     Integer getMovieLength();
+    @Value("#{target.ticket_price}")
+    Integer getTicketPrice();
 }

@@ -31,7 +31,7 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
     List<ShowDate> findShowDateByTheaterId(Integer theaterId);
 
     @Query(value = "select ticket.ticket_id, show_date.show_date_id, show_time.show_time_id, movie.movie_id, room.room_id,\n" +
-            "movie.movie_name, \n" +
+            "movie.movie_name, ticket.ticket_price,\n" +
             "STR_TO_DATE(concat(show_date.date,' ', show_time.time), '%Y-%m-%d %T') as time_start, \n" +
             "STR_TO_DATE(concat(show_date.date,' ', show_time.time), '%Y-%m-%d %T') + INTERVAL movie.movie_length MINUTE as time_end,\n" +
             "movie.movie_length, room.room_name from show_date \n" +
