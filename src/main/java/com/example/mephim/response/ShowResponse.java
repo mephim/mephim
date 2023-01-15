@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface ShowResponse {
     @Value("#{target.ticket_id}")
-    String getTicketId();
+    Integer getTicketId();
     @Value("#{target.movie_id}")
     Integer getMovieId();
     @Value("#{target.movie_name}")
