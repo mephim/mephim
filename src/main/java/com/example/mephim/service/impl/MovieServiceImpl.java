@@ -4,10 +4,8 @@ import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.*;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.repos.MovieRepo;
-import com.example.mephim.service.CommonService;
-import com.example.mephim.service.MovieActorService;
-import com.example.mephim.service.MovieCategoryService;
-import com.example.mephim.service.MovieService;
+import com.example.mephim.response.MovieDetailResponse;
+import com.example.mephim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,10 +24,27 @@ public class MovieServiceImpl implements MovieService {
     MovieActorService movieActorService;
     @Autowired
     MovieCategoryService movieCategoryService;
+    @Autowired
+    ActorService actorService;
+    @Autowired
+    CategoryService categoryService;
 
     @Override
     public List<Movie> findAMovies() {
         return movieRepo.findAll();
+    }
+
+    @Override
+    public MovieDetailResponse findById(Integer movieId) {
+        Movie movie = movieRepo.findMovieByMovieId(movieId);
+        List<Actor> actorList = actorService.findByMovie(movieId);
+        List<Category> categoryList = categoryService.findByMovie(movieId);
+        if(movie == null) return null;
+        MovieDetailResponse movieDetailResponse = new MovieDetailResponse();
+        movieDetailResponse.setMovie(movie);
+        movieDetailResponse.setActorList(actorList);
+        movieDetailResponse.setCategoryList(categoryList);
+        return movieDetailResponse;
     }
 
     @Override

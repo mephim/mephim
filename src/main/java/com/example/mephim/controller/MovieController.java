@@ -1,17 +1,16 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
+import com.example.mephim.entity.Actor;
 import com.example.mephim.entity.ShowDate;
 import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.response.CustomResponse;
+import com.example.mephim.response.MovieDetailResponse;
 import com.example.mephim.response.ShowTimeRes;
-import com.example.mephim.service.MovieService;
-import com.example.mephim.service.ShowDateService;
-import com.example.mephim.service.ShowTimeService;
-import com.example.mephim.service.TicketService;
+import com.example.mephim.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,14 +29,22 @@ public class MovieController {
     ShowTimeService showTimeService;
     @Autowired
     ShowDateService showDateService;
-
     @Autowired
     TicketService ticketService;
-
+    @Autowired
+    ActorService actorService;
     @GetMapping("/list-movie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
         return new ResponseEntity<>(movieList, HttpStatus.OK);
+    }
+    @GetMapping("/detail/{id}")
+    public ResponseEntity<?> movieDetail(@PathVariable("id") Integer movieId) {
+        MovieDetailResponse movieDetail = movieService.findById(movieId);
+        if(movieDetail == null) {
+            return new ResponseEntity<>(new CustomResponse<>(10, "data is empty"), HttpStatus.OK);
+        }
+        return new ResponseEntity<>(movieDetail, HttpStatus.OK);
     }
     @PostMapping(value = "/create-movie")
     public ResponseEntity<?> addMovie(@RequestBody MovieCreateDto movieCreateDto) {
