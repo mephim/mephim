@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 
 public interface RoomSeatRes {
     @Value("#{target.seat_id}")
-    Integer getRoomSeatId();
+    Integer getSeatId();
     @Value("#{target.seat_name}")
     String getSeatName();
     @Value("#{target.seat_type}")

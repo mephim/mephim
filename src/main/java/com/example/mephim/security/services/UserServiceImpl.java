@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void signUp(SignupRequest signUpRequest) throws UsernameDuplicateException, EmailDuplicateException {
-        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+        if (userRepository.existsByUsername(signUpRequest.getEmail())) {
             throw new UsernameDuplicateException();
         }
 
@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService {
         }
 
         // Create new user's account
-        User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
+        User user = new User(signUpRequest.getEmail(), signUpRequest.getEmail(),
                 encoder.encode(signUpRequest.getPassword()), Instant.now(), EProvider.REGISTER.toString(), false);
 
         Set<String> strRoles = signUpRequest.getRole();

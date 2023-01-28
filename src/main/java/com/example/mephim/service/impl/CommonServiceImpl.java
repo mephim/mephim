@@ -1,7 +1,6 @@
 package com.example.mephim.service.impl;
 
 import com.example.mephim.entity.*;
-import com.example.mephim.exception.InvalidParamException;
 import com.example.mephim.repos.*;
 import com.example.mephim.service.CommonService;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +31,6 @@ public class CommonServiceImpl implements CommonService {
 
     @Autowired
     ShowTimeRepo showTimeRepo;
-
-    @Autowired
-    ActorRepo actorRepo;
 
     @Autowired
     CategoryRepo categoryRepo;
@@ -85,12 +81,6 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void initialActor(Actor actor) {
-        log.info("Saves actor to the database: " + actor.getActorName());
-        actorRepo.save(actor);
-    }
-
-    @Override
     public void initialRoom(Room room) {
         log.info("Saves room to the database: " + room.getRoomName());
         roomRepo.save(room);
@@ -126,11 +116,6 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public ShowTime findShowTimeById(Integer id) {
         return showTimeRepo.findById(id).orElse(null);
-    }
-
-    @Override
-    public Actor findActorById(Integer id) {
-        return actorRepo.findById(id).orElse(null);
     }
 
     @Override

@@ -11,7 +11,6 @@ public interface CommonService {
     void initialShowDate(ShowDate showDate);
     void initialShowTime(ShowTime showTime);
     void initialCategory(Category category);
-    void initialActor(Actor actor);
     void initialRoom(Room room);
     void initialTheaterGroup(TheaterGroup theaterGroup);
     void initialSeat(Integer roomId, Integer seatColumnId, Integer seatRowId);
@@ -19,7 +18,6 @@ public interface CommonService {
 
     ShowDate findShowDateById(Integer id);
     ShowTime findShowTimeById(Integer id);
-    Actor findActorById(Integer id);
     Category findCategoryById(Integer id);
     MovieTheater findMovieTheaterById(Integer id);
 }

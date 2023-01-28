@@ -21,11 +21,7 @@ public class MovieServiceImpl implements MovieService {
     @Autowired
     CommonService commonService;
     @Autowired
-    MovieActorService movieActorService;
-    @Autowired
     MovieCategoryService movieCategoryService;
-    @Autowired
-    ActorService actorService;
     @Autowired
     CategoryService categoryService;
 
@@ -37,12 +33,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public MovieDetailResponse findById(Integer movieId) {
         Movie movie = movieRepo.findMovieByMovieId(movieId);
-        List<Actor> actorList = actorService.findByMovie(movieId);
         List<Category> categoryList = categoryService.findByMovie(movieId);
         if(movie == null) return null;
         MovieDetailResponse movieDetailResponse = new MovieDetailResponse();
         movieDetailResponse.setMovie(movie);
-        movieDetailResponse.setActorList(actorList);
         movieDetailResponse.setCategoryList(categoryList);
         return movieDetailResponse;
     }
@@ -57,26 +51,18 @@ public class MovieServiceImpl implements MovieService {
                 .collect(Collectors.toList());
         return listIdNotExist.isEmpty();
     }
-    boolean isExitsActorsId(List<Integer> idList) {
-        List<Integer> listIdNotExist = idList.stream().filter((id -> commonService.findActorById(id) == null))
-                .collect(Collectors.toList());
-        return listIdNotExist.isEmpty();
-    }
 
     @Override
     public void saveMovie(MovieCreateDto movieCreateDto) throws InvalidParamException {
         Movie movie = new Movie();
         movie.setMovieName(movieCreateDto.getMovieName());
+        movie.setMovieActor(movieCreateDto.getMovieActor());
         movie.setMovieDirector(movieCreateDto.getMovieDirector());
         movie.setMovieLength(movieCreateDto.getMovieLength());
         movie.setMovieTrailerUrl(movieCreateDto.getMovieTrailerUrl());
         movie.setMoviePoster(movieCreateDto.getMoviePoster());
         movie.setMovieDescription(movieCreateDto.getMovieDescription());
 
-        if (!isExitsCategoriesId(movieCreateDto.getMovieCategoryIds())
-                || !isExitsActorsId(movieCreateDto.getMovieActorIds())) {
-            throw new InvalidParamException();
-        }
         Movie movieSaved = movieRepo.save(movie);
         movieCreateDto.getMovieCategoryIds().forEach(id -> {
             MovieCategory movieCategory = new MovieCategory();
@@ -84,14 +70,6 @@ public class MovieServiceImpl implements MovieService {
             movieCategory.setMovie(movieSaved);
             movieCategoryService.save(movieCategory);
         });
-
-        movieCreateDto.getMovieActorIds().forEach(id -> {
-            MovieActor movieActor = new MovieActor();
-            movieActor.setActor(new Actor(id));
-            movieActor.setMovie(movieSaved);
-            movieActorService.save(movieActor);
-        });
-
     }
 
     @Override

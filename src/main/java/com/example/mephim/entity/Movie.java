@@ -15,10 +15,12 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer movieId;
     private String movieName;
+    private String movieActor;
     private String movieDirector;
     private Integer movieLength;
     private String movieTrailerUrl;
     private String moviePoster;
+    @Column(length=5000)
     private String movieDescription;
     public Movie(Integer movieId){
         this.movieId = movieId;

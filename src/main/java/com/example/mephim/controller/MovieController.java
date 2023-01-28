@@ -1,7 +1,6 @@
 package com.example.mephim.controller;
 
 import com.example.mephim.constants.Constants;
-import com.example.mephim.entity.Actor;
 import com.example.mephim.entity.ShowDate;
 import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
@@ -31,8 +30,6 @@ public class MovieController {
     ShowDateService showDateService;
     @Autowired
     TicketService ticketService;
-    @Autowired
-    ActorService actorService;
     @GetMapping("/list-movie")
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
@@ -44,7 +41,7 @@ public class MovieController {
         if(movieDetail == null) {
             return new ResponseEntity<>(new CustomResponse<>(10, "data is empty"), HttpStatus.OK);
         }
-        return new ResponseEntity<>(movieDetail, HttpStatus.OK);
+        return new ResponseEntity<>(new CustomResponse<>(1, movieDetail), HttpStatus.OK);
     }
     @PostMapping(value = "/create-movie")
     public ResponseEntity<?> addMovie(@RequestBody MovieCreateDto movieCreateDto) {

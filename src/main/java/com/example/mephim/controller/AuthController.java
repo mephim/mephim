@@ -22,6 +22,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -106,7 +108,13 @@ public class AuthController {
 
                 .map(RefreshToken::getUser)
                 .map(user -> {
-                    String token = jwtUtils.generateTokenFromUsername(user.getUsername());
+                    Map<String, Object> claims = new HashMap<>();
+                    List<String> roles = new ArrayList<>();
+                    user.getRoles().forEach(role -> {
+                        roles.add(role.getName().toString());
+                    });
+                    claims.put("roles", roles.toArray());
+                    String token = jwtUtils.generateTokenFromUser(user.getUsername(), claims);
                     return ResponseEntity.ok(new TokenRefreshResponse(token, requestRefreshToken));
                 })
                 .orElseThrow(() -> new TokenRefreshException(requestRefreshToken,

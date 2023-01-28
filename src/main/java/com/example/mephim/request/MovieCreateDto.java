@@ -8,10 +8,10 @@ import java.util.List;
 public class MovieCreateDto {
     private String movieName;
     private String movieDirector;
+    private String movieActor;
     private Integer movieLength;
     private String movieTrailerUrl;
     private String moviePoster;
     private String movieDescription;
     private List<Integer> movieCategoryIds;
-    private List<Integer> movieActorIds;
 }
