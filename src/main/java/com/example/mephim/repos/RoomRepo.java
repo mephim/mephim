@@ -11,9 +11,6 @@ import java.util.List;
 
 @Repository
 public interface RoomRepo extends JpaRepository<Room, Integer> {
-    @Query(value = "SELECT * FROM room WHERE room_seart.room_id = ?1", nativeQuery = true)
-    Room findByRoomSeat(Integer roomSeat);
-
     @Query(value = "select distinct room.* from room inner join ticket\n" +
             "where room.room_id = ticket.room_id\n" +
             "and ticket.active=1\n" +

@@ -15,15 +15,13 @@ import com.example.mephim.response.CustomResponse;
 import com.example.mephim.security.jwt.JwtUtils;
 import com.example.mephim.security.services.RefreshTokenService;
 import com.example.mephim.security.services.UserDetailsImpl;
-import com.example.mephim.security.services.UserService;
+import com.example.mephim.security.services.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -43,7 +41,7 @@ public class AuthController {
     UserRepository userRepository;
 
     @Autowired
-    UserService userService;
+    AuthService authService;
 
     @Autowired
     RoleRepository roleRepository;
@@ -83,7 +81,7 @@ public class AuthController {
     public ResponseEntity<?> registerUser(@Valid @RequestBody SignupRequest signUpRequest) {
 
         try {
-            userService.signUp(signUpRequest);
+            authService.signUp(signUpRequest);
         } catch (UsernameDuplicateException e) {
             return ResponseEntity
                     .status(HttpStatus.CREATED)
@@ -132,7 +130,7 @@ public class AuthController {
     @PostMapping("/verify")
     public ResponseEntity<?> verify(@RequestBody VerifyCodeRequest request) throws UserNotFoundException {
         System.out.println("VerifyCode: "+ request.getVerifyCode());
-        userService.verify(request.getVerifyCode());
+        authService.verify(request.getVerifyCode());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new CustomResponse<>(1, "Verify code was sending!"));
@@ -140,7 +138,7 @@ public class AuthController {
 
     @PostMapping("/request-code")
     public ResponseEntity<?> requestResetPassword(@RequestBody RequestResetPasswordRequest request) throws UserNotFoundException {
-            userService.requestVerifyCode(request.getEmail());
+            authService.requestVerifyCode(request.getEmail());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new CustomResponse<>(1, "Email reset password was sending!"));
@@ -148,7 +146,7 @@ public class AuthController {
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request) throws UserNotFoundException {
-        userService.requestVerifyCode(request.getVerifyCode());
+        authService.requestVerifyCode(request.getVerifyCode());
         return ResponseEntity
                 .status(HttpStatus.OK)
                 .body(new CustomResponse<>(1, "Email reset password was sending!"));

@@ -2,9 +2,11 @@ package com.example.mephim.request;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class BookingDto {
     private String user;
-    private Integer seatId;
+    private List<Integer> seatIds;
     private Integer ticketId;
 }

@@ -27,7 +27,7 @@ import static com.example.mephim.constants.Constants.RESET_PASSWORD;
 import static com.example.mephim.constants.Constants.VERIFY_MAIL;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class AuthServiceImpl implements AuthService {
     @Autowired
     UserRepository userRepository;
 

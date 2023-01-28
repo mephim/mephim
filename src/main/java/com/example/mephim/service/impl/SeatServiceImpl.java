@@ -9,12 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service @Transactional
 public class SeatServiceImpl implements SeatService {
-
     @Autowired
     SeatRepo seatRepo;
     @Override
     public void save(Seat seat) {
         seatRepo.save(seat);
+    }
+    @Override
+    public Seat findById(Integer seatId) {
+        return seatRepo.findById(seatId).orElse(null);
     }
 
     @Override
