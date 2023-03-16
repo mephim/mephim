@@ -2,10 +2,6 @@ package com.example.mephim.response;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-
 import static java.time.LocalDateTime.now;
 
 @Data
