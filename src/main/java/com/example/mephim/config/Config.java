@@ -21,34 +21,8 @@ public class Config {
     public static final String vnp_OrderType  = "250000"; // thanh toán hoá đơn
     public static final String vnp_ReturnUrl  = "http://localhost:3000/payment/result";
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static final String vnp_HashSecret = "LNCQFTXTOIWXYBNHXBSLTHZUPBCRVUKM";
-    public static final String vnp_TmnCode = "AK1LPMG2";
-
-    public static String Sha256(String message) {
-        String digest = null;
-        try {
-            MessageDigest md = MessageDigest.getInstance("SHA-256");
-            byte[] hash = md.digest(message.getBytes("UTF-8"));
-
-            // converting byte array to Hexadecimal String
-            StringBuilder sb = new StringBuilder(2 * hash.length);
-            for (byte b : hash) {
-                sb.append(String.format("%02x", b & 0xff));
-            }
-
-            digest = sb.toString();
-
-        } catch (UnsupportedEncodingException ex) {
-            digest = "";
-            // Logger.getLogger(StringReplace.class.getName()).log(Level.SEVERE,
-            // null, ex);
-        } catch (NoSuchAlgorithmException ex) {
-            // Logger.getLogger(StringReplace.class.getName()).log(Level.SEVERE,
-            // null, ex);
-            digest = "";
-        }
-        return digest;
-    }
+    public static final String vnp_HashSecret = "ONSLPOUWNXTBCWHHCZVFAQDXAJYZYGIT";
+    public static final String vnp_TmnCode = "KWBZIWD8";
 
     public static String hmacSHA512(final String key, final String data) {
         try {
@@ -71,43 +45,6 @@ public class Config {
         } catch (Exception ex) {
             return "";
         }
-    }
-
-    //Util for VNPAY
-    public static String hashAllFields(Map fields) {
-        // create a list and sort it
-        List fieldNames = new ArrayList(fields.keySet());
-        Collections.sort(fieldNames);
-        // create a buffer for the md5 input and add the secure secret first
-        StringBuilder sb = new StringBuilder();
-
-        Iterator itr = fieldNames.iterator();
-        while (itr.hasNext()) {
-            String fieldName = (String) itr.next();
-            String fieldValue = (String) fields.get(fieldName);
-            if ((fieldValue != null) && (fieldValue.length() > 0)) {
-                sb.append(fieldName);
-                sb.append("=");
-                sb.append(fieldValue);
-            }
-            if (itr.hasNext()) {
-                sb.append("&");
-            }
-        }
-        return hmacSHA512(vnp_HashSecret, sb.toString());
-    }
-
-    public static String getIpAddress(HttpServletRequest request) {
-        String ipAdress;
-        try {
-            ipAdress = request.getHeader("X-FORWARDED-FOR");
-            if (ipAdress == null) {
-                ipAdress = request.getRemoteAddr();
-            }
-        } catch (Exception e) {
-            ipAdress = "Invalid IP:" + e.getMessage();
-        }
-        return ipAdress;
     }
 
     public static String getRandomNumber(int len) {
