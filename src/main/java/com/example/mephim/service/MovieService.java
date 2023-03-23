@@ -3,10 +3,13 @@ package com.example.mephim.service;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.response.MovieDetailResponse;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
 public interface MovieService {
+    Page<Movie> findAMoviesForAdmin(Pageable pageable);
     List<Movie> findAMovies();
     MovieDetailResponse findById(Integer movieId);
     List<Movie> findMovieHasTicket();

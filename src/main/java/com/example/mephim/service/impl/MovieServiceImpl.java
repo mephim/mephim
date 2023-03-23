@@ -7,6 +7,8 @@ import com.example.mephim.repos.MovieRepo;
 import com.example.mephim.response.MovieDetailResponse;
 import com.example.mephim.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +26,11 @@ public class MovieServiceImpl implements MovieService {
     MovieCategoryService movieCategoryService;
     @Autowired
     CategoryService categoryService;
+
+    @Override
+    public Page<Movie> findAMoviesForAdmin(Pageable pageable) {
+        return movieRepo.findAll(pageable);
+    }
 
     @Override
     public List<Movie> findAMovies() {

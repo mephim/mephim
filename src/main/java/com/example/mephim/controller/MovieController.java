@@ -12,6 +12,9 @@ import com.example.mephim.response.ShowTimeRes;
 import com.example.mephim.service.*;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,6 +37,13 @@ public class MovieController {
     public ResponseEntity<?> listMovie() {
         List<Movie> movieList = movieService.findAMovies();
         return new ResponseEntity<>(movieList, HttpStatus.OK);
+    }
+    @GetMapping("/list-movie-admin")
+    public ResponseEntity<?> listMovieForAdmin( @RequestParam(defaultValue = "0") int page,
+                                                @RequestParam(defaultValue = "10") int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Movie> movieList = movieService.findAMoviesForAdmin(pageable);
+        return new ResponseEntity<>(new CustomResponse<>(1, movieList), HttpStatus.OK);
     }
     @GetMapping("/detail/{id}")
     public ResponseEntity<?> movieDetail(@PathVariable("id") Integer movieId) {
