@@ -13,21 +13,16 @@ import java.util.stream.Collectors;
 
 public class UserDetailsImpl implements UserDetails {
 	private static final long serialVersionUID = 1L;
-
 	private Long id;
-
 	private String username;
-
 	private String email;
-
 	@JsonIgnore
 	private String password;
-
 	private Boolean isEnable;
-
+	private Integer availablePoint;
 	private Collection<? extends GrantedAuthority> authorities;
 
-	public UserDetailsImpl(Long id, String username, String email, String password,
+	public UserDetailsImpl(Long id, String username, String email, String password, Integer availablePoint,
 			Collection<? extends GrantedAuthority> authorities, Boolean isEnable) {
 		this.id = id;
 		this.username = username;
@@ -35,6 +30,7 @@ public class UserDetailsImpl implements UserDetails {
 		this.password = password;
 		this.authorities = authorities;
 		this.isEnable = isEnable;
+		this.availablePoint = availablePoint;
 	}
 
 	public static UserDetailsImpl build(User user) {
@@ -47,6 +43,7 @@ public class UserDetailsImpl implements UserDetails {
 				user.getUsername(), 
 				user.getEmail(),
 				user.getPassword(),
+				user.getAvailablePoint(),
 				authorities,
 				user.getIsEnable());
 	}
@@ -102,5 +99,13 @@ public class UserDetailsImpl implements UserDetails {
 			return false;
 		UserDetailsImpl user = (UserDetailsImpl) o;
 		return Objects.equals(id, user.id);
+	}
+
+	public Integer getAvailablePoint() {
+		return availablePoint;
+	}
+
+	public void setAvailablePoint(Integer availablePoint) {
+		this.availablePoint = availablePoint;
 	}
 }

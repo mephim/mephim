@@ -32,16 +32,13 @@ public class User {
     @NotBlank
     @Size(max = 20)
     private String username;
-
     @NotBlank
     @Size(max = 50)
     @Email
     private String email;
-
     @NotBlank
     @Size(max = 120)
     private String password;
-
 //    @NotBlank
     @Size(max = 9)
     private String phone;
@@ -61,16 +58,13 @@ public class User {
         this.provider = provider;
         this.isEnable = isEnable;
     }
-
     @Column(nullable = false)
     private Instant registerDate;
-
     @Size(max = 500)
     private String verificationCode;
-
     @Size(max = 20)
     private String provider;
-
+    private Integer availablePoint;
     @Column(name = "is_enable", columnDefinition = "bit(1)")
     private Boolean isEnable;
 
@@ -87,4 +81,7 @@ public class User {
     @OneToMany(mappedBy = "transactionId")
     @JsonIgnore
     private List<Transaction> transactions;
+    @OneToMany(mappedBy = "rateId")
+    @JsonIgnore
+    private List<Rate> rates;
 }

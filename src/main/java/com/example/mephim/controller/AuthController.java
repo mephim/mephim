@@ -74,7 +74,7 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(new CustomResponse<>(200, new JwtResponse(jwt, refreshToken.getToken(), userDetails.getId(),
-                        userDetails.getUsername(), userDetails.getEmail(), roles)));
+                        userDetails.getUsername(), userDetails.getEmail(), userDetails.getAvailablePoint(), roles)));
     }
 
     @PostMapping("/signup")

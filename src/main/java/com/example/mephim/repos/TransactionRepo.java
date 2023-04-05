@@ -13,7 +13,7 @@ import java.util.List;
 public interface TransactionRepo extends JpaRepository<Transaction, Integer> {
     @Query(value = "select booking.booking_id, booking.time, users.username, movie.movie_name,\n" +
             "GROUP_CONCAT( CONCAT(seat_row.row_name, seat_column.column_name) SEPARATOR ',') as 'seat',\n" +
-            "SUM(ticket.ticket_price) as price\n" +
+            "SUM(ticket.ticket_price) as price, booking.point_of_use, booking.reward_point\n" +
             "from booking inner join users inner join ticket inner join movie\n" +
             "inner join seat inner join seat_column inner join seat_row\n" +
             "on users.id = booking.user_id\n" +

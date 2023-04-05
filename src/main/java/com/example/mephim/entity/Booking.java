@@ -20,21 +20,18 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer bookingId;
-
     @ManyToOne
-    @JoinColumn(name="user_id")
+    @JoinColumn(name = "user_id")
     private User user;
-
     private String time;
-
+    private Integer pointOfUse;
+    private Integer rewardPoint;
     @ManyToOne
-    @JoinColumn(name="booking_status_id")
+    @JoinColumn(name = "booking_status_id")
     private BookingStatus BookingStatus;
-
     @ManyToOne
-    @JoinColumn(name="ticket_id")
+    @JoinColumn(name = "ticket_id")
     private Ticket ticket;
-
     @ManyToOne
     @JoinColumn(name = "seatId")
     private Seat seat;

@@ -47,6 +47,7 @@ public class BookingServiceImpl implements BookingService {
         return bookingRepo.findBookingByRoomSeatAndTicket(roomSeatId, ticketId);
     }
 
+    @Transactional
     @Override
     public BookedResponse saveBooking(BookingDto bookingDto) throws InvalidParamException, SeatIsBookedException {
         BookedResponse bookedResponse = new BookedResponse();
@@ -69,14 +70,26 @@ public class BookingServiceImpl implements BookingService {
                 bookedResponse.setMovieName(ticket.getMovie().getMovieName());
             }
 
+            Integer pointOfUse = bookingDto.getPointOfUse();
+            if(pointOfUse == null) pointOfUse = 0;
+
+            // rewardPoint is 10% ticket price
+            int rewardPoint = ticket.getTicketPrice() * 10/100;
+            Integer pointToUpdate = pointOfUse > 0 ? -pointOfUse : rewardPoint;
+
             Booking booking = new Booking();
             booking.setUser(user);
             booking.setSeat(seat);
             booking.setTicket(ticket);
             booking.setBookingStatus(new BookingStatus(1));
             booking.setTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new java.util.Date()));
+            booking.setPointOfUse(pointOfUse);
+            booking.setRewardPoint(pointToUpdate);
 
             Booking bookingSaved = bookingRepo.save(booking);
+
+            // increase point for user
+            userRepository.increasePoint(pointToUpdate, user.getUsername());
 
             // Create model to response client know result and make mail result send to user
             if(bookedResponse.getListBookingIds() == null) {

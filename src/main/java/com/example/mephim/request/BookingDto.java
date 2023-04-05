@@ -9,4 +9,5 @@ public class BookingDto {
     private String user;
     private List<Integer> seatIds;
     private Integer ticketId;
+    private Integer pointOfUse;
 }

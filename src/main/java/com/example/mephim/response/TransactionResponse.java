@@ -10,4 +10,8 @@ public interface TransactionResponse {
     String getSeat();
     @Value("#{target.price}")
     String getPrice();
+    @Value("#{target.point_of_use}")
+    Integer getPointOfUser();
+    @Value("#{target.reward_point}")
+    Integer getRewardPoint();
 }
