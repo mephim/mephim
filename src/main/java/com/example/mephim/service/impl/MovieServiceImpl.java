@@ -53,6 +53,21 @@ public class MovieServiceImpl implements MovieService {
         return movieRepo.findMovieHasTicket();
     }
 
+    @Override
+    public List<Movie> findMovieHasTicketAndSearchByCategoryAndName(String keySearch, Integer categoryId) {
+        return movieRepo.findMovieHasTicketAndSearch(keySearch, categoryId);
+    }
+
+    @Override
+    public List<Movie> findMovieHasTicketAndSearchByName(String keySearch) {
+        return movieRepo.findMovieHasTicketAndSearchByName(keySearch);
+    }
+
+    @Override
+    public List<Movie> findMovieHasTicketAndSearchByCategory(Integer categoryId) {
+        return movieRepo.findMovieHasTicketAndSearchByCategory(categoryId);
+    }
+
     boolean isExitsCategoriesId(List<Integer> idList) {
         List<Integer> listIdNotExist = idList.stream().filter((id -> commonService.findCategoryById(id) == null))
                 .collect(Collectors.toList());

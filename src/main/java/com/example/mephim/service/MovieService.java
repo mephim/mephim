@@ -13,6 +13,9 @@ public interface MovieService {
     List<Movie> findAMovies();
     MovieDetailResponse findById(Integer movieId);
     List<Movie> findMovieHasTicket();
+    List<Movie> findMovieHasTicketAndSearchByCategoryAndName(String keySearch, Integer categoryId);
+    List<Movie> findMovieHasTicketAndSearchByName(String keySearch);
+    List<Movie> findMovieHasTicketAndSearchByCategory(Integer categoryId);
     void saveMovie(MovieCreateDto movie) throws Exception;
     void deleteMovie(Integer movieId);
     List<Movie> getMovieByTheater(Integer theaterId);

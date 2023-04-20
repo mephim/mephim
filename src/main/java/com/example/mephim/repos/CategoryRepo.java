@@ -9,6 +9,9 @@ import java.util.List;
 
 @Repository
 public interface CategoryRepo extends JpaRepository<Category, Integer> {
-    @Query(value="select * from category inner join movie_category where movie_category.movie_id = ?;", nativeQuery = true)
+    @Query(value="select category.* from category inner join movie inner join movie_category \n" +
+            "where movie.movie_id = movie_category.movie_id\n" +
+            "and category.category_id = movie_category.category_id\n" +
+            "and movie.movie_id = ?;", nativeQuery = true)
     List<Category> findByMovie(Integer movieId);
 }

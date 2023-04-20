@@ -35,4 +35,41 @@ public interface MovieRepo extends JpaRepository<Movie, Integer> {
     @Query(value = "select distinct * from movie inner join movie_theater where movie.movie_id = movie_theater.movie_id\n" +
             "and movie_theater.theater_id = 1", nativeQuery = true)
     List<Movie> findMovieByTheaterId(Integer theaterId);
+
+    @Query(value = "select movie.* from movie inner join movie_category inner join ticket \n" +
+            "inner join show_date inner join show_time\n" +
+            "where ticket.show_date_id = show_date.show_date_id\n" +
+            "and movie.movie_id = movie_category.movie_id\n" +
+            "and movie.movie_id = ticket.movie_id and ticket.active = 1\n" +
+            "and ticket.show_time_id = show_time.show_time_id\n" +
+            "and ticket.movie_id = movie.movie_id\n" +
+            "and (STR_TO_DATE(concat(show_date.date,' ', show_time.time), '%Y-%m-%d %T') Between NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY))\n" +
+            "and movie.movie_name LIKE CONCAT('%',?,'%')\n" +
+            "and movie_category.category_id = ?\n" +
+            "group by movie.movie_id", nativeQuery = true)
+    List<Movie> findMovieHasTicketAndSearch(String keySearch, Integer categoryId);
+
+    @Query(value = "select movie.* from movie inner join movie_category inner join ticket \n" +
+            "inner join show_date inner join show_time\n" +
+            "where ticket.show_date_id = show_date.show_date_id\n" +
+            "and movie.movie_id = movie_category.movie_id\n" +
+            "and movie.movie_id = ticket.movie_id and ticket.active = 1\n" +
+            "and ticket.show_time_id = show_time.show_time_id\n" +
+            "and ticket.movie_id = movie.movie_id\n" +
+            "and (STR_TO_DATE(concat(show_date.date,' ', show_time.time), '%Y-%m-%d %T') Between NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY))\n" +
+            "and movie.movie_name LIKE CONCAT('%',?,'%')\n" +
+            "group by movie.movie_id", nativeQuery = true)
+    List<Movie> findMovieHasTicketAndSearchByName(String keySearch);
+
+    @Query(value = "select movie.* from movie inner join movie_category inner join ticket \n" +
+            "inner join show_date inner join show_time\n" +
+            "where ticket.show_date_id = show_date.show_date_id\n" +
+            "and movie.movie_id = movie_category.movie_id\n" +
+            "and movie.movie_id = ticket.movie_id and ticket.active = 1\n" +
+            "and ticket.show_time_id = show_time.show_time_id\n" +
+            "and ticket.movie_id = movie.movie_id\n" +
+            "and (STR_TO_DATE(concat(show_date.date,' ', show_time.time), '%Y-%m-%d %T') Between NOW() AND DATE_ADD(NOW(), INTERVAL 7 DAY))\n" +
+            "and movie_category.category_id = ?\n" +
+            "group by movie.movie_id", nativeQuery = true)
+    List<Movie> findMovieHasTicketAndSearchByCategory(Integer categoryId);
 }

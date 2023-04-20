@@ -20,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/movie")
@@ -75,8 +76,21 @@ public class MovieController {
     }
 
     @GetMapping(value = "/find-movie-has-ticket")
-    public ResponseEntity<?> findAllTicket() {
-        List<Movie> movieList = movieService.findMovieHasTicket();
+    public ResponseEntity<?> findAllTicket(@RequestParam(required = false) Optional<Integer> categoryId,
+                                           @RequestParam(name = "search",required = false) Optional<String> keySearch) {
+        List<Movie> movieList;
+        Integer id = categoryId.orElse(0);
+        String search = keySearch.orElse("");
+        if(id != 0 && !search.equals("")) {
+            movieList = movieService.findMovieHasTicketAndSearchByCategoryAndName(search, id);
+        } else if (id != 0) {
+            movieList = movieService.findMovieHasTicketAndSearchByCategory(id);
+        }else if (!search.equals("")) {
+            System.out.println("SEARCH: " + search);
+            movieList = movieService.findMovieHasTicketAndSearchByName(search);
+        } else {
+            movieList = movieService.findMovieHasTicket();
+        }
         if(movieList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0,""), HttpStatus.OK);
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("movieList", movieList);

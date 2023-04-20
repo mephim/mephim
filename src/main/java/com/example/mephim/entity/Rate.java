@@ -12,6 +12,9 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(uniqueConstraints = {
+        @UniqueConstraint(name = "UniqueUserAndMovie", columnNames = {"userId", "movieId"}),
+})
 public class Rate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +25,7 @@ public class Rate {
     @ManyToOne
     @JoinColumn(name = "userId")
     private User user;
-    private Integer numRate;
+    private Double numRate;
     private String content;
+    private Boolean isLiked;
 }
