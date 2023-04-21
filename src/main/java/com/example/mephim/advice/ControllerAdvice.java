@@ -46,7 +46,7 @@ public class ControllerAdvice {
   }
 
   @ExceptionHandler(value = NotAllowRating.class)
-  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  @ResponseStatus(HttpStatus.UNAUTHORIZED)
   public ErrorMessage notAllowRating(NotAllowRating ex, WebRequest request) {
     return new ErrorMessage(
             HttpStatus.BAD_REQUEST.value(),
