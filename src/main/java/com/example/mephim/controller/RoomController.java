@@ -20,6 +20,12 @@ public class RoomController {
     @Autowired
     RoomService roomService;
 
+    @GetMapping("/find-all-room")
+    public ResponseEntity<?> findAllRoom(){
+        List<Room> roomList = roomService.findAll();
+        return new ResponseEntity<>(new CustomResponse<>(20,roomList), HttpStatus.CREATED);
+    }
+
     @GetMapping("/find")
     public ResponseEntity<?> addBooking(@RequestParam(name = "showDateId") Integer showDateId,
                                         @RequestParam(name = "showTimeId") Integer showTimeId,

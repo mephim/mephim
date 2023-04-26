@@ -23,6 +23,7 @@ public class Room {
     private String roomName;
     private Integer totalRow;
     private Integer totalColumn;
+    private Boolean isEnable;
 
     @OneToMany(mappedBy = "seatId")
     @JsonIgnore

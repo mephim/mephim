@@ -16,6 +16,7 @@ public interface RoomRepo extends JpaRepository<Room, Integer> {
             "and ticket.active=1\n" +
             "and ticket.ticket_id = ?;", nativeQuery = true)
     Room findByTicketId(Integer ticketId);
+    List<Room> findAll();
 
     @Query(value="select * from (\n" +
             "\twith TEMP_room_seat AS (\n" +
