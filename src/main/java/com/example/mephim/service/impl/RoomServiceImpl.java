@@ -3,6 +3,7 @@ package com.example.mephim.service.impl;
 import com.example.mephim.entity.*;
 import com.example.mephim.repos.RoomRepo;
 import com.example.mephim.request.AddRoomDto;
+import com.example.mephim.request.RoomEditDto;
 import com.example.mephim.response.RoomSeatRes;
 import com.example.mephim.response.RoomStruct;
 import com.example.mephim.service.RoomService;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -25,8 +27,28 @@ public class RoomServiceImpl implements RoomService {
     @Transactional
     @Override
     public Room save(AddRoomDto roomDto) {
+        // i-1 because index of row in the FE start with 0
+        List<Integer> rowVipConverter = roomDto.getRowVIP().stream().map(integer -> integer + 1).sorted().collect(Collectors.toList());
+
         Room room = new Room();
-        room.setRoomName(roomDto.getRoomName());
+        room.setRoomName(roomDto.getName());
+        room.setTotalRow(roomDto.getHeight());
+        room.setTotalColumn(roomDto.getWidth());
+        room.setRowVIP(rowVipConverter.stream().map(Object::toString)
+                .collect(Collectors.joining("-")));
+        room.setIsEnable(true);
+
+        Room savedRoom = roomRepo.save(room);
+        saveSeatForRoom(room.getRoomId(), savedRoom.getTotalColumn(), savedRoom.getTotalRow(), rowVipConverter);
+        return savedRoom;
+    }
+
+    @Override
+    @Transactional
+    public Room edit(RoomEditDto roomDto) {
+        deleteAllSeatOnRoom(roomDto.getRoomId());
+        Room room = new Room();
+        room.setRoomName(roomDto.getName());
         room.setTotalRow(roomDto.getHeight());
         room.setTotalColumn(roomDto.getWidth());
         room.setIsEnable(true);
@@ -34,6 +56,15 @@ public class RoomServiceImpl implements RoomService {
         Room savedRoom = roomRepo.save(room);
         saveSeatForRoom(room.getRoomId(), savedRoom.getTotalColumn(), savedRoom.getTotalRow(), roomDto.getRowVIP());
         return savedRoom;
+    }
+
+    @Override
+    public Room detail(Integer roomId) {
+        return roomRepo.findById(roomId).orElse(null);
+    }
+
+    void deleteAllSeatOnRoom(Integer roomId) {
+        seatService.deleteAllSeatByRoom(roomId);
     }
 
     void saveSeatForRoom(int roomId, int width, int height, List<Integer> rowVIP) {

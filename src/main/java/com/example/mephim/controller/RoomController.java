@@ -2,6 +2,7 @@ package com.example.mephim.controller;
 
 import com.example.mephim.entity.Room;
 import com.example.mephim.request.AddRoomDto;
+import com.example.mephim.request.RoomEditDto;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.response.RoomSeatRes;
 import com.example.mephim.response.RoomStruct;
@@ -24,6 +25,18 @@ public class RoomController {
     @PostMapping("/add-new-room")
     public ResponseEntity<?> addNewRoom(@RequestBody AddRoomDto roomDto) {
         Room room1 = roomService.save(roomDto);
+        return new ResponseEntity<>(new CustomResponse<>(20,room1), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/edit-room")
+    public ResponseEntity<?> addNewRoom(@RequestBody RoomEditDto roomDto) {
+        Room room1 = roomService.edit(roomDto);
+        return new ResponseEntity<>(new CustomResponse<>(20,room1), HttpStatus.CREATED);
+    }
+
+    @GetMapping("/detail-room")
+    public ResponseEntity<?> detailRoom(@RequestParam(name = "roomId") Integer roomId) {
+        Room room1 = roomService.detail(roomId);
         return new ResponseEntity<>(new CustomResponse<>(20,room1), HttpStatus.CREATED);
     }
 

@@ -7,14 +7,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service @Transactional
+import java.util.List;
+
+@Service
+@Transactional
 public class SeatServiceImpl implements SeatService {
     @Autowired
     SeatRepo seatRepo;
+
     @Override
     public void save(Seat seat) {
         seatRepo.save(seat);
     }
+
+    @Override
+    public void deleteAllSeatByRoom(Integer roomId) {
+        seatRepo.deleteAllSeatByRoom(roomId);
+    }
+
+    @Override
+    public List<Seat> seatInRoom(Integer roomId) {
+        return null;
+    }
+
     @Override
     public Seat findById(Integer seatId) {
         return seatRepo.findById(seatId).orElse(null);
