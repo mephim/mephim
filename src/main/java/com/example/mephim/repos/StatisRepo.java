@@ -44,11 +44,13 @@ public interface StatisRepo extends JpaRepository<Booking, Integer> {
             "group by DATE(booking.time)\n" +
             "order by DATE(booking.time) asc;", nativeQuery = true)
     List<ITransStatisResponse> getTransactionChaneOnWeek();
-    @Query(value = "select movie.movie_name, count(movie.movie_id) as 'num_of_booking' from movie inner join ticket inner join booking\n" +
-            "where movie.movie_id = ticket.ticket_id\n" +
-            "and booking.ticket_id = ticket.ticket_id\n" +
+    @Query(value = "SELECT movie.movie_name, count(booking.booking_id) as 'num_of_booking', sum(ticket.ticket_price) as 'value' from booking inner join ticket\n" +
+            "inner join movie\n" +
+            "where booking.ticket_id = ticket.ticket_id\n" +
+            "and ticket.movie_id = movie.movie_id\n" +
             "and booking.time >= DATE(NOW() - INTERVAL ? DAY)\n" +
-            "group by movie.movie_id;", nativeQuery = true)
+            "group by movie.movie_id\n" +
+            "order by num_of_booking desc;", nativeQuery = true)
     List<IMovieStatisResponse> getMovieStatics(Integer numOfDay);
 
     @Query(value = "call getCategoryStatisBy1WeeksAgo(?);", nativeQuery = true)

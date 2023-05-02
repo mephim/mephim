@@ -7,4 +7,6 @@ public interface IMovieStatisResponse {
     String getMovieName();
     @Value("#{target.num_of_booking}")
     Integer getNumOfBooking();
+    @Value("#{target.value}")
+    Integer getValue();
 }
