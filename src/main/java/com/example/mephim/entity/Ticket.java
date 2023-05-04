@@ -41,6 +41,8 @@ public class Ticket {
     private Room room;
 
     private Boolean active;
+    private String modifyBy;
+    private String lastModify;
 
     public Ticket(Integer ticketId) {
         this.ticketId = ticketId;

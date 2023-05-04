@@ -20,6 +20,8 @@ public class Movie {
     private Integer movieLength;
     private String movieTrailerUrl;
     private String moviePoster;
+    private String modifyBy;
+    private String lastModify;
     @Column(length=5000)
     private String movieDescription;
     @OneToMany(mappedBy = "rateId")

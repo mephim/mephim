@@ -25,6 +25,8 @@ public class Room {
     private Integer totalColumn;
     private String rowVIP;
     private Boolean isEnable;
+    private String modifyBy;
+    private String lastModify;
 
     @OneToMany(mappedBy = "seatId")
     @JsonIgnore

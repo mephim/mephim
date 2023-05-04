@@ -38,12 +38,6 @@ public class CommonServiceImpl implements CommonService {
     @Autowired
     RoomRepo roomRepo;
 
-    @Autowired
-    TheaterGroupRepo theaterGroupRepo;
-
-    @Autowired
-    MovieTheaterRepo movieTheaterRepo;
-
     @Override
     public void initialSeatColumn(SeatColumn seatColumn) {
         log.info("Saves seat column to the database: " + seatColumn.getColumnName());
@@ -87,12 +81,6 @@ public class CommonServiceImpl implements CommonService {
     }
 
     @Override
-    public void initialTheaterGroup(TheaterGroup theaterGroup) {
-        log.info("Saves theaterGroup to the database: " + theaterGroup.getTheaterName());
-        theaterGroupRepo.save(theaterGroup);
-    }
-
-    @Override
     public void initialSeat(Integer roomId, Integer seatColumnId, Integer seatRowId) {
         log.info("Saves seat to the database: " + seatColumnId + "; "+ seatRowId);
         SeatColumn seatColumn = seatColumnRepo.findById(seatColumnId).orElse(null);
@@ -121,10 +109,5 @@ public class CommonServiceImpl implements CommonService {
     @Override
     public Category findCategoryById(Integer id) {
         return categoryRepo.findById(id).orElse(null);
-    }
-
-    @Override
-    public MovieTheater findMovieTheaterById(Integer id) {
-        return movieTheaterRepo.findById(id).orElse(null);
     }
 }

@@ -9,7 +9,7 @@ import com.example.mephim.repos.BookingRepo;
 import com.example.mephim.repos.MovieRepo;
 import com.example.mephim.repos.RateRepo;
 import com.example.mephim.repos.UserRepository;
-import com.example.mephim.request.RateDto;
+import com.example.mephim.request.AddRateDto;
 import com.example.mephim.response.RateResponse;
 import com.example.mephim.service.RateService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,19 +36,25 @@ public class RateServiceImpl implements RateService {
     }
 
     @Override
-    public Rate addRate(RateDto rateDto) throws NotAllowRating {
-        System.out.println("IS ALLOW: " + isAllowAddRate(rateDto.getUsername(), rateDto.getMovieId()));
-        if(!isAllowAddRate(rateDto.getUsername(), rateDto.getMovieId())) {
+    public List<RateResponse> findAllRate() {
+        return rateRepo.findAllRate();
+    }
+
+    @Override
+    public Rate addRate(AddRateDto addRateDto) throws NotAllowRating {
+        System.out.println("IS ALLOW: " + isAllowAddRate(addRateDto.getUsername(), addRateDto.getMovieId()));
+        if(!isAllowAddRate(addRateDto.getUsername(), addRateDto.getMovieId())) {
             throw new NotAllowRating();
         }
-        User user = userRepository.findByUsername(rateDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + rateDto.getUsername()));
-        Movie movie = movieRepo.findMovieByMovieId(rateDto.getMovieId());
+        User user = userRepository.findByUsername(addRateDto.getUsername()).orElseThrow(() -> new UsernameNotFoundException("User Not Found with username: " + addRateDto.getUsername()));
+        Movie movie = movieRepo.findMovieByMovieId(addRateDto.getMovieId());
         Rate rate = new Rate();
         rate.setUser(user);
         rate.setMovie(movie);
-        rate.setNumRate(rateDto.getNumRate());
-        rate.setContent(rateDto.getContent());
+        rate.setNumRate(addRateDto.getNumRate());
+        rate.setContent(addRateDto.getContent());
         rate.setIsLiked(false);
+        rate.setIsDeleted(false);
         Rate rateSaved;
         try {
             rateSaved = rateRepo.save(rate);
@@ -56,6 +62,16 @@ public class RateServiceImpl implements RateService {
             throw new NotAllowRating();
         }
         return rateSaved;
+    }
+
+    @Override
+    public void reactRate(Integer rateId, Boolean isLike) {
+        rateRepo.reactRate(isLike, rateId);
+    }
+
+    @Override
+    public void deleteRate(Integer rateId) {
+        rateRepo.deleteRate(rateId);
     }
 
     boolean isAllowAddRate(String username, Integer movieId) {

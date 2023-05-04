@@ -78,9 +78,6 @@ public class User {
     @JsonIgnore
     private List<Booking> bookings;
 
-    @OneToMany(mappedBy = "transactionId")
-    @JsonIgnore
-    private List<Transaction> transactions;
     @OneToMany(mappedBy = "rateId")
     @JsonIgnore
     private List<Rate> rates;

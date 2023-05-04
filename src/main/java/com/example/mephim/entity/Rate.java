@@ -13,7 +13,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(uniqueConstraints = {
-        @UniqueConstraint(name = "UniqueUserAndMovie", columnNames = {"userId", "movieId"}),
+        @UniqueConstraint(name = "UniqueUserAndMovie", columnNames = {"userId", "movieId", "isDeleted"}),
 })
 public class Rate {
     @Id
@@ -28,4 +28,5 @@ public class Rate {
     private Double numRate;
     private String content;
     private Boolean isLiked;
+    private Boolean isDeleted;
 }

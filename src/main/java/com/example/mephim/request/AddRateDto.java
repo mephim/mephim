@@ -3,7 +3,7 @@ package com.example.mephim.request;
 import lombok.Data;
 
 @Data
-public class RateDto {
+public class AddRateDto {
     private String username;
     private Integer movieId;
     private Double numRate;
