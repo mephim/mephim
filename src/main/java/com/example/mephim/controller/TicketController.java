@@ -6,6 +6,7 @@ import com.example.mephim.entity.Booking;
 import com.example.mephim.entity.Ticket;
 import com.example.mephim.exception.ShowConflictBySameMovieInTimeException;
 import com.example.mephim.exception.ShowConflictBySameRoomException;
+import com.example.mephim.request.DeleteTicketDto;
 import com.example.mephim.request.TicketCreateDto;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.service.TicketService;
@@ -49,5 +50,11 @@ public class TicketController {
         JSONObject dataResponseJson=new JSONObject();
         dataResponseJson.put("ticket", result);
         return new ResponseEntity<>(new CustomResponse<>(25, dataResponseJson), HttpStatus.CREATED);
+    }
+
+    @PostMapping("/delete-ticket")
+    public ResponseEntity<?> createNewTicket(@RequestBody DeleteTicketDto ticketDto) {
+        boolean status = ticketService.deleteTicket(ticketDto.getTicketId());
+        return new ResponseEntity<>(new CustomResponse<>(25, status), HttpStatus.CREATED);
     }
 }

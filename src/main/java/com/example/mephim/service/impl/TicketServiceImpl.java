@@ -103,6 +103,12 @@ public class TicketServiceImpl implements TicketService {
         return ticketRepo.save(ticket);
     }
 
+    @Override
+    public Boolean deleteTicket(Integer ticketId) {
+        int numOfRecord = ticketRepo.deleteTicket(ticketId);
+        return numOfRecord > 0;
+    }
+
     public Map<String, String> getTimeStartAndTimeEnd(Integer showDateId, Integer showTimeId, Integer movieId) {
         ShowDate showDate = showDateRepo.findByShowDateId(showDateId);
         ShowTime showTime = showTimeRepo.findByShowTimeId(showTimeId);

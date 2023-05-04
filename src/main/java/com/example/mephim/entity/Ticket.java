@@ -43,6 +43,7 @@ public class Ticket {
     private Boolean active;
     private String modifyBy;
     private String lastModify;
+    private Boolean isDeleted;
 
     public Ticket(Integer ticketId) {
         this.ticketId = ticketId;

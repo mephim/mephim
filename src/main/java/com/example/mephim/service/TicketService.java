@@ -14,4 +14,5 @@ public interface TicketService {
     Ticket findTicketByShowDateAndShowTime(Integer showDateId, Integer showTimeId);
     Ticket findTicketByMovieIdAndShowDateIdAndShowTimeId(Integer movieId, Integer showDateId, Integer showTimeId);
     Ticket save(TicketCreateDto ticketCreateDto) throws ShowConflictBySameMovieInTimeException, ShowConflictBySameRoomException;
+    Boolean deleteTicket(Integer ticketId);
 }

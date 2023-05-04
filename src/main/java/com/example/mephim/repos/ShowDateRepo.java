@@ -40,6 +40,7 @@ public interface ShowDateRepo extends JpaRepository<ShowDate, Integer> {
             "where show_date.show_date_id = ticket.show_date_id\n" +
             "and show_time.show_time_id = ticket.show_time_id\n" +
             "and ticket.room_id = room.room_id\n" +
+            "and ticket.is_deleted = false\n" +
             "and movie.movie_id = ticket.movie_id", nativeQuery = true)
     List<ShowResponse> adminFindAllShow();
 }
