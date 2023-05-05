@@ -50,6 +50,6 @@ public interface TicketRepo extends JpaRepository<Ticket, Integer> {
     @Modifying
     @Query(value = "update ticket set ticket.is_deleted = true \n" +
             "where ticket.ticket_id not in (select ticket_id from booking) \n" +
-            "and ticket.ticket_id = 1;", nativeQuery = true)
+            "and ticket.ticket_id = ?;", nativeQuery = true)
     int deleteTicket(Integer ticketId);
 }
