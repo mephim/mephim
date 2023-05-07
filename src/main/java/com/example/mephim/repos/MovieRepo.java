@@ -14,6 +14,8 @@ public interface MovieRepo extends JpaRepository<Movie, Integer> {
 
 //    @Query(value="select movie_id, movie_description, movie_length, movie_name, movie_poster, movie_trailer_url from movie",nativeQuery = true)
     List<Movie> findAll();
+    @Query(value = "select * from movie where movie.movie_name LIKE CONCAT('%',?,'%') ;", nativeQuery = true)
+    List<Movie> findByMovieName(String movieName);
     @Query(value = "select movie.* from movie \n" +
             "inner join ticket\n" +
             "inner join show_date inner join show_time\n" +

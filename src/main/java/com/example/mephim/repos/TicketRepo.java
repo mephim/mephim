@@ -15,8 +15,10 @@ public interface TicketRepo extends JpaRepository<Ticket, Integer> {
     @Query(value = "select * from ticket where roomId = ?", nativeQuery = true)
     Ticket findTicketByRoomId(Integer roomId);
 
-    @Query(value = "select * from ticket where movie_id = ? and ticket.is_deleted = false", nativeQuery = true)
-    Ticket findTicketByMovie(Integer movieId);
+    @Query(value = "select ticket.* from ticket inner join movie\n" +
+            "where movie.movie_id = ticket.movie_id\n" +
+            "and movie_name LIKE CONCAT('%',?,'%') and ticket.is_deleted = false;", nativeQuery = true)
+    List<Ticket> findTicketByMovie(String movieName);
 
     @Query(value = "select ticket.* from ticket inner join show_date inner join show_time\n" +
             "where ticket.show_date_id = show_date.show_date_id\n" +

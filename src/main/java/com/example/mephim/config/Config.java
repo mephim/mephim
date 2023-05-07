@@ -21,8 +21,8 @@ public class Config {
     public static final String vnp_OrderType  = "250000"; // thanh toán hoá đơn
     public static final String vnp_ReturnUrl  = "http://localhost:3000/payment/result";
     public static final String vnp_PayUrl = "https://sandbox.vnpayment.vn/paymentv2/vpcpay.html";
-    public static final String vnp_HashSecret = "ONSLPOUWNXTBCWHHCZVFAQDXAJYZYGIT";
-    public static final String vnp_TmnCode = "KWBZIWD8";
+    public static final String vnp_HashSecret = "LGENPFYANRQAATLRTSHKTGJNHZCXNMJX";
+    public static final String vnp_TmnCode = "92YH4DR6";
 
     public static String hmacSHA512(final String key, final String data) {
         try {

@@ -11,5 +11,6 @@ public interface ShowDateService {
     List<ShowDate> findShowDateByTheaterId(Integer theaterId);
     List<ShowDate> findShowDateByMovieId(Integer movieId);
     List<ShowResponse> adminFindAllShow();
+    List<ShowResponse> adminFindAllShowByMovie(String movieName);
     ShowDate findShowDateById(Integer showDateId);
 }

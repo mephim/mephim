@@ -29,6 +29,7 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    private String name;
     @NotBlank
     @Size(max = 20)
     private String username;

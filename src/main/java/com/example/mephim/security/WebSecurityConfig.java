@@ -96,6 +96,7 @@ public class WebSecurityConfig { // extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/transaction/**").permitAll()
                 .antMatchers("/api/statis/**").permitAll()
                 .antMatchers("/booking/**").hasRole("USER")
+                .antMatchers("/api/users/**").permitAll()
                 .anyRequest().authenticated();
 
         http.authenticationProvider(authenticationProvider());

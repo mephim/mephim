@@ -9,7 +9,8 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface MovieService {
-    Page<Movie> findAMoviesForAdmin(Pageable pageable);
+    List<Movie> findAMoviesForAdmin();
+    List<Movie> findAMoviesForAdminByMovieName(String movieName);
     List<Movie> findAMovies();
     MovieDetailResponse findById(Integer movieId);
     List<Movie> findMovieHasTicket();

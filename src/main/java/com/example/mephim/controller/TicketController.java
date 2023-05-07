@@ -31,6 +31,11 @@ public class TicketController {
         List<Ticket> ticketList = ticketService.findAll();
         return new ResponseEntity<>(new CustomResponse<>(1,ticketList), HttpStatus.OK);
     }
+    @GetMapping("/find-by-movie")
+    public ResponseEntity<?> findTicketByMovie(@RequestParam String movieName) {
+        List<Ticket> ticketList = ticketService.findTicketByMovie(movieName);
+        return new ResponseEntity<>(new CustomResponse<>(1,ticketList), HttpStatus.OK);
+    }
 
     @PostMapping("/create-new")
     public ResponseEntity<?> createNewTicket(@RequestBody TicketCreateDto ticketCreateDto) {

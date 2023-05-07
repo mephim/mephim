@@ -28,8 +28,13 @@ public class MovieServiceImpl implements MovieService {
     CategoryService categoryService;
 
     @Override
-    public Page<Movie> findAMoviesForAdmin(Pageable pageable) {
-        return movieRepo.findAll(pageable);
+    public List<Movie> findAMoviesForAdmin() {
+        return movieRepo.findAll();
+    }
+
+    @Override
+    public List<Movie> findAMoviesForAdminByMovieName(String movieName) {
+        return movieRepo.findByMovieName(movieName);
     }
 
     @Override

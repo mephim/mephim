@@ -37,6 +37,11 @@ public class ShowDateServiceImpl implements ShowDateService {
     }
 
     @Override
+    public List<ShowResponse> adminFindAllShowByMovie(String movieName) {
+        return showDateRepo.adminFindAllShowByMovie(movieName);
+    }
+
+    @Override
     public ShowDate findShowDateById(Integer showDateId) {
         return showDateRepo.findById(showDateId).orElse(null);
     }

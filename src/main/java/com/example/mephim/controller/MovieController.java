@@ -40,10 +40,13 @@ public class MovieController {
         return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
     @GetMapping("/list-movie-admin")
-    public ResponseEntity<?> listMovieForAdmin( @RequestParam(defaultValue = "0") int page,
-                                                @RequestParam(defaultValue = "10") int size) {
-        Pageable pageable = PageRequest.of(page, size);
-        Page<Movie> movieList = movieService.findAMoviesForAdmin(pageable);
+    public ResponseEntity<?> listMovieForAdmin() {
+        List<Movie> movieList = movieService.findAMoviesForAdmin();
+        return new ResponseEntity<>(new CustomResponse<>(1, movieList), HttpStatus.OK);
+    }
+    @GetMapping("/list-movie-admin-by-name")
+    public ResponseEntity<?> listMovieForAdminByMovieName(@RequestParam String movieName) {
+        List<Movie> movieList = movieService.findAMoviesForAdminByMovieName(movieName);
         return new ResponseEntity<>(new CustomResponse<>(1, movieList), HttpStatus.OK);
     }
     @GetMapping("/detail/{id}")
@@ -130,6 +133,11 @@ public class MovieController {
     @GetMapping(value = "/admin/find-all-show")
     public ResponseEntity<?> adminFindAllShow() {
         List<?> showResponses = showDateService.adminFindAllShow();
+        return new ResponseEntity<>(new CustomResponse<>(15, showResponses), HttpStatus.CREATED);
+    }
+    @GetMapping(value = "/admin/find-all-show-by-movie")
+    public ResponseEntity<?> adminFindAllShowByMovie(@RequestParam String movieName) {
+        List<?> showResponses = showDateService.adminFindAllShowByMovie(movieName);
         return new ResponseEntity<>(new CustomResponse<>(15, showResponses), HttpStatus.CREATED);
     }
 
