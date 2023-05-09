@@ -7,6 +7,7 @@ import com.example.mephim.service.UserService;
 import com.example.mephim.template.mail.ConfirmMailTemplate;
 import com.example.mephim.ultils.MailSender;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -20,6 +21,8 @@ public class UserServiceImpl implements UserService {
     UserRepo userRepo;
     @Autowired
     MailSender mailSender;
+    @Autowired
+    PasswordEncoder encoder;
 
     @Override
     public User findByUsername(String username) {
@@ -67,5 +70,15 @@ public class UserServiceImpl implements UserService {
         });
         thread.start();
         return true;
+    }
+
+    @Override
+    public Boolean updateInfo(String name, String phone, String email) {
+        return userRepo.updateInfo(name, phone, email) > 0;
+    }
+
+    @Override
+    public Boolean updatePassword(String newPassword, String email) {
+        return userRepo.updatePassword(encoder.encode(newPassword), email) > 0;
     }
 }

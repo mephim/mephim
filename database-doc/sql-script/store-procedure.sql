@@ -1,8 +1,11 @@
-CREATE DEFINER=`root`@`localhost` PROCEDURE `getCategoryStatisBy1WeeksAgo`(
+CREATE
+DEFINER=`root`@`localhost` PROCEDURE `getCategoryStatisBy1WeeksAgo`(
 daysAgo int)
 BEGIN
-DROP TEMPORARY TABLE IF EXISTS table2;
-CREATE TEMPORARY TABLE table2 AS (SELECT category.*,
+DROP
+TEMPORARY TABLE IF EXISTS table2;
+CREATE
+TEMPORARY TABLE table2 AS (SELECT category.*,
  count(category.category_id) as 'num_of_booking'
 from booking
  inner join ticket
@@ -16,8 +19,10 @@ and movie_category.movie_id = movie.movie_id
 and booking.time >= DATE(NOW() - INTERVAL daysAgo DAY)
 group by category.category_id
 order by num_of_booking desc);
-DROP TEMPORARY TABLE IF EXISTS table3;
-CREATE TEMPORARY TABLE table3(select category_id
+DROP
+TEMPORARY TABLE IF EXISTS table3;
+CREATE
+TEMPORARY TABLE table3(select category_id
 from table2);
 select table2.*
 from table2
