@@ -90,6 +90,13 @@ public class MovieServiceImpl implements MovieService {
         movie.setMoviePoster(movieCreateDto.getMoviePoster());
         movie.setMovieDescription(movieCreateDto.getMovieDescription());
 
+        if(movieCreateDto.getMovieId() != null) {
+            movie.setMovieId(movieCreateDto.getMovieId());
+
+            // delete all categories of movie
+            movieCategoryService.deleteAllCategory(movie.getMovieId());
+        }
+
         Movie movieSaved = movieRepo.save(movie);
         movieCreateDto.getMovieCategoryIds().forEach(id -> {
             MovieCategory movieCategory = new MovieCategory();

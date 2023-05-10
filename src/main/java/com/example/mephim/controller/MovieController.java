@@ -6,6 +6,7 @@ import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
+import com.example.mephim.request.MovieEditDto;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.response.MovieDetailResponse;
 import com.example.mephim.response.ShowTimeRes;
@@ -67,6 +68,17 @@ public class MovieController {
             return new ResponseEntity<>(new CustomResponse<>(-100,Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
         }
         return new ResponseEntity<>(new CustomResponse<>(18, ""), HttpStatus.CREATED);
+    }
+    @PostMapping(value = "/edit-movie")
+    public ResponseEntity<?> editMovie(@RequestBody MovieCreateDto movieCreateDto) {
+        try {
+            movieService.saveMovie(movieCreateDto);
+        } catch (InvalidParamException e) {
+            return new ResponseEntity<>(new CustomResponse<>(-1,e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new CustomResponse<>(-100,Constants.RESPONSE_STATUS_ERROR), HttpStatus.EXPECTATION_FAILED);
+        }
+        return new ResponseEntity<>(new CustomResponse<>(18, ""), HttpStatus.OK);
     }
 
     @GetMapping(value = "/find-movie-by-theater")

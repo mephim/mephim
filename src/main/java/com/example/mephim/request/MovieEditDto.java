@@ -2,12 +2,10 @@ package com.example.mephim.request;
 
 import lombok.Data;
 
-import javax.validation.constraints.Null;
 import java.util.List;
 
 @Data
-public class MovieCreateDto {
-    @Null
+public class MovieEditDto {
     private Integer movieId;
     private String movieName;
     private String movieDirector;

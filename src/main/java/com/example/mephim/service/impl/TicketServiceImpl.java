@@ -99,6 +99,7 @@ public class TicketServiceImpl implements TicketService {
         ticket.setShowTime(showTime);
         ticket.setActive(true);
         ticket.setRoom(new Room(roomId));
+        ticket.setIsDeleted(false);
 
         return ticketRepo.save(ticket);
     }

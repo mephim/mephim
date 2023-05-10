@@ -15,4 +15,9 @@ public class MovieCategoryImpl implements MovieCategoryService {
     public void save(MovieCategory movieCategory) {
         movieCategoryRepo.save(movieCategory);
     }
+
+    @Override
+    public Boolean deleteAllCategory(Integer movieId) {
+        return movieCategoryRepo.deleteAllCategory(movieId) > 0;
+    }
 }
