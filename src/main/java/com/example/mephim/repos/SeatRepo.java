@@ -2,8 +2,10 @@ package com.example.mephim.repos;
 
 import com.example.mephim.entity.Seat;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -16,6 +18,8 @@ public interface SeatRepo extends JpaRepository<Seat, Integer> {
             "and seat.seat_id = ?", nativeQuery = true)
     // To do check the seat is existed in the room
     Seat findSeatByTicketIdAndSeatId(Integer ticketId, Integer seatId);
+    @Transactional
+    @Modifying
     @Query(value = "DELETE FROM seat WHERE seat.room_id = ?;", nativeQuery = true)
     void deleteAllSeatByRoom(Integer roomId);
 

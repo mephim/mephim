@@ -51,4 +51,7 @@ public interface RoomRepo extends JpaRepository<Room, Integer> {
 
     @Query(value = "select * from room where room.room_id = ?;", nativeQuery = true)
     RoomStruct getRoomStruct(Integer roomId);
+
+    @Query(value = "select * from room where room.room_id = ? and room.is_enable = true;", nativeQuery = true)
+    Room findByRoomId(Integer roomId);
 }

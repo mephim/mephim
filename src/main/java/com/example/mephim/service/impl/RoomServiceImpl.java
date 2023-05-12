@@ -2,7 +2,7 @@ package com.example.mephim.service.impl;
 
 import com.example.mephim.entity.*;
 import com.example.mephim.repos.RoomRepo;
-import com.example.mephim.request.AddRoomDto;
+import com.example.mephim.request.SaveRoomDto;
 import com.example.mephim.request.RoomEditDto;
 import com.example.mephim.response.RoomSeatRes;
 import com.example.mephim.response.RoomStruct;
@@ -26,11 +26,18 @@ public class RoomServiceImpl implements RoomService {
 
     @Transactional
     @Override
-    public Room save(AddRoomDto roomDto) {
+    public Room save(SaveRoomDto roomDto) {
+
+        Room room = new Room();
+
+        if (roomDto.getId() != null) {
+            deleteAllSeatOnRoom(roomDto.getId());
+            room.setRoomId(roomDto.getId());
+        }
+
         // i-1 because index of row in the FE start with 0
         List<Integer> rowVipConverter = roomDto.getRowVIP().stream().map(integer -> integer + 1).sorted().collect(Collectors.toList());
 
-        Room room = new Room();
         room.setRoomName(roomDto.getName());
         room.setTotalRow(roomDto.getHeight());
         room.setTotalColumn(roomDto.getWidth());
