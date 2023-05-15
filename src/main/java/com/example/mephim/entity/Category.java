@@ -14,8 +14,11 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer categoryId;
     private String categoryName;
+    private String description;
+    private Boolean isEnable;
     private String modifyBy;
     private String lastModify;
+    private String isDeleted;
 
 //    @OneToMany(mappedBy = "movieCategoryId")
 //    @JsonManagedReference

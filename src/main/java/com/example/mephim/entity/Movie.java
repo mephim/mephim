@@ -22,6 +22,7 @@ public class Movie {
     private String moviePoster;
     private String modifyBy;
     private String lastModify;
+    private String isEnable;
     @Column(length=5000)
     private String movieDescription;
     @OneToMany(mappedBy = "rateId")

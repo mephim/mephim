@@ -27,6 +27,7 @@ public class Room {
     private Boolean isEnable;
     private String modifyBy;
     private String lastModify;
+    private String isDeleted;
 
     @OneToMany(mappedBy = "seatId")
     @JsonIgnore
