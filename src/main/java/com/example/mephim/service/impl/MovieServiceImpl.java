@@ -29,7 +29,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public List<Movie> findAMoviesForAdmin() {
-        return movieRepo.findAll();
+        return movieRepo.findAllForAdmin();
     }
 
     @Override
@@ -40,6 +40,11 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> findAMovies() {
         return movieRepo.findAll();
+    }
+
+    @Override
+    public List<Movie> findAMoviesUser() {
+        return movieRepo.findAllForUser();
     }
 
     @Override
@@ -108,7 +113,7 @@ public class MovieServiceImpl implements MovieService {
 
     @Override
     public void deleteMovie(Integer movieId) {
-        movieRepo.deleteById(movieId);
+        movieRepo.deleteMovie(movieId);
     }
 
     @Override
@@ -119,5 +124,10 @@ public class MovieServiceImpl implements MovieService {
     @Override
     public List<Movie> getMovieByShowDate(Integer showDateId) {
         return movieRepo.getMovieByShowDate(showDateId);
+    }
+
+    @Override
+    public void visibleMovie(Integer movieId, Boolean isVisible) {
+        movieRepo.visibleMovie(isVisible ,movieId);
     }
 }

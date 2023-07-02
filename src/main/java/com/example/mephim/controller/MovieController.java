@@ -6,7 +6,9 @@ import com.example.mephim.entity.ShowTime;
 import com.example.mephim.request.MovieCreateDto;
 import com.example.mephim.entity.Movie;
 import com.example.mephim.exception.InvalidParamException;
+import com.example.mephim.request.MovieDeleteDto;
 import com.example.mephim.request.MovieEditDto;
+import com.example.mephim.request.MovieVisibleDto;
 import com.example.mephim.response.CustomResponse;
 import com.example.mephim.response.MovieDetailResponse;
 import com.example.mephim.response.ShowTimeRes;
@@ -165,5 +167,22 @@ public class MovieController {
         List<ShowTimeRes> showTimeList = showTimeService.findTicketByMovieIdAndShowDateIdAndShowTimeId(movieId, showDateId);
         if(showTimeList.isEmpty()) return new ResponseEntity<>(new CustomResponse<>(0, "data is empty"), HttpStatus.OK);
         return new ResponseEntity<>(new CustomResponse<>(17 ,showTimeList), HttpStatus.CREATED);
+    }
+
+    @PostMapping(value = "/set-visible")
+    public ResponseEntity<?> visibleMovie(@RequestBody MovieVisibleDto movieVisibleDto){
+        movieService.visibleMovie(movieVisibleDto.getMovieId(), movieVisibleDto.getIsVisible());
+        return new ResponseEntity<>(new CustomResponse<>(16, "OK"), HttpStatus.CREATED);
+    }
+    @PostMapping(value = "/delete")
+    public ResponseEntity<?> deleteMovie(@RequestBody MovieDeleteDto movieDeleteDto){
+        movieService.deleteMovie(movieDeleteDto.getMovieId());
+        return new ResponseEntity<>(new CustomResponse<>(16, "OK"), HttpStatus.CREATED);
+    }
+
+    @GetMapping(value = "/list-movie-user")
+    public ResponseEntity<?> findAllMovieForUser() {
+        List<Movie> movieList = movieService.findAMoviesUser();
+        return new ResponseEntity<>(movieList, HttpStatus.OK);
     }
 }

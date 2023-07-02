@@ -12,6 +12,7 @@ public interface MovieService {
     List<Movie> findAMoviesForAdmin();
     List<Movie> findAMoviesForAdminByMovieName(String movieName);
     List<Movie> findAMovies();
+    List<Movie> findAMoviesUser();
     MovieDetailResponse findById(Integer movieId);
     List<Movie> findMovieHasTicket();
     List<Movie> findMovieHasTicketAndSearchByCategoryAndName(String keySearch, Integer categoryId);
@@ -21,4 +22,5 @@ public interface MovieService {
     void deleteMovie(Integer movieId);
     List<Movie> getMovieByTheater(Integer theaterId);
     List<Movie> getMovieByShowDate(Integer showDateId);
+    void visibleMovie(Integer movieId, Boolean isVisible);
 }

@@ -22,6 +22,7 @@ public interface TransactionRepo extends JpaRepository<Booking, Integer> {
             "and seat.seat_column_id = seat_column.column_id\n" +
             "and seat.seat_row_id = seat_row.row_id\n" +
             "and users.username = ?\n" +
-            "group by users.username, booking.time;", nativeQuery = true)
+            "group by users.username, booking.time\n" +
+            "order by booking.booking_id desc LIMIT 10;", nativeQuery = true)
     List<TransactionResponse> findByMail(String mail);
 }
